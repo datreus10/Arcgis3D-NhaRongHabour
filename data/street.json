@@ -3811,7 +3811,7 @@
     },
     {
         "name": "Quốc lộ 1A",
-        "lengthr": "123km",
+        "length": "123km",
         "color": "rgb(242,209,99)",
         "cities": "Đồng Nai và TP. Hồ Chí Minh",
         "point": [
