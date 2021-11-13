@@ -124,5 +124,87 @@
         "address": "1 Phan Bội Châu, Phường 1, Vĩnh Long, Việt Nam",
         "url": "https://i.imgur.com/rroNCiv.png",
         "point": [[105.97198535660502, 10.257469969472611]]
+    },
+    
+    {
+        "name": "Trường Đh Kiên Giang",
+        "address": "320A, QL61, Vĩnh Hoà Hiệp, Châu Thành, Kiên Giang, Việt Nam",
+        "url": "https://i.imgur.com/3tBkVTc.png",
+        "point": [[105.1442895, 9.916142]]
+    },
+    {
+        "name": "Trường Đh Bạc Liêu",
+        "address": "108 Võ Thị Sáu, Phường 8, Bạc Liêu, Việt Nam",
+        "url": "https://i.imgur.com/3tBkVTc.png",
+        "point": [[105.7081468, 9.2926027]]
+    },
+    {
+        "name": "Trường Đh Tôn Đức Thắng - Cơ sở Cà Mau",
+        "address": "Mậu Thân, Phường 9, Thành phố Cà Mau, Cà Mau, Việt Nam",
+        "url": "https://i.imgur.com/3tBkVTc.png",
+        "point": [[105.1541888, 9.2021995]]
+    },
+
+
+    {
+        "name": "Cầu Giồng Riềng - Kiên Giang",
+        "address": "tt. Giồng Riềng, Giồng Riềng, Kiên Giang, Việt Nam",
+        "url": "https://i.imgur.com/gaLRV6n.png?1",
+        "point": [[105.08055389108301, 10.005710843141367]]
+    },
+    {
+        "name": "Cầu Bạc Liêu 2",
+        "address": "Tp. Bạc Liêu, Bạc Liêu, Việt Nam",
+        "url": "https://i.imgur.com/gaLRV6n.png?1",
+        "point": [[105.73901672771348, 9.29496676700337]]
+    },
+    {
+        "name": "Cầu Cà Mau",
+        "address": "Tp. Cà Mau, Cà Mau, Việt Nam",
+        "url": "https://i.imgur.com/gaLRV6n.png?1",
+        "point": [[105.1487914, 9.1776709]]
+    },
+
+
+
+    {
+        "name": "Bảo tàng Kiên Giang",
+        "address": "X469+Q63, Phường An Bình, Rạch Giá, Kiên Giang, Việt Nam",
+        "url": "https://i.imgur.com/b41Peey.png",
+        "point": [[105.1179592, 9.9618376 ]] 
+    },
+    {
+        "name": "Bảo tàng Sóc Trăng",
+        "address": "Hùng Vương, Phường 6, Sóc Trăng, Việt Nam",
+        "url": "https://i.imgur.com/b41Peey.png",
+        "point": [[105.9675062, 9.6121871]]  
+    },
+    {
+        "name": "Bảo tàng Bạc Liêu",
+        "address": "25 Hai Bà Trưng, Phường 3, Bạc Liêu, Việt Nam",
+        "url": "https://i.imgur.com/b41Peey.png",
+        "point": [[105.7232388, 9.2868307]]  
+    },
+
+
+
+    {
+        "name": "Công viên Kiên Giang",
+        "address": "Lô A11C-06 khu biệt thự Seaview, Đường 3 Tháng 2, Phường Vĩnh Bảo, Rạch Giá, Kiên Giang, Việt Nam",
+        "url": "https://i.imgur.com/rroNCiv.png",
+        "point": [[105.0794515, 10.001659]]
+    },
+    {
+        "name": "Công viên 30/4 - Sóc Trăng",
+        "address": "Ba Mươi Tháng Tư, Phường 1, Sóc Trăng, Việt Nam",
+        "url": "https://i.imgur.com/rroNCiv.png",
+        "point": [[105.9721228, 9.602617]] 
+    },
+    {
+        "name": "Công viên Lê Thị Riêng Bạc Liêu",
+        "address": "1, Phường 8, Bạc Liêu, Việt Nam",
+        "url": "https://i.imgur.com/rroNCiv.png",
+        "point": [[105.6210187, 9.2671799]] 
     }
+
 ]
