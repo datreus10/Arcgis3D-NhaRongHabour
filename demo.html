@@ -121,16 +121,6 @@
                     .then((res) => res.json())
                     .then((data) => {
                         data.forEach((city) => {
-                            let Polygon
-                            if(typeof(city) == "Array") {
-                                city.forEach((cityinfo) => {
-                                    Polygon = Create("polyline", cityinfo.point);
-                                })
-                            }
-                            else
-                            {
-                                Polygon = Create("polyline", city.point);
-                            }
                             Polygon = Create("polygon", city.points);
                             const simpleFillSymbol = SetUI(
                                 "simple-fill",
@@ -164,16 +154,7 @@
                     .then((res) => res.json())
                     .then((streets) => {
                         streets.forEach((street) => {
-                            let Street
-                            if(typeof(street) == "Array") {
-                                street.forEach((streetinfo) => {
-                                    Street = Create("polyline", streetinfo.point);
-                                })
-                            }
-                            else
-                            {
-                                Street = Create("polyline", street.point);
-                            }
+                            Street = Create("polyline", street.point);
                             const simpleFillSymbol = SetUI(
                                 "simple-line",
                                 street.color,
