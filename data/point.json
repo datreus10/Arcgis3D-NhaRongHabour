@@ -173,7 +173,7 @@
     {
         "name": "Bảo Tàng Văn Hóa Dân Tộc Khmer",
         "address": "Nguyễn Du, Phường 8, Trà Vinh, Việt Nam",
-        "type": "park",
+        "type": "museum",
         "point": [
             106.30571417194415,
             9.916386595392423
@@ -182,7 +182,7 @@
     {
         "name": "Bảo tàng tỉnh Vĩnh Long",
         "address": "1 Phan Bội Châu, Phường 1, Vĩnh Long, Việt Nam",
-        "type": "park",
+        "type": "museum",
         "point": [
             105.97198535660502,
             10.257469969472611
