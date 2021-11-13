@@ -1,1 +1,128 @@
-
+[
+    {
+        "name": "DHQG phân hiệu Bến Tre",
+        "address": "99A QL60, Khu phố 1, Bến Tre",
+        "url": "https://i.imgur.com/3tBkVTc.png",
+        "point": [[106.359458, 10.2702283]]
+    },
+    {
+        "name": "Đại học Võ Trường Toản",
+        "address": "QL1A, Tân Phú Thạnh, Châu Thành A, Hậu Giang",
+        "url": "https://i.imgur.com/3tBkVTc.png",
+        "point": [[105.737143, 9.9590373]]
+    },
+    {
+        "name": "Đại học Trà Vinh",
+        "address": "126 Nguyễn Thiện Thành, Phường 5, Trà Vinh, Việt Nam",
+        "url": "https://i.imgur.com/3tBkVTc.png",
+        "point": [[106.3443306, 9.9234569]]
+    },
+    {
+        "name": "Trường Đại học Công nghệ Thông tin ĐHQG TP.HCM",
+        "address": "khu phố 6, Thủ Đức, Thành phố Hồ Chí Minh, Việt Nam",
+        "url": "https://i.imgur.com/3tBkVTc.png",
+        "point": [[106.80295753691941, 10.87001942859222]]
+    },
+    {
+        "name": "Đại Học Kinh Tế TP.HCM",
+        "address": "91C Đường 3/2, Phường 11, Quận 10, Thành phố Hồ Chí Minh, Việt Nam",
+        "url": "https://i.imgur.com/3tBkVTc.png",
+        "point": [[106.67751756575456, 10.773376526770662]]
+    },
+    {
+        "name": "Đại học Y Dược Thành phố Hồ Chí Minh",
+        "address": "217 Hồng Bàng, Phường 11, Quận 5, Thành phố Hồ Chí Minh, Việt Nam",
+        "url": "https://i.imgur.com/3tBkVTc.png",
+        "point": [[106.66328050993613, 10.754620361745848]]
+    },
+    {
+        "name": "Cầu Hàm Luông",
+        "address": "Cầu Hàm Luông, Bình Phú, Bến Tre, Việt Nam",
+        "url": "https://i.imgur.com/gaLRV6n.png?1",
+        "point": [[106.3344809, 10.2352541]]
+    },
+      {
+        "name": "Cầu Cổ Chiên",
+        "address": "Đồng Văn Cống, Mỹ Thạnh An, Bến Tre, Việt Nam",
+        "url": "https://i.imgur.com/gaLRV6n.png?1",
+        "point": [[106.3060236, 10.0285744]]
+    },
+      {
+        "name": "Cầu Mỹ Hoá",
+        "address": "Cầu Bình Lợi, Hiệp Bình Chánh, Bình Thạnh, Thành phố Hồ Chí Minh, Việt Nam",
+        "url": "https://i.imgur.com/gaLRV6n.png?1",
+        "point": [[106.3613154, 10.2282834]]
+    },
+    {
+        "name": "Cầu Bình Lợi",
+        "address": "Cầu Bình Lợi, Hiệp Bình Chánh, Bình Thạnh, Thành phố Hồ Chí Minh, Việt Nam",
+        "url": "https://i.imgur.com/gaLRV6n.png?1",
+        "point": [[106.71012945226427, 10.82500959212852]]
+    },
+    {
+        "name": "Cầu Long Thành",
+        "address": "ĐCT Thành phố Hồ Chí Minh - Long Thành - Dầu Giây, Tam An, Quận 9, Thành phố Hồ Chí Minh, Việt Nam",
+        "url": "https://i.imgur.com/gaLRV6n.png?1",
+        "point": [[106.86557696108369, 10.787303867427655]]
+    },
+    {
+        "name": "Cầu Phú Mỹ",
+        "address": "Quận 7, Thành phố Hồ Chí Minh, Việt Nam",
+        "url": "https://i.imgur.com/gaLRV6n.png?1",
+        "point": [[106.741378, 10.743434]]
+    },
+    {
+        "name": "Bảo tàng Tôn Đức Thắng",
+        "address": "5 Đ. Tôn Đức Thắng, Bến Nghé, Quận 1, Thành phố Hồ Chí Minh, Việt Nam",
+        "url": "https://i.imgur.com/b41Peey.png",
+        "point": [[106.70665008480918, 10.77725934470716]]
+    },
+    {
+        "name": "Bảo tàng Phụ nữ Nam bộ",
+        "address": "202 Võ Thị Sáu, Quận 3, Thành phố Hồ Chí Minh, Việt Nam",
+        "url": "https://i.imgur.com/b41Peey.png",
+        "point": [[106.68758978110014, 10.783923697748005]]
+    },
+    {
+        "name": "Bảo tàng Chứng tích Chiến tranh",
+        "address": "28 Võ Văn Tần, Phường 6, Quận 3, Thành phố Hồ Chí Minh 700000, Việt Nam",
+        "url": "https://i.imgur.com/b41Peey.png",
+        "point": [[106.69199503691834, 10.779763540619332]]
+    },
+    {
+        "name": "Công viên Tao Đàn",
+        "address": "Trương Định, Phường Bến Thành, Quận 1, Thành phố Hồ Chí Minh, Việt Nam",
+        "url": "https://i.imgur.com/rroNCiv.png",
+        "point": [[106.69240990993643, 10.774464114476492]]
+    },
+    {
+        "name": "Thảo Cầm Viên Sài Gòn",
+        "address": "2 Nguyễn Bỉnh Khiêm, Bến Nghé, Quận 1, Thành phố Hồ Chí Minh 700000, Việt Nam",
+        "url": "https://i.imgur.com/rroNCiv.png",
+        "point": [[106.7053120541184, 10.787796333859546]]
+    },
+    {
+        "name": "Công Viên Gia Định",
+        "address": "Hoàng Minh Giám, Phường 9, Phú Nhuận, Thành phố Hồ Chí Minh, Việt Nam",
+        "url": "https://i.imgur.com/rroNCiv.png",
+        "point": [[106.67420409644595, 10.811268538688514]]
+    },
+    {
+        "name": "Bảo Tàng Tỉnh Bến Tre",
+        "address": "Hùng Vương, Phường 3, Bến Tre, Việt Nam",
+        "url": "https://i.imgur.com/rroNCiv.png",
+        "point": [[106.37417429195439, 10.23496936656393]]
+    },
+    {
+        "name": "Bảo Tàng Văn Hóa Dân Tộc Khmer",
+        "address": "Nguyễn Du, Phường 8, Trà Vinh, Việt Nam",
+        "url": "https://i.imgur.com/rroNCiv.png",
+        "point": [[106.30571417194415, 9.916386595392423]]
+    },
+    {
+        "name": "Bảo tàng tỉnh Vĩnh Long",
+        "address": "1 Phan Bội Châu, Phường 1, Vĩnh Long, Việt Nam",
+        "url": "https://i.imgur.com/rroNCiv.png",
+        "point": [[105.97198535660502, 10.257469969472611]]
+    }
+]
