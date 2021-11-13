@@ -1,217 +1,165 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta
-            name="viewport"
-            content="initial-scale=1,maximum-scale=1,user-scalable=no"
-        />
-        <title>Arcgis</title>
-        <style>
-            html,
-            body,
-            #viewDiv {
-                padding: 0;
-                margin: 0;
-                height: 100%;
-                width: 100%;
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>Arcgis</title>
+    <style>
+        html,
+        body,
+        #viewDiv {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://js.arcgis.com/4.21/esri/themes/light/main.css" />
+    <script src="https://js.arcgis.com/4.21/"></script>
+
+    <script>
+        require([
+            "esri/config",
+            "esri/Map",
+            "esri/views/MapView",
+            "esri/Graphic",
+            "esri/layers/GraphicsLayer",
+        ], function (esriConfig, Map, MapView, Graphic, GraphicsLayer) {
+            const Create = (typeofcreate, createposition) => {
+                const result = {
+                    type: typeofcreate
+                }
+                switch (typeofcreate) {
+                    case "polyline":
+                        result.paths = createposition
+                        break;
+                    case "polygon":
+                        result.rings = createposition
+                        break;
+                    default: //point
+                        result.longitude = createposition[0];
+                        result.latitude = createposition[1];
+                        break;
+                }
+                return result;
             }
-        </style>
-
-        <link
-            rel="stylesheet"
-            href="https://js.arcgis.com/4.21/esri/themes/light/main.css"
-        />
-        <script src="https://js.arcgis.com/4.21/"></script>
-
-        <script>
-            require([
-                "esri/config",
-                "esri/Map",
-                "esri/views/MapView",
-                "esri/Graphic",
-                "esri/layers/GraphicsLayer",
-            ], function (esriConfig, Map, MapView, Graphic, GraphicsLayer) {
-                const map = new Map({
-                    basemap: "topo-vector",
+            const SetUI = (typeofSetUI, colorSetUI, widthSetUI = 1, outlinecolorSetUI = colorSetUI,
+                outlinewidthSetUI = 1, urlSetUI = "") => {
+                return {
+                    type: typeofSetUI,
+                    color: colorSetUI,
+                    width: widthSetUI,
+                    url: urlSetUI,
+                    outline: {
+                        color: outlinecolorSetUI,
+                        width: outlinewidthSetUI
+                    }
+                };
+            }
+            const popupTemplateSetup = () => {
+                return {
+                    title: "{Name}",
+                    content: "{Description}"
+                }
+            }
+            const attributesSetup = (Name, Description) => {
+                return {
+                    Name: Name,
+                    Description: Description
+                }
+            }
+            const BuildUI = (poly, simpleMarker, attributes, popupTemplate) => {
+                return new Graphic({
+                    geometry: poly,
+                    symbol: simpleMarker,
+                    attributes: attributes,
+                    popupTemplate: popupTemplate
                 });
+            }
 
-                const view = new MapView({
-                    container: "viewDiv",
-                    map: map,
-                    zoom: 10,
-                    // center: [15, 65] // longitude, latitude
-                    center: [106.7976408, 10.8811081],
-                });
+            //Helper function
+            const GetData = async url => {
+                const response = await fetch(url);
+                return await response.json();
+            }
 
-                const Create = (typeofcreate, createposition) => {
-                    if (typeofcreate == "point") {
-                        return {
-                            type: typeofcreate,
-                            longitude: createposition[0][0],
-                            latitude: createposition[0][1],
-                        };
-                    }
-                    if (typeofcreate == "polyline") {
-                        return {
-                            type: typeofcreate,
-                            paths: createposition,
-                        };
-                    }
-                    if (typeofcreate == "polygon") {
-                        return {
-                            type: typeofcreate,
-                            rings: createposition,
-                        };
-                    }
-                };
-                const SetUI = (
-                    typeofSetUI,
-                    colorSetUI,
-                    widthSetUI = 1,
-                    heightSetUI = 1,
-                    outlinecolorSetUI = colorSetUI,
-                    outlinewidthSetUI = 1,
-                    urlSetUI = ""
-                ) => {
-                    return {
-                        type: typeofSetUI,
-                        color: colorSetUI,
-                        width: widthSetUI,
-                        height: heightSetUI,
-                        url: urlSetUI,
-                        outline: {
-                            color: outlinecolorSetUI,
-                            width: outlinewidthSetUI,
-                        },
-                    };
-                };
-                const popupTemplateSetup = () => {
-                    return {
-                        title: "{Name}",
-                        content: "{Description}",
-                    };
-                };
-                const attributesSetup = (Name, Description) => {
-                    return {
-                        Name: Name,
-                        Description: Description,
-                    };
-                };
-                const BuildUI = (
-                    poly,
-                    simpleMarker,
-                    attributes,
-                    popupTemplate
-                ) => {
-                    return new Graphic({
-                        geometry: poly,
-                        symbol: simpleMarker,
-                        attributes: attributes,
-                        popupTemplate: popupTemplate,
-                    });
-                };
-                const graphicsLayer = new GraphicsLayer();
-                map.add(graphicsLayer);
+            const DrawProvince = (data, uiTemplate) => {
+                const popup = `Diện tích: ${data.area}\nDân số: ${data.population}`;
+                graphicsLayer.add(
+                    BuildUI(Create("polygon", data.points),
+                        uiTemplate,
+                        attributesSetup(`Tỉnh ${data.name}`, popup), popupTemplateSetup()));
+            }
 
-                // Polygon
-                const URL =
-                    "https://raw.githubusercontent.com/NguyenThanhLong-student/Thuc-hanh-IE402.M11/main/data/city.json";
-                const data = fetch(URL)
-                    .then((res) => res.json())
-                    .then((data) => {
-                        data.forEach((city) => {
-                            Polygon = Create("polygon", city.points);
-                            const simpleFillSymbol = SetUI(
-                                "simple-fill",
-                                city.color,
-                                1,
-                                null,
-                                [255, 255, 255],
-                                1
-                            );
-                            graphicsLayer.add(
-                                BuildUI(
-                                    Polygon,
-                                    simpleFillSymbol,
-                                    attributesSetup(
-                                        city.name,
-                                        "Diện tích: " +
-                                            city.area +
-                                            "\nDân số: " +
-                                            city.population
-                                    ),
-                                    popupTemplateSetup()
-                                )
-                            );
-                        });
-                    });
+            const DrawStreet = (data, uiTemplate) => {
+                const popup = `Chiều dài: ${data.length}\nCác tỉnh đi qua: ${data.cities}`;
+                graphicsLayer.add(
+                    BuildUI(Create("polyline", data.point),
+                        uiTemplate,
+                        attributesSetup(`Đường ${data.name}`, popup), popupTemplateSetup()));
+            }
 
-                // Line
-                const URL_LINE =
-                    "https://raw.githubusercontent.com/NguyenThanhLong-student/Thuc-hanh-IE402.M11/main/data/street.json";
-                const streets = fetch(URL_LINE)
-                    .then((res) => res.json())
-                    .then((streets) => {
-                        streets.forEach((street) => {
-                            Street = Create("polyline", street.point);
-                            const simpleFillSymbol = SetUI(
-                                "simple-line",
-                                street.color,
-                                2
-                            );
-                            graphicsLayer.add(
-                                BuildUI(
-                                    Street,
-                                    simpleFillSymbol,
-                                    attributesSetup(
-                                        street.name,
-                                        "Độ dài: " +
-                                            street.length +
-                                            "\nCác tỉnh đi qua: " +
-                                            street.cities
-                                    ),
-                                    popupTemplateSetup()
-                                )
-                            );
-                        });
-                    });
+            const DrawPoint = (data, uiTemplate) => {
+                const popup = `Địa chỉ: ${data.address}`;
+                graphicsLayer.add(BuildUI(Create("point", data.point),
+                    uiTemplate,
+                    attributesSetup(`${data.name}`, popup), popupTemplateSetup()));
+            }
 
-                // Point
-                const URL_POINT =
-                    "https://raw.githubusercontent.com/NguyenThanhLong-student/Thuc-hanh-IE402.M11/main/data/point.json";
-                const points = fetch(URL_POINT)
-                    .then((res) => res.json())
-                    .then((points) => {
-                        points.forEach((p) => {
-                            const Point = Create("point", p.point);
-                            const simpleFillSymbol = SetUI(
-                                "picture-marker",
-                                [227, 139, 79, 0.3],
-                                24,
-                                24,
-                                [255, 255, 255],
-                                1,
-                                p.url
-                            );
-                            graphicsLayer.add(
-                                BuildUI(
-                                    Point,
-                                    simpleFillSymbol,
-                                    attributesSetup(
-                                        p.name,
-                                        "Địa chỉ: " + p.address
-                                    ),
-                                    popupTemplateSetup()
-                                )
-                            );
-                        });
-                    });
+            const map = new Map({
+                basemap: "topo-vector" //Basemap layer service
             });
-        </script>
-    </head>
+            const view = new MapView({
+                map: map,
+                center: [106.736361, 10.872751],
+                zoom: 13,
+                container: "viewDiv"
+            });
+            const graphicsLayer = new GraphicsLayer();
+            map.add(graphicsLayer);
 
-    <body>
-        <div id="viewDiv"></div>
-    </body>
+            // Main function
+            (async () => {
+                // remote
+                const baseURL = "https://raw.githubusercontent.com/NguyenThanhLong-student/Thuc-hanh-IE402.M11/main";
+                // local
+                //const baseURL = ".";
+
+                // Polygon Province
+                const polygonApi = await GetData(`${baseURL}/data/city.json`);
+                polygonApi.forEach(e => {
+                    DrawProvince(e, SetUI("simple-fill", [227, 139, 79, 0.3], 1, [255, 255,
+                        255], 1))
+                })
+
+
+                // Polyline Steet
+                const polylineApi = await GetData(`${baseURL}/data/street.json`);
+                polylineApi.forEach(e => DrawStreet(e, SetUI("simple-line", [245, 190, 7], 2)))
+
+
+                // // Point
+                const pointApi = await GetData(`${baseURL}/data/point.json`);
+                pointApi.forEach(e => {
+                    const simpleMarkerSymbol = {
+                        type: "picture-marker",
+                        url: `${baseURL}/image/${e.type}.png`,
+                        width: "48px",
+                        height: "48px"
+                    };
+                    DrawPoint(e, simpleMarkerSymbol)
+                })
+
+
+            })();
+        });
+    </script>
+</head>
+
+<body>
+    <div id="viewDiv"></div>
+</body>
+
 </html>
