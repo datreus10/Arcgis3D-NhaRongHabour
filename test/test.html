@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>Smartcity - Building Map</title>
+
+    <style>
+        html,
+        body,
+        #viewDiv {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        #back {
+            position: absolute;
+            bottom: 20px;
+        }
+
+        #back i {
+            background-image: url(app/public/img/back.svg);
+            background-repeat: no-repeat;
+            display: inline-block;
+            width: 100px;
+            height: 25px;
+            padding-left: 25px;
+            padding-top: 2px;
+            margin: 10px;
+            cursor: pointer;
+            background-size: 20px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/geolib@3.3.1/lib/index.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://js.arcgis.com/4.16/esri/themes/light/main.css" />
+    <script src="https://js.arcgis.com/4.16/"></script>
+
+    <script>
+        require([
+            "esri/Map",
+            "esri/views/SceneView",
+            "esri/layers/GeoJSONLayer",
+            "esri/layers/SceneLayer", "esri/layers/GraphicsLayer", "esri/Graphic", "esri/request"
+        ], function (Map, SceneView, GeoJSONLayer, SceneLayer,
+            GraphicsLayer, Graphic, esriRequest) {
+
+            var createGraphic = function (data) {
+                return new Graphic({
+                    geometry: data,
+                    symbol: data.symbol,
+                    attributes: data,
+                    popupTemplate: data.popupTemplate
+                });
+            };
+
+            // const json_options = {
+            //     query: {
+            //         f: "json"
+            //     },
+            //     responseType: "json"
+            // };
+            // // request json
+            // esriRequest('./data2/test.json', json_options).then(function (response) {
+            //     var graphicsLayer = new GraphicsLayer();
+            //     response.data.forEach(function (data) {
+            //         graphicsLayer.add(createGraphic(data));
+            //     });
+            //     map.add(graphicsLayer);
+
+            // });
+
+            const getRectNgang = (sPoint, bearing, cd, cr) => {
+                const startPoint = {
+                    latitude: sPoint[1],
+                    longitude: sPoint[0]
+                };
+                const listPoint = [
+                    [sPoint[0], sPoint[1]]
+                ]
+                const p2 = geolib.computeDestinationPoint(startPoint, cd, bearing);
+                listPoint.push([p2.longitude, p2.latitude])
+
+                const p3 = geolib.computeDestinationPoint(p2, cr, 180 + bearing + 90);
+                listPoint.push([p3.longitude, p3.latitude])
+
+                const p4 = geolib.computeDestinationPoint(p3, cd, 180 + bearing);
+                listPoint.push([p4.longitude, p4.latitude])
+                listPoint.push([sPoint[0], sPoint[1]])
+
+                return listPoint;
+            }
+
+            const getRectDoc = (sPoint, ePoint, h) => {
+                return [
+                    [sPoint[0], sPoint[1], h[0]],
+                    [ePoint[0], ePoint[1], h[0]],
+                    [ePoint[0], ePoint[1]+2e-14, h[1]],
+                    [sPoint[0], sPoint[1]+1e-13, h[1]],
+                    [sPoint[0], sPoint[1]+1e-14, h[0]],
+                ]
+            }
+
+            const DrawBox = (sPoint, bearing, cd, cr, h)=>{
+                const addH = (arr,hh)=> arr.map(e=>{
+                    e.push(hh); 
+                    return e;
+                })
+                const n1 = getRectNgang(sPoint, bearing, cd, cr)
+                const n2 = getRectNgang(sPoint, bearing, cd, cr)
+            
+                const d1= getRectDoc(sPoint,n1[3],h)
+                const d2= getRectDoc(sPoint,n1[1],h)
+                const d3= getRectDoc(n1[1],n1[2],h)
+                const d4= getRectDoc(n1[3],n1[2],h)
+                
+                
+                
+                map.add(drawRect(addH(n1,h[0])))
+                map.add(drawRect(addH(n2,h[1])))
+                map.add(drawRect(d1))
+                map.add(drawRect(d2))
+                map.add(drawRect(d3))
+                map.add(drawRect(d4))
+                
+ 
+
+
+               
+            }
+
+
+            const drawRect = (listPoint) => {
+                var graphicsLayer = new GraphicsLayer();
+                graphicsLayer.add(createGraphic({
+                    "type": "polygon",
+                    "rings": listPoint,
+                    "symbol": {
+                        "type": "simple-fill",
+                        "color": [227, 139, 79, 0.6],
+                        "outline": {
+                            "color": [255, 255, 255],
+                            "width": 1
+                        }
+                    }
+                }))
+                return graphicsLayer;
+            }
+
+
+            // getRect([106.70675051181462, 10.768089872127144], 66.3, 33, 26.5, 5.5)
+            const map = new Map({
+                basemap: "topo-vector",
+                ground: "world-elevation",
+                //layers: [geojsonLayer] //end layers
+            });
+
+
+            DrawBox([106.70675051181462, 10.768089872127144], 66.3, 1, 1, [5,10]);
+            DrawBox([106.70702648998187,10.768210581731992], 66.3, 1, 1, [5,10]);
+            DrawBox([106.70692968057045,10.768424190220674], 66.3, 1, 1, [1,10]);
+            DrawBox([106.7066537023181,10.768303480371836], 66.3, 1, 1, [1,10]);
+
+ 
+
+            const view = new SceneView({
+                container: "viewDiv",
+                map: map,
+                camera: {
+                    position: [106.70680940151215,
+                        10.766974818494525, 100
+                    ],
+                    heading: 0,
+                    tilt: 60
+                }
+            });
+
+        });
+    </script>
+</head>
+
+<body>
+    <div id="viewDiv"></div>
+</body>
+
+</html>

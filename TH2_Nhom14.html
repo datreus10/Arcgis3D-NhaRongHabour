@@ -1,111 +1,113 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="utf-8" />
-<meta name="viewport"
-	content="initial-scale=1,maximum-scale=1,user-scalable=no" />
-<title>Smartcity - Building Map</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>Smartcity - Building Map</title>
 
-<style>
-html, body, #viewDiv {
-	padding: 0;
-	margin: 0;
-	height: 100%;
-	width: 100%;
-}
+	<style>
+		html,
+		body,
+		#viewDiv {
+			padding: 0;
+			margin: 0;
+			height: 100%;
+			width: 100%;
+		}
 
-#back {
-	position: absolute;
-	bottom: 20px;
-}
+		#back {
+			position: absolute;
+			bottom: 20px;
+		}
 
-#back i {
-	background-image: url(app/public/img/back.svg);
-	background-repeat: no-repeat;
-	display: inline-block;
-	width: 100px;
-	height: 25px;
-	padding-left: 25px;
-	padding-top: 2px;
-	margin: 10px;
-	cursor: pointer;
-	background-size: 20px;
-}
-</style>
+		#back i {
+			background-image: url(app/public/img/back.svg);
+			background-repeat: no-repeat;
+			display: inline-block;
+			width: 100px;
+			height: 25px;
+			padding-left: 25px;
+			padding-top: 2px;
+			margin: 10px;
+			cursor: pointer;
+			background-size: 20px;
+		}
+	</style>
 
-<link rel="stylesheet"
-	href="https://js.arcgis.com/4.16/esri/themes/light/main.css" />
-<script src="https://js.arcgis.com/4.16/"></script>
+	<link rel="stylesheet" href="https://js.arcgis.com/4.16/esri/themes/light/main.css" />
+	<script src="https://js.arcgis.com/4.16/"></script>
 
-<script>
-        require([
-            "esri/Map",
-            "esri/views/SceneView",
-            "esri/layers/GeoJSONLayer",
-            "esri/layers/SceneLayer", "esri/layers/GraphicsLayer", "esri/Graphic", "esri/request"
-        ], function (Map, SceneView, GeoJSONLayer, SceneLayer,
-                     GraphicsLayer, Graphic, esriRequest) {
-        	var createGraphic = function(data) {
-    			return new Graphic({
-    				geometry : data,
-    				symbol : data.symbol,
-    				attributes : data,
-    				popupTemplate : data.popupTemplate
-    			});
-    		};
-    		
-    		const json_options = {
-    				query : {
-    					f : "json"
-    				},
-    				responseType : "json"
-    			};
+	<script>
+		require([
+			"esri/Map",
+			"esri/views/SceneView",
+			"esri/layers/GeoJSONLayer",
+			"esri/layers/SceneLayer", "esri/layers/GraphicsLayer", "esri/Graphic", "esri/request"
+		], function (Map, SceneView, GeoJSONLayer, SceneLayer,
+			GraphicsLayer, Graphic, esriRequest) {
+			var createGraphic = function (data) {
+				return new Graphic({
+					geometry: data,
+					symbol: data.symbol,
+					attributes: data,
+					popupTemplate: data.popupTemplate
+				});
+			};
+
+			const json_options = {
+				query: {
+					f: "json"
+				},
+				responseType: "json"
+			};
 			// geojson layer
 			const geojsonLayer = new GeoJSONLayer({
 				url: "./data/data3d.geojson"
 			});
-			
+
+
 			geojsonLayer.renderer = {
 				type: "simple",
 				symbol: {
 					type: "polygon-3d",
-					symbolLayers: [
-						{
-							type: "extrude",
-							size: 7,
-							material: {
-								color: "#7eadf7"
-							}
+					symbolLayers: [{
+						type: "extrude",
+						size: 7,
+						material: {
+							color: "#7eadf7"
 						}
-					]
+					}]
 				}
-			};            
+			};
+
+
+
 			const map = new Map({
-                basemap: "topo-vector",
-                ground: "world-elevation",
-                layers: [geojsonLayer] //end layers
-            });
+				basemap: "topo-vector",
+				ground: "world-elevation",
+				layers: [geojsonLayer] //end layers
+			});
 
-            const view = new SceneView({
-                container: "viewDiv",
-                map: map,
-                camera: {
-                    position: [
-              106.70692540705204,
-              10.768436575083348,300
-            ],
-                    heading: 0,
-                    tilt: 75
-                }
-            });
+			const view = new SceneView({
+				container: "viewDiv",
+				map: map,
+				camera: {
+					position: [106.70680940151215,
+						10.766974818494525, 100
+					],
+					heading: 0,
+					tilt: 60
+				}
+			});
 
-            view.popup.defaultPopupTemplateEnabled = true;
-        });
-
-    </script>
+			view.popup.defaultPopupTemplateEnabled = true;
+		});
+	</script>
 </head>
 
 <body>
 	<div id="viewDiv"></div>
 </body>
+
 </html>
