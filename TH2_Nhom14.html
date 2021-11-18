@@ -63,9 +63,14 @@
 			};
 			// geojson layer
 			const geojsonLayer = new GeoJSONLayer({
-				url: "./data/data3d.geojson"
+				url: "./data/data3dnen.geojson"
 			});
-
+			const geojsonLayercot = new GeoJSONLayer({
+				url: "./data/data3dcot.geojson"
+			});
+			const geojsonLayertrangtri = new GeoJSONLayer({
+				url: "./data/data3dtrangtri.geojson"
+			});
 
 			geojsonLayer.renderer = {
 				type: "simple",
@@ -73,21 +78,47 @@
 					type: "polygon-3d",
 					symbolLayers: [{
 						type: "extrude",
-						size: 7,
+						size: 1,
 						material: {
 							color: "#7eadf7"
 						}
 					}]
 				}
 			};
-
+			geojsonLayercot.renderer = {
+				type: "simple",
+				symbol: {
+					type: "polygon-3d",
+					symbolLayers: [{
+						type: "extrude",
+						size: 10,
+						material: {
+							color: "#7eadf7"
+						}
+					}]
+				}
+			};
+			geojsonLayertrangtri.renderer = {
+				type: "simple",
+				symbol: {
+					type: "polygon-3d",
+					symbolLayers: [{
+						type: "extrude",
+						size: 1,
+						material: {
+							color: "#cccccc"
+						}
+					}]
+				}
+			};
 
 
 			const map = new Map({
 				basemap: "topo-vector",
 				ground: "world-elevation",
-				layers: [geojsonLayer] //end layers
+				layers: [geojsonLayer,geojsonLayercot,geojsonLayertrangtri] //end layers
 			});
+
 
 			const view = new SceneView({
 				container: "viewDiv",
