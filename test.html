@@ -19,12 +19,16 @@
     <div>
         <form>
             <table style="width:40%">
-
                 <tr>
-                    <td><label for="lng">Lng</label></td>
-                    <td><input type="text" name="lng" /></td>
-                    <td><label for="lat">Lat</label></td>
-                    <td><input type="text" name="lat"></td>
+                    <td><label for="cd">Chiều dài</label></td>
+                    <td><input type="text" name="cd" /></td>
+                    <td><label for="cr">Chiều rộng</label></td>
+                    <td><input type="text" name="cr" /></td>
+                </tr>
+                <tr>
+                    <td colspan="1"><label for="lnglat">Lng,Lat</label></td>
+                    <td colspan="3"><input type="text" name="lnglat" /></td>
+
                 </tr>
                 <tr>
                     <td><label for="bearing">Độ</label></td>
@@ -47,20 +51,39 @@
             event.preventDefault();
             const data = new FormData(event.target);
             const value = Object.fromEntries(data.entries());
+            const t = value.lnglat.split(',')
             const startPoint = {
-                latitude: value.lat,
-                longitude: value.lng
+                latitude: t[1],
+                longitude: t[0]
             };
             const distanceMeters = value.distance;
-            const bearing = value.bearing;
+            let bearing = value.bearing;
 
-            const destination = geolib.computeDestinationPoint(
+            const p2 = geolib.computeDestinationPoint(
                 startPoint,
                 distanceMeters,
                 bearing
             );
 
-            document.getElementById("result").innerHTML = `${destination.longitude},${destination.latitude}`
+
+
+            document.getElementById("result").innerHTML = `${p2.longitude},${p2.latitude}`
+
+            if (value.cd) {
+                bearing = parseInt(bearing)
+                const p3 = geolib.computeDestinationPoint(
+                    p2,
+                    value.cr,
+                    bearing+180+90
+                );
+                document.getElementById("result").innerText += `\n${p3.longitude},${p3.latitude}`
+                const p4 = geolib.computeDestinationPoint(
+                    p3,
+                    value.cd,
+                    bearing+180
+                );
+                document.getElementById("result").innerText += `\n${p4.longitude},${p4.latitude}`
+            }
         }
         const form = document.querySelector('form');
         form.addEventListener('submit', handleSubmit);
