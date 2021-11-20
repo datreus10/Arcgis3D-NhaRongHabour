@@ -61,6 +61,8 @@
 				},
 				responseType: "json"
 			};
+
+		
 			// geojson layer
 			const geojsonLayer = new GeoJSONLayer({
 				url: "./data/data3dnen.geojson"
@@ -71,9 +73,12 @@
 			const geojsonLayertrangtri = new GeoJSONLayer({
 				url: "./data/data3dtrangtri.geojson"
 			});
-			const geojsonLayerrout = new GeoJSONLayer({
+			const geojsonLayerruot = new GeoJSONLayer({
 				url: "./data/data3drout.geojson"
 			});
+			const geojsonLayerbacthem = new GeoJSONLayer({
+				url: "./data/data3dbacthem.geojson"
+			})
 
 			geojsonLayer.renderer = {
 				type: "simple",
@@ -114,8 +119,7 @@
 					}]
 				}
 			};
-
-			geojsonLayerrout.renderer = {
+			geojsonLayerruot.renderer = {
 				type: "simple",
 				symbol: {
 					type: "polygon-3d",
@@ -128,13 +132,27 @@
 					}]
 				}
 			};
+			geojsonLayerbacthem.renderer = {
+				type: "simple",
+				symbol: {
+					type: "polygon-3d",
+					symbolLayers: [{
+						type: "extrude",
+						size: 2,
+						material: {
+							color: "#7eadf7"
+						}
+					}]
+				}
+			}
 
 
 
 			const map = new Map({
 				basemap: "topo-vector",
 				ground: "world-elevation",
-				layers: [geojsonLayer,geojsonLayercot,geojsonLayertrangtri,geojsonLayerrout] //end layers
+				layers: [geojsonLayer, geojsonLayercot, 
+						geojsonLayertrangtri, geojsonLayerruot,geojsonLayerbacthem] //end layers
 			});
 
 

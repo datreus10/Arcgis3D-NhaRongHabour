@@ -70,7 +70,7 @@
         {
             "type": "Feature",
             "properties": {
-                "Building name": "Landmark Plus",
+                "Building name": "Cột nhỏ AB2",
                 "height": 8,
                 "idb": "10"
             },
@@ -91,7 +91,7 @@
         {
             "type": "Feature",
             "properties": {
-                "Building name": "Landmark Plus",
+                "Building name": "Cột nhỏ AB3",
                 "height": 8,
                 "idb": "10"
             },
@@ -112,7 +112,7 @@
         {
             "type": "Feature",
             "properties": {
-                "Building name": "Landmark Plus",
+                "Building name": "Cột nhỏ AB4",
                 "height": 8,
                 "idb": "10"
             },
