@@ -17,7 +17,7 @@
 
 
     <div>
-        <form>
+        <form class="form1">
             <table style="width:40%">
                 <tr>
                     <td><label for="cd">Chiều dài</label></td>
@@ -42,7 +42,35 @@
             </table>
         </form>
         <div id="result">
+        </div>
 
+        <div style="margin-top:50px;">
+            <h4>Tool 2</h4>
+            <form class="form2">
+                <table>
+                    <tr>
+                        <td><label for="lnglat">Lng,Lat</label></td>
+                        <td><input type="text" name="lnglat" /></td>
+                    </tr>
+                    <tr>
+                        <td><label for="ngang">Ngang</label></td>
+                        <td><input type="text" name="ngang" /></td>
+                        <td><label for="cao">Cao</label></td>
+                        <td><input type="text" name="cao" /></td>
+                    </tr>
+                    <tr>
+                        <td><label for="points">Số điểm</label></td>
+                        <td><input type="text" name="points" /></td>
+                        <td><label for="bearing">Độ</label></td>
+                        <td><input type="text" name="bearing" /></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"><button type="submit">Tính</button></td>
+                    </tr>
+                </table>
+            </form>
+            <div id="result2">
+            </div>
         </div>
     </div>
 
@@ -51,7 +79,7 @@
             event.preventDefault();
             const data = new FormData(event.target);
             const value = Object.fromEntries(data.entries());
-            const t = value.lnglat.split(',')
+            const t = value.lnglat.trim().split(',')
             const startPoint = {
                 latitude: t[1],
                 longitude: t[0]
@@ -74,19 +102,48 @@
                 const p3 = geolib.computeDestinationPoint(
                     p2,
                     value.cr,
-                    bearing+180+90
+                    bearing + 180 + 90
                 );
                 document.getElementById("result").innerText += `\n[${p3.longitude},${p3.latitude},5.5],`
                 const p4 = geolib.computeDestinationPoint(
                     p3,
                     value.cd,
-                    bearing+180
+                    bearing + 180
                 );
                 document.getElementById("result").innerText += `\n[${p4.longitude},${p4.latitude},5.5],`
             }
         }
-        const form = document.querySelector('form');
-        form.addEventListener('submit', handleSubmit);
+        const form1 = document.querySelector('.form1');
+        form1.addEventListener('submit', handleSubmit);
+
+
+        const handleSubmit2 = (event) => {
+            event.preventDefault();
+            document.getElementById("result2").innerText = "";
+            const data = new FormData(event.target);
+            const value = Object.fromEntries(data.entries());
+            const t = value.lnglat.trim().split(',')
+            const startPoint = {
+                latitude: t[1],
+                longitude: t[0]
+            };
+
+            const kc = parseInt(value.ngang) / parseInt(value.points);
+            for (let i = 0; i < parseInt(value.ngang); i += kc) {
+                const p = geolib.computeDestinationPoint(
+                    startPoint,
+                    i,
+                    value.bearing
+                );
+                const y = Math.sqrt((1 - (i * i / parseInt(value.ngang))) * parseInt(value.cao))
+                document.getElementById("result2").innerText += `\n[${p.longitude},${p.latitude},${y}],`
+            }
+
+        }
+
+
+        const form2 = document.querySelector('.form2');
+        form2.addEventListener('submit', handleSubmit2);
     </script>
 </body>
 
