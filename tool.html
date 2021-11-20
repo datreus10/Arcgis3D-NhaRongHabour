@@ -98,7 +98,7 @@
             document.getElementById("result").innerHTML = `[${p2.longitude},${p2.latitude},5.5]`
 
             if (value.cd) {
-                bearing = parseInt(bearing)
+                bearing = parseFloat(bearing)
                 const p3 = geolib.computeDestinationPoint(
                     p2,
                     value.cr,
@@ -128,17 +128,61 @@
                 longitude: t[0]
             };
 
-            const kc = parseInt(value.ngang) / parseInt(value.points);
-            for (let i = 0; i < parseInt(value.ngang); i += kc) {
+            // const kc = parseFloat(value.ngang) / parseFloat(value.points);
+            // let c=0;
+            // let listy = [];
+            // for (let i = 0; i < parseFloat(value.ngang); i += kc) {
+            //     const p = geolib.computeDestinationPoint(
+            //         startPoint,
+            //         i,
+            //         value.bearing
+            //     );
+            //     let oa = parseFloat(value.ngang)/2;
+            //     let width = oa/(parseFloat(value.points)/2)
+            //     let y =  Math.sqrt((1 - ((width*c * width*c) / ((parseFloat(value.ngang)/2)*(parseFloat(value.ngang)/2)))) * (parseFloat(value.cao)/2)*(parseFloat(value.cao)/2))
+            //     listy.push(y);
+            //     if(parseFloat(value.ngang)/2>i)
+            //     {
+            //         document.getElementById("result2").innerText += `\n[${p.longitude},${p.latitude},${10.5-y}],`
+            //     }
+            //     else{
+            //         let vitri = c-(parseInt(value.points))/2;
+            //         document.getElementById("result2").innerText += `\n[${p.longitude},${p.latitude},${10.5-listy[vitri]}],`
+            //     }
+            //     c++;
+            // }
+            const kc = parseFloat(value.ngang) / parseFloat(value.points);
+            const a=parseFloat(value.ngang) /2;
+            const b=parseFloat(value.cao);
+            
+            let listy=[];
+            let listx=[];
+
+            for(let i =0 ; i <=  parseFloat(value.ngang); i += kc)
+            {
                 const p = geolib.computeDestinationPoint(
                     startPoint,
                     i,
                     value.bearing
                 );
-                const y = Math.sqrt((1 - (i * i / parseInt(value.ngang))) * parseInt(value.cao))
-                document.getElementById("result2").innerText += `\n[${p.longitude},${p.latitude},${y}],`
+                listx.push(p);
             }
 
+            for(let i =0 ; i <= parseFloat(value.points)/2 ; i++)
+            {
+                let y =  Math.sqrt((1 - ((kc*i * kc*i) / (a*a))) * b*b);
+                listy.push(y);
+            }
+            let listynew = [...listy];
+            listynew.splice(0,1);
+            listy.reverse();
+            let listyfinal = listy.concat(listynew);
+            console.log(listyfinal);
+            console.log(listx)
+            document.getElementById("result2").innerText="";
+            listyfinal.forEach((y,index)=>{
+                document.getElementById("result2").innerText += `\n[${listx[index].longitude},${listx[index].latitude},${9.5+y}],`
+            })
         }
 
 
