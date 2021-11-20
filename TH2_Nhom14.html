@@ -71,6 +71,9 @@
 			const geojsonLayertrangtri = new GeoJSONLayer({
 				url: "./data/data3dtrangtri.geojson"
 			});
+			const geojsonLayerrout = new GeoJSONLayer({
+				url: "./data/data3drout.geojson"
+			});
 
 			geojsonLayer.renderer = {
 				type: "simple",
@@ -112,11 +115,26 @@
 				}
 			};
 
+			geojsonLayerrout.renderer = {
+				type: "simple",
+				symbol: {
+					type: "polygon-3d",
+					symbolLayers: [{
+						type: "extrude",
+						size: 14,
+						material: {
+							color: "#cccccc"
+						}
+					}]
+				}
+			};
+
+
 
 			const map = new Map({
 				basemap: "topo-vector",
 				ground: "world-elevation",
-				layers: [geojsonLayer,geojsonLayercot,geojsonLayertrangtri] //end layers
+				layers: [geojsonLayer,geojsonLayercot,geojsonLayertrangtri,geojsonLayerrout] //end layers
 			});
 
 

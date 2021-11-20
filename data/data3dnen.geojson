@@ -6,7 +6,7 @@
   "features": [{
       "type": "Feature",
       "properties": {
-        "Building name": "Landmark Plus",
+        "Building name": "A",
         "height": 0,
         "idb": "8"
       },
@@ -27,7 +27,7 @@
     {
       "type": "Feature",
       "properties": {
-        "Building name": "Landmark Plus",
+        "Building name": "B",
         "height": 0,
         "idb": "8"
       },
@@ -48,7 +48,7 @@
     {
       "type": "Feature",
       "properties": {
-        "Building name": "Landmark Plus",
+        "Building name": "C",
         "height": 0,
         "idb": "8"
       },
