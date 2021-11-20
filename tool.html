@@ -128,29 +128,6 @@
                 longitude: t[0]
             };
 
-            // const kc = parseFloat(value.ngang) / parseFloat(value.points);
-            // let c=0;
-            // let listy = [];
-            // for (let i = 0; i < parseFloat(value.ngang); i += kc) {
-            //     const p = geolib.computeDestinationPoint(
-            //         startPoint,
-            //         i,
-            //         value.bearing
-            //     );
-            //     let oa = parseFloat(value.ngang)/2;
-            //     let width = oa/(parseFloat(value.points)/2)
-            //     let y =  Math.sqrt((1 - ((width*c * width*c) / ((parseFloat(value.ngang)/2)*(parseFloat(value.ngang)/2)))) * (parseFloat(value.cao)/2)*(parseFloat(value.cao)/2))
-            //     listy.push(y);
-            //     if(parseFloat(value.ngang)/2>i)
-            //     {
-            //         document.getElementById("result2").innerText += `\n[${p.longitude},${p.latitude},${10.5-y}],`
-            //     }
-            //     else{
-            //         let vitri = c-(parseInt(value.points))/2;
-            //         document.getElementById("result2").innerText += `\n[${p.longitude},${p.latitude},${10.5-listy[vitri]}],`
-            //     }
-            //     c++;
-            // }
             const kc = parseFloat(value.ngang) / parseFloat(value.points);
             const a=parseFloat(value.ngang) /2;
             const b=parseFloat(value.cao);
@@ -177,12 +154,89 @@
             listynew.splice(0,1);
             listy.reverse();
             let listyfinal = listy.concat(listynew);
-            console.log(listyfinal);
-            console.log(listx)
             document.getElementById("result2").innerText="";
+            // listyfinal.forEach((y,index)=>{
+            //     document.getElementById("result2").innerText += `\n[${listx[index].longitude},${listx[index].latitude},${9.5+y}],`
+            // })
+            bearing = parseFloat(value.bearing);
+            let results=[];
             listyfinal.forEach((y,index)=>{
-                document.getElementById("result2").innerText += `\n[${listx[index].longitude},${listx[index].latitude},${9.5+y}],`
+                if(y<listyfinal.length-1)
+                {
+                    let point1 = {
+                    long: listx[index].longitude,
+                    lat: listx[index].latitude,
+                    h: 9.5+listyfinal[index],
+                }
+
+
+                let point2 = {
+                    long: listx[index+1].longitude,
+                    lat: listx[index+1].latitude,
+                    h: 9.5+listyfinal[index+1],
+                }
+                
+                const p3 = geolib.computeDestinationPoint(
+                    {
+                        latitude: point2.lat,
+                        longitude: point2.long
+                    },
+                    0.5,
+                    bearing + 180 + 90
+                );
+                const p4 = geolib.computeDestinationPoint(
+                    p3,
+                    0.03,
+                    bearing + 180
+                );
+
+                let point3 = {
+                    long:p3.longitude,
+                    lat:p3.latitude,
+                    h: 9.5+listyfinal[index+1],
+                }
+                let point4 = {
+                    long: p4.longitude,
+                    lat: p4.latitude,
+                    h: 9.5+listyfinal[index],
+                }
+                
+                results = [point1,point2,point3,point4,point1];
+                console.log(results);
+                let coordinates="";
+                results.forEach((result,index)=>{
+                    
+                    // document.getElementById("result2").innerText += `\n[${result.long},${result.lat},${result.h}],`
+                    
+                    if(results.length-1==index)
+                    {
+                        coordinates+= `\n[${result.long},${result.lat},${result.h}]`;
+                    }
+                    else
+                    {
+                        coordinates+= `\n[${result.long},${result.lat},${result.h}],`;
+                    }
+                })
+                
+                document.getElementById("result2").innerText += `{
+      "type": "Feature",
+      "properties": {
+        "Building name": "Landmark Plus",
+        "height": 8,
+        "idb": "9"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+            ${coordinates}
+        ]]
+      },
+      "id": "pp9"
+    },`
+                }
+                
             })
+            
         }
 
 
