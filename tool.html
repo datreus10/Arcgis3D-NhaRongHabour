@@ -24,6 +24,8 @@
                     <td><input type="text" name="cd" /></td>
                     <td><label for="cr">Chiều rộng</label></td>
                     <td><input type="text" name="cr" /></td>
+                    <td><label for="cr">Chiều cao</label></td>
+                    <td><input type="text" name="cc" /></td>
                 </tr>
                 <tr>
                     <td colspan="1"><label for="lnglat">Lng,Lat</label></td>
@@ -95,7 +97,7 @@
 
 
 
-            document.getElementById("result").innerHTML = `[${p2.longitude},${p2.latitude},5.5]`
+            document.getElementById("result").innerHTML = `[${p2.longitude},${p2.latitude},${value.cc}],`
 
             if (value.cd) {
                 bearing = parseFloat(bearing)
@@ -104,13 +106,13 @@
                     value.cr,
                     bearing + 180 + 90
                 );
-                document.getElementById("result").innerText += `\n[${p3.longitude},${p3.latitude},5.5],`
+                document.getElementById("result").innerText += `\n[${p3.longitude},${p3.latitude},${value.cc}],`
                 const p4 = geolib.computeDestinationPoint(
                     p3,
                     value.cd,
                     bearing + 180
                 );
-                document.getElementById("result").innerText += `\n[${p4.longitude},${p4.latitude},5.5],`
+                document.getElementById("result").innerText += `\n[${p4.longitude},${p4.latitude},${value.cc}],`
             }
         }
         const form1 = document.querySelector('.form1');

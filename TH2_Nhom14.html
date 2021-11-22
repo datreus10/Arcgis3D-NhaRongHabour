@@ -79,6 +79,9 @@
 			const geojsonLayerbacthem = new GeoJSONLayer({
 				url: "./data/data3dbacthem.geojson"
 			})
+			const geojsonLayerhangrao = new GeoJSONLayer({
+				url: "./data/data3dhangrao.geojson"
+			})
 
 			geojsonLayer.renderer = {
 				type: "simple",
@@ -99,7 +102,7 @@
 					type: "polygon-3d",
 					symbolLayers: [{
 						type: "extrude",
-						size: 10,
+						size: 12.5,
 						material: {
 							color: "#7eadf7"
 						}
@@ -145,6 +148,19 @@
 					}]
 				}
 			}
+			geojsonLayerhangrao.renderer = {
+				type: "simple",
+				symbol: {
+					type: "polygon-3d",
+					symbolLayers: [{
+						type: "extrude",
+						size: 1,
+						material: {
+							color: "#000000"
+						}
+					}]
+				}
+			};
 
 
 
@@ -152,7 +168,7 @@
 				basemap: "topo-vector",
 				ground: "world-elevation",
 				layers: [geojsonLayer, geojsonLayercot, 
-						geojsonLayertrangtri, geojsonLayerruot,geojsonLayerbacthem] //end layers
+						geojsonLayertrangtri, geojsonLayerruot,geojsonLayerbacthem,geojsonLayerhangrao] //end layers
 			});
 
 
