@@ -102,6 +102,12 @@
                 const geojsonLayercuaso = new GeoJSONLayer({
                     url: "./data/data3dcuaso.geojson",
                 });
+                const geojsonLayermai= new GeoJSONLayer({
+                    url: "./data/data3dmai.geojson",
+                });
+                const geojsonLayermainhon= new GeoJSONLayer({
+                    url: "./data/data3dmainhon.geojson",
+                });
 
                 geojsonLayer.renderer = {
                     type: "simple",
@@ -226,6 +232,37 @@
                     },
                 };
 
+                geojsonLayermai.renderer = {
+                    type: "simple",
+                    symbol: {
+                        type: "polygon-3d",
+                        symbolLayers: [
+                            {
+                                type: "extrude",
+                                size: 0.1,
+                                material: {
+                                    color: "#7b4a35",
+                                },
+                            },
+                        ],
+                    },
+                };
+                geojsonLayermainhon.renderer = {
+                    type: "simple",
+                    symbol: {
+                        type: "polygon-3d",
+                        symbolLayers: [
+                            {
+                                type: "extrude",
+                                size: 3,
+                                material: {
+                                    color: "#7b4a35",
+                                },
+                            },
+                        ],
+                    },
+                };
+
                 const map = new Map({
                     basemap: "topo-vector",
                     ground: "world-elevation",
@@ -238,6 +275,8 @@
                         geojsonLayerhangrao,
                         geojsonLayercua,
                         geojsonLayercuaso,
+                        geojsonLayermai,
+                        geojsonLayermainhon
                     ], //end layers
                 });
 
