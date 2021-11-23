@@ -1,356 +1,148 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta
-            name="viewport"
-            content="initial-scale=1,maximum-scale=1,user-scalable=no"
-        />
-        <title>Smartcity - Building Map</title>
 
-        <style>
-            html,
-            body,
-            #viewDiv {
-                padding: 0;
-                margin: 0;
-                height: 100%;
-                width: 100%;
-            }
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>Smartcity - Building Map</title>
 
-            #back {
-                position: absolute;
-                bottom: 20px;
-            }
+    <style>
+        html,
+        body,
+        #viewDiv {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+        }
 
-            #back i {
-                background-image: url(app/public/img/back.svg);
-                background-repeat: no-repeat;
-                display: inline-block;
-                width: 100px;
-                height: 25px;
-                padding-left: 25px;
-                padding-top: 2px;
-                margin: 10px;
-                cursor: pointer;
-                background-size: 20px;
-            }
-        </style>
+        #back {
+            position: absolute;
+            bottom: 20px;
+        }
 
-        <link
-            rel="stylesheet"
-            href="https://js.arcgis.com/4.16/esri/themes/light/main.css"
-        />
-        <script src="https://js.arcgis.com/4.16/"></script>
+        #back i {
+            background-image: url(app/public/img/back.svg);
+            background-repeat: no-repeat;
+            display: inline-block;
+            width: 100px;
+            height: 25px;
+            padding-left: 25px;
+            padding-top: 2px;
+            margin: 10px;
+            cursor: pointer;
+            background-size: 20px;
+        }
+    </style>
 
-        <script>
-            require([
-                "esri/Map",
-                "esri/views/SceneView",
-                "esri/layers/GeoJSONLayer",
-                "esri/layers/SceneLayer",
-                "esri/layers/GraphicsLayer",
-                "esri/Graphic",
-                "esri/request",
-            ], function (
-                Map,
-                SceneView,
-                GeoJSONLayer,
-                SceneLayer,
-                GraphicsLayer,
-                Graphic,
-                esriRequest
-            ) {
-                var createGraphic = function (data) {
-                    return new Graphic({
-                        geometry: data,
-                        symbol: data.symbol,
-                        attributes: data,
-                        popupTemplate: data.popupTemplate,
-                    });
-                };
+    <link rel="stylesheet" href="https://js.arcgis.com/4.16/esri/themes/light/main.css" />
+    <script src="https://js.arcgis.com/4.16/"></script>
 
-                const json_options = {
-                    query: {
-                        f: "json",
-                    },
-                    responseType: "json",
-                };
-
-                // geojson layer
+    <script>
+        require([
+            "esri/Map",
+            "esri/views/SceneView",
+            "esri/layers/GeoJSONLayer",
+            "esri/layers/SceneLayer",
+            "esri/layers/GraphicsLayer",
+            "esri/Graphic",
+            "esri/request",
+        ], function (
+            Map,
+            SceneView,
+            GeoJSONLayer,
+            SceneLayer,
+            GraphicsLayer,
+            Graphic,
+            esriRequest
+        ) {
+            
+            const DrawGeo = (url, size, color) => {
                 const geojsonLayer = new GeoJSONLayer({
-                    url: "./data/data3dnen.geojson",
+                    url: url,
                 });
-                const geojsonLayercot = new GeoJSONLayer({
-                    url: "./data/data3dcot.geojson",
-                });
-                const geojsonLayertrangtri = new GeoJSONLayer({
-                    url: "./data/data3dtrangtri.geojson",
-                });
-                const geojsonLayerruot = new GeoJSONLayer({
-                    url: "./data/data3drout.geojson",
-                });
-                const geojsonLayerbacthem = new GeoJSONLayer({
-                    url: "./data/data3dbacthem.geojson",
-                });
-                const geojsonLayerhangrao = new GeoJSONLayer({
-                    url: "./data/data3dhangrao.geojson",
-                });
-                const geojsonLayercua = new GeoJSONLayer({
-                    url: "./data/data3dcua.geojson",
-                });
-                const geojsonLayercuaso = new GeoJSONLayer({
-                    url: "./data/data3dcuaso.geojson",
-                });
-                const geojsonLayermai= new GeoJSONLayer({
-                    url: "./data/data3dmai.geojson",
-                });
-                const geojsonLayermainhon= new GeoJSONLayer({
-                    url: "./data/data3dmainhon.geojson",
-                });
-                const geojsonLayertrangtricot= new GeoJSONLayer({
-                    url: "./data/data3dtrangtricot.geojson",
-                });
-                const geojsonLayerlotnen = new GeoJSONLayer({
-                    url: "./data/data3dlotnen.geojson",
-                })
-                const geojsonLayerlotmai = new GeoJSONLayer({
-                    url: "./data/data3dlotmai.geojson",
-                })
                 geojsonLayer.renderer = {
                     type: "simple",
                     symbol: {
                         type: "polygon-3d",
-                        symbolLayers: [
-                            {
-                                type: "extrude",
-                                size: 1.1,
-                                material: {
-                                    color: "#E7AD9F",
-                                },
+                        symbolLayers: [{
+                            type: "extrude",
+                            size: size,
+                            material: {
+                                color: color,
                             },
-                        ],
+                        }],
                     },
                 };
-                geojsonLayercot.renderer = {
-                    type: "simple",
-                    symbol: {
-                        type: "polygon-3d",
-                        symbolLayers: [
-                            {
-                                type: "extrude",
-                                size: 12.5,
-                                material: {
-                                    color: "#E7AD9F",
-                                },
-                            },
-                        ],
-                    },
-                };
-                geojsonLayertrangtri.renderer = {
-                    type: "simple",
-                    symbol: {
-                        type: "polygon-3d",
-                        symbolLayers: [
-                            {
-                                type: "extrude",
-                                size: 0.9,
-                                material: {
-                                    color: "#E7AD9F",
-                                },
-                            },
-                        ],
-                    },
-                };
-                geojsonLayerruot.renderer = {
-                    type: "simple",
-                    symbol: {
-                        type: "polygon-3d",
-                        symbolLayers: [
-                            {
-                                type: "extrude",
-                                size: 14,
-                                material: {
-                                    color: "#fcbb8a",
-                                },
-                            },
-                        ],
-                    },
-                };
-                geojsonLayerbacthem.renderer = {
-                    type: "simple",
-                    symbol: {
-                        type: "polygon-3d",
-                        symbolLayers: [
-                            {
-                                type: "extrude",
-                                size: 2,
-                                material: {
-                                    color: "#435a64",
-                                },
-                            },
-                        ],
-                    },
-                };
-                geojsonLayerhangrao.renderer = {
-                    type: "simple",
-                    symbol: {
-                        type: "polygon-3d",
-                        symbolLayers: [
-                            {
-                                type: "extrude",
-                                size: 1,
-                                material: {
-                                    color: "rgba(0, 0, 0,0.3)",
-                                },
-                            },
-                        ],
-                    },
-                };
+                return geojsonLayer;
+            }
+            
 
-                geojsonLayercua.renderer = {
-                    type: "simple",
-                    symbol: {
-                        type: "polygon-3d",
-                        symbolLayers: [
-                            {
-                                type: "extrude",
-                                size: 3,
-                                material: {
-                                    color: "#7b4a35",
-                                },
-                            },
-                        ],
-                    },
-                };
 
-                geojsonLayercuaso.renderer = {
-                    type: "simple",
-                    symbol: {
-                        type: "polygon-3d",
-                        symbolLayers: [
-                            {
-                                type: "extrude",
-                                size: 1.5,
-                                material: {
-                                    color: "#7b4a35",
-                                },
-                            },
-                        ],
-                    },
-                };
+            let layers = [];
+            layers.push(DrawGeo("./data/data3dnen.geojson", 1.1, "#E7AD9F"));
+            layers.push(DrawGeo("./data/data3dcot.geojson", 12.5, "#E7AD9F"));
+            layers.push(DrawGeo("./data/data3dtrangtri.geojson", 0.9, "#E7AD9F"));
+            layers.push(DrawGeo("./data/data3drout.geojson", 14, "#E7AD9F"));
+            layers.push(DrawGeo("./data/data3dbacthem.geojson", 2, "#435a64"));
+            layers.push(DrawGeo("./data/data3dhangrao.geojson", 1, "rgba(0, 0, 0,0.3)"));
+            layers.push(DrawGeo("./data/data3dcua.geojson", 3, "#7b4a35"));
+            layers.push(DrawGeo("./data/data3dcuaso.geojson", 1.5, "#7b4a35"));
+            layers.push(DrawGeo("./data/data3dmai.geojson", 0.1, "#fda265"));
+            layers.push(DrawGeo("./data/data3dmainhon.geojson", 3, "#fda265"));
+            layers.push(DrawGeo("./data/data3dtrangtricot.geojson", 0.2, "#ffffff"));
+            layers.push(DrawGeo("./data/data3dlotnen.geojson", 1.15, "rgb(222, 222, 222)"));
+            layers.push(DrawGeo("./data/data3dlotmai.geojson", 1.15, "#fda265"));
 
-                geojsonLayermai.renderer = {
-                    type: "simple",
-                    symbol: {
-                        type: "polygon-3d",
-                        symbolLayers: [
-                            {
-                                type: "extrude",
-                                size: 0.1,
-                                material: {
-                                    color: "#fda265",
-                                },
-                            },
-                        ],
-                    },
-                };
-                geojsonLayermainhon.renderer = {
-                    type: "simple",
-                    symbol: {
-                        type: "polygon-3d",
-                        symbolLayers: [
-                            {
-                                type: "extrude",
-                                size: 3,
-                                material: {
-                                    color: "#fda265",
-                                },
-                            },
-                        ],
-                    },
-                };
-                geojsonLayertrangtricot.renderer = {
-                    type: "simple",
-                    symbol: {
-                        type: "polygon-3d",
-                        symbolLayers: [
-                            {
-                                type: "extrude",
-                                size: 0.2,
-                                material: {
-                                    color: "#ffffff",
-                                },
-                            },
-                        ],
-                    },
-                };
-                geojsonLayerlotnen.renderer = {
-                    type: "simple",
-                    symbol: {
-                        type: "polygon-3d",
-                        symbolLayers: [
-                            {
-                                type: "extrude",
-                                size: 1.15,
-                                material: {
-                                    color: "rgb(222, 222, 222)",
-                                },
-                            },
-                        ],
-                    },
-                };
-                geojsonLayerlotmai.renderer = {
-                    type: "simple",
-                    symbol: {
-                        type: "polygon-3d",
-                        symbolLayers: [
-                            {
-                                type: "extrude",
-                                size: 1.15,
-                                material: {
-                                    color: "#fda265",
-                                },
-                            },
-                        ],
-                    },
-                };
-                const map = new Map({
-                    basemap: "topo-vector",
-                    ground: "world-elevation",
-                    layers: [
-                        geojsonLayer,
-                        geojsonLayercot,
-                        geojsonLayertrangtri,
-                        geojsonLayerruot,
-                        geojsonLayerbacthem,
-                        geojsonLayerhangrao,
-                        geojsonLayercua,
-                        geojsonLayercuaso,
-                        geojsonLayermai,
-                        geojsonLayermainhon,
-                        geojsonLayertrangtricot,
-                        geojsonLayerlotnen,
-                        geojsonLayerlotmai
-                    ], //end layers
-                });
 
-                const view = new SceneView({
-                    container: "viewDiv",
-                    map: map,
-                    camera: {
-                        position: [106.70680940151215, 10.766974818494525, 100],
-                        heading: 0,
-                        tilt: 60,
-                    },
-                });
+            var createGraphic = function(data) {
+    			return new Graphic({
+    				geometry : data,
+    				symbol : data.symbol,
+    				attributes : data,
+    				popupTemplate : data.popupTemplate
+    			});
+    		};
+    		
+    		const json_options = {
+    				query : {
+    					f : "json"
+    				},
+    				responseType : "json"
+    			};
+			// request json
+			esriRequest('./data/data3dVienMaiNha.json', json_options).then(function(response) {
+				var graphicsLayer = new GraphicsLayer();
+				response.data.forEach(function(data){
+					graphicsLayer.add(createGraphic(data));
+				});
+				map.add(graphicsLayer);
 
-                view.popup.defaultPopupTemplateEnabled = true;
+			});
+
+            const map = new Map({
+                basemap: "topo-vector",
+                ground: "world-elevation",
+                layers: layers, //end layers
             });
-        </script>
-    </head>
 
-    <body>
-        <div id="viewDiv"></div>
-    </body>
+            const view = new SceneView({
+                container: "viewDiv",
+                map: map,
+                camera: {
+                    position: [106.70680940151215, 10.766974818494525, 100],
+                    heading: 0,
+                    tilt: 60,
+                },
+            });
+
+            view.popup.defaultPopupTemplateEnabled = true;
+        });
+    </script>
+</head>
+
+<body>
+    <div id="viewDiv"></div>
+</body>
+
 </html>
