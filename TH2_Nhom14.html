@@ -108,6 +108,9 @@
                 const geojsonLayermainhon= new GeoJSONLayer({
                     url: "./data/data3dmainhon.geojson",
                 });
+                const geojsonLayertrangtricot= new GeoJSONLayer({
+                    url: "./data/data3dtrangtricot.geojson",
+                });
 
                 geojsonLayer.renderer = {
                     type: "simple",
@@ -118,7 +121,7 @@
                                 type: "extrude",
                                 size: 1.1,
                                 material: {
-                                    color: "#e6b8a1",
+                                    color: "#E7AD9F",
                                 },
                             },
                         ],
@@ -133,7 +136,7 @@
                                 type: "extrude",
                                 size: 12.5,
                                 material: {
-                                    color: "#e6b8a1",
+                                    color: "#E7AD9F",
                                 },
                             },
                         ],
@@ -148,7 +151,7 @@
                                 type: "extrude",
                                 size: 0.9,
                                 material: {
-                                    color: "#e6b8a1",
+                                    color: "#E7AD9F",
                                 },
                             },
                         ],
@@ -163,7 +166,7 @@
                                 type: "extrude",
                                 size: 14,
                                 material: {
-                                    color: "#e6b8a1",
+                                    color: "#fcbb8a",
                                 },
                             },
                         ],
@@ -241,7 +244,7 @@
                                 type: "extrude",
                                 size: 0.1,
                                 material: {
-                                    color: "#7b4a35",
+                                    color: "#fda265",
                                 },
                             },
                         ],
@@ -256,7 +259,22 @@
                                 type: "extrude",
                                 size: 3,
                                 material: {
-                                    color: "#7b4a35",
+                                    color: "#fda265",
+                                },
+                            },
+                        ],
+                    },
+                };
+                geojsonLayertrangtricot.renderer = {
+                    type: "simple",
+                    symbol: {
+                        type: "polygon-3d",
+                        symbolLayers: [
+                            {
+                                type: "extrude",
+                                size: 0.2,
+                                material: {
+                                    color: "#ffffff",
                                 },
                             },
                         ],
@@ -276,7 +294,8 @@
                         geojsonLayercua,
                         geojsonLayercuaso,
                         geojsonLayermai,
-                        geojsonLayermainhon
+                        geojsonLayermainhon,
+                        geojsonLayertrangtricot
                     ], //end layers
                 });
 
