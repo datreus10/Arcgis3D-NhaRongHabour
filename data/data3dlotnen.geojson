@@ -6,7 +6,7 @@
     "features": [{
         "type": "Feature",
         "properties": {
-          "Building name": "A",
+          "Building name": "Nền trệt",
           "height": 0,
           "idb": "8"
         },
@@ -27,7 +27,7 @@
       {
         "type": "Feature",
         "properties": {
-          "Building name": "B",
+          "Building name": "Nền lầu 1",
           "height": 0,
           "idb": "8"
         },
