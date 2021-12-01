@@ -2,9 +2,9 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const BodySchema = new Schema({
-        Name:{
-            type: String
-        }
+    Name: {
+        type: String
+    }
 })
 
-module.exports = mongoose.model("Body",BodySchema)
+module.exports = mongoose.model("Body", BodySchema)

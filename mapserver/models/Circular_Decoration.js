@@ -12,11 +12,11 @@ const Circular_DecorationSchema = new Schema({
     ref: "Column",
     required: true,
   },
-  Count:{
-      type: Int
+  Count: {
+    type: Int
   },
-  Name:{
-      type: String
+  Name: {
+    type: String
   }
 });
 
