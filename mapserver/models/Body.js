@@ -7,4 +7,5 @@ const BodySchema = new Schema({
     }
 })
 
-module.exports = mongoose.model("Body", BodySchema)
+const Body = mongoose.model("Body",BodySchema,"Body")
+module.exports = {Body}
