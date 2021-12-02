@@ -1,17 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
 </head>
+
 <body>
   <h1 align="center">Admin Page</h1>
-  <h2>Xin chào <%=username%></h2>
-  <h2><%=description%></h2>
-  <form action="/logout">
-    <button>Logout</button>
+  <h2>Xin chào <%=username%>
+  </h2>
+  <h2>
+    <%=description%>
+  </h2>
+  <button><a href="/logout">Logout</a></button>
+  <hr>
+  <form method="post" action="/admin">
+    <input type="text" name="bodyName" placeholder="body name"></input>
+    <Button type="submit">Submit</Button>
   </form>
+
 </body>
+
 </html>
