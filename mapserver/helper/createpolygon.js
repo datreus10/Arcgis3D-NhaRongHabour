@@ -96,6 +96,23 @@ const createPolygon = (startPoint,type, bearing, width, length,altitute) => {
     return result;
 }
 
+const getBox = (data) => {
+    const {
+        startPoint,
+        bearing,
+        width,
+        length,
+        heights
+    } = data;
+    const rect = getRect(getPointFromArray(startPoint), bearing, width, length);
+    return rect.map((e, i) => [e[0], e[1], i < heights.length ? heights[i] : heights[heights.length - 1]])
+}
+
 module.exports = {
+    geoTemplateData,
+    geoTemplate,
+    getPointFromArray,
+    getRect,
+    getBox,
     createPolygon
 }
