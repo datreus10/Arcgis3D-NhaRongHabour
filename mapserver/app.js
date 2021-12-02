@@ -10,8 +10,7 @@ var loginroute = require('./routes/admin/login');
 var logoutroute = require('./routes/admin/logout');
 var userpageroute = require('./routes/user/users');
 var homepageroute = require('./routes/homepage');
-var testFuncRoute = require('./routes/testFunc')
-
+var data = require('./routes/data/data');
 var app = express();
 
 // view engine setup
@@ -30,7 +29,7 @@ app.use('/admin', adminpageroute);
 app.use('/user', userpageroute);
 app.use('/login', loginroute);
 app.use('/logout', logoutroute);
-app.use('/test',testFuncRoute);
+app.use('/data',data);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
