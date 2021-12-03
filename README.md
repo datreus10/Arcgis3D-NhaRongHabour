@@ -4,5 +4,8 @@ Chạy debug: npm run debug
 
 ### 1. Test map
 http://localhost:3000/test
- 
+
+
+https://github.com/manuelbieh/geolib
+https://developers.arcgis.com/javascript/latest/api-reference/esri-symbols-ExtrudeSymbol3DLayer.html
 

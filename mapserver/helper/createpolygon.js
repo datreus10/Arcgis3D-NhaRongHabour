@@ -58,6 +58,10 @@ const getBox = (data) => {
 }
 
 
+
+
+
+
 module.exports = {
     geoTemplateData,
     geoTemplate,

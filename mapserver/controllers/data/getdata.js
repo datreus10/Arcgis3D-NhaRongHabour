@@ -11,7 +11,7 @@ const getnen = (req, res, next) => {
         bearing: 66,
         width: 33,
         length: 26,
-        heights: [5.5, 5, 5, 5, 5.5]
+        heights: [5.5, 5, 5, 5, 5.5] // [5] để như vầy 4 góc bằng 5
     })
 
     const result = geoTemplate()
