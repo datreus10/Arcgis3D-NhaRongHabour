@@ -10,6 +10,16 @@ const getadminpage = (req, res, next) => {
     }
 }
 
+const getadminpagecirculation = (req, res, next) => {
+    if(req.username!="admin"){
+        res.redirect('/login');
+    }
+    else
+    {
+        res.render('admin_circulation',{description: "This is admin page",username: req.username});
+    }
+}
+
 const postadminpage = async (req, res, next) => {
     if(req.username!="admin"){
         res.redirect('/login');
@@ -28,5 +38,6 @@ const postadminpage = async (req, res, next) => {
 }
 module.exports = {
     getadminpage,
-    postadminpage
+    postadminpage,
+    getadminpagecirculation
 }

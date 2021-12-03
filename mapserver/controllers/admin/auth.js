@@ -11,6 +11,7 @@ const login = (req, res, next) => {
             username,
             password
         } = req.body;
+        console.log(username, password);
         if (username == "admin" && password == "admin") {
             const token = jwt.sign({
                 username: "admin",
