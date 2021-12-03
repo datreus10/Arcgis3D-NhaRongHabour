@@ -1,5 +1,7 @@
 const express = require('express');
-const { altitudeKeys } = require('geolib');
+const {
+    altitudeKeys
+} = require('geolib');
 const geolib = require('geolib')
 
 
@@ -36,28 +38,30 @@ const getPointFromArray = (arr) => {
         latitude: arr[1]
     }
 }
-const A = {longitude: '106.70675051181462', latitude:'10.768089872127144'};
+// const A = {
+//     longitude: '106.70675051181462',
+//     latitude: '10.768089872127144'
+// };
 
-const distance =  (lat1, long1, lat2, long2) => {
-    if ((lat1 == lat2) && (long1 == long2)) {
-        return 0;
-    }
-    else {
-        var radlat1 = Math.PI * lat1/180;
-        var radlat2 = Math.PI * lat2/180;
-        var theta = long1-long2;
-        var radtheta = Math.PI * theta/180;
-        var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
-        if (dist > 1) {
-            dist = 1;
-        }
-        dist = Math.acos(dist);
-        dist = dist * 180/Math.PI;
-        dist = dist * 60 * 1.1515;
-        dist = dist * 1.609344;
-        return dist;
-    }
-}
+// const distance = (lat1, long1, lat2, long2) => {
+//     if ((lat1 == lat2) && (long1 == long2)) {
+//         return 0;
+//     } else {
+//         var radlat1 = Math.PI * lat1 / 180;
+//         var radlat2 = Math.PI * lat2 / 180;
+//         var theta = long1 - long2;
+//         var radtheta = Math.PI * theta / 180;
+//         var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+//         if (dist > 1) {
+//             dist = 1;
+//         }
+//         dist = Math.acos(dist);
+//         dist = dist * 180 / Math.PI;
+//         dist = dist * 60 * 1.1515;
+//         dist = dist * 1.609344;
+//         return dist;
+//     }
+// }
 
 const getRect = (startPoint, bearing, width, length, altitute) => {
     // const distancewithA = distance(A.latitude, A.longitude,startPoint.latitude,startPoint.longitude);
@@ -85,28 +89,56 @@ const getRect = (startPoint, bearing, width, length, altitute) => {
 //     return altitude;
 // }
 
-const createPolygon = (startPoint,type, bearing, width, length,altitute) => {
-    altitutes = [altitute+0.5,altitute,altitute-0.5,altitute,altitute+0.5]
-    const rect = getRect(getPointFromArray(startPoint), bearing, width, length, altitute)
-    rect.forEach((rectinfo,index) => {
-        rectinfo.push(altitutes[index]);
-    })
-    const result = geoTemplate()
-    result["features"].push(geoTemplateData(type, [rect]))
-    return result;
-}
+// const createPolygon = (startPoint, type, bearing, width, length, altitute) => {
+//     altitutes = [altitute + 0.5, altitute, altitute - 0.5, altitute, altitute + 0.5]
+//     const rect = getRect(getPointFromArray(startPoint), bearing, width, length, altitute)
+//     rect.forEach((rectinfo, index) => {
+//         rectinfo.push(altitutes[index]);
+//     })
+//     const result = geoTemplate()
+//     result["features"].push(geoTemplateData(type, [rect]))
+//     return result;
+// }
 
-const getBox = (data) => {
-    const {
-        startPoint,
-        bearing,
-        width,
-        length,
-        heights
-    } = data;
+const getBox = (startPoint, bearing, width, length, heights) => {
     const rect = getRect(getPointFromArray(startPoint), bearing, width, length);
     return rect.map((e, i) => [e[0], e[1], i < heights.length ? heights[i] : heights[heights.length - 1]])
 }
+
+
+const getEllipse = (startPoint, bearing, width, length, height, nPoint, offset) => {
+    startPoint = getPointFromArray(startPoint)
+    const a = width / 2;
+    const b = height / 2;
+
+    const small = width / nPoint;
+    const listX = [startPoint]
+    const listY = [0]
+    const result = []
+
+    for (let i = 1, x = -a + small; i <= nPoint; i++, x += small) {
+        const A = listX[i - 1]
+        const B = geolib.computeDestinationPoint(A, small, bearing);
+        const C = geolib.computeDestinationPoint(B, length, bearing + 270);
+        const D = geolib.computeDestinationPoint(C, small, bearing + 180);
+
+        listX.push(B)
+        const tmp = Math.sqrt((1 - ((x * x) / (a * a))) * b * b)
+        listY.push(tmp > 0 ? tmp : 0)
+
+        result.push([
+            [A.longitude, A.latitude, offset + listY[i - 1]],
+            [B.longitude, B.latitude, offset + listY[i]],
+            [C.longitude, C.latitude, offset + listY[i]],
+            [D.longitude, D.latitude, offset + listY[i - 1]],
+            [A.longitude, A.latitude, offset + listY[i - 1]]
+        ])
+    }
+
+    return result;
+}
+
+
 
 module.exports = {
     geoTemplateData,
@@ -114,5 +146,6 @@ module.exports = {
     getPointFromArray,
     getRect,
     getBox,
-    createPolygon
+    //createPolygon,
+    getEllipse
 }

@@ -6,6 +6,6 @@ Chạy debug: npm run debug
 http://localhost:3000/test
 
 
-https://github.com/manuelbieh/geolib
+https://www.npmjs.com/package/geolib
 https://developers.arcgis.com/javascript/latest/api-reference/esri-symbols-ExtrudeSymbol3DLayer.html
 
