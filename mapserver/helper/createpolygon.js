@@ -63,7 +63,7 @@ const getPointFromArray = (arr) => {
 //     }
 // }
 
-const getRect = (startPoint, bearing, width, length, altitute) => {
+const getRect = (startPoint, bearing, width, length) => {
     // const distancewithA = distance(A.latitude, A.longitude,startPoint.latitude,startPoint.longitude);
     // altitudeA= getAltitudewidth(distancewithA,altitute);
     // altitudeB= getAltitudewidth(distancewithA+width,altitute);
@@ -117,22 +117,18 @@ const getEllipse = (startPoint, bearing, width, length, height, nPoint, offset) 
     const result = []
 
     for (let i = 1, x = -a + small; i <= nPoint; i++, x += small) {
-        const A = listX[i - 1]
-        const B = geolib.computeDestinationPoint(A, small, bearing);
-        const C = geolib.computeDestinationPoint(B, length, bearing + 270);
-        const D = geolib.computeDestinationPoint(C, small, bearing + 180);
 
-        listX.push(B)
+        const rect = getRect(listX[i - 1], bearing, small, length)
+
+        listX.push(getPointFromArray(rect[1]))
         const tmp = Math.sqrt((1 - ((x * x) / (a * a))) * b * b)
         listY.push(tmp > 0 ? tmp : 0)
 
-        result.push([
-            [A.longitude, A.latitude, offset + listY[i - 1]],
-            [B.longitude, B.latitude, offset + listY[i]],
-            [C.longitude, C.latitude, offset + listY[i]],
-            [D.longitude, D.latitude, offset + listY[i - 1]],
-            [A.longitude, A.latitude, offset + listY[i - 1]]
-        ])
+        result.push(rect.map((e, j) => {
+            if (j > 0 && j < 3)
+                return [...e, offset + listY[i]]
+            return [...e, offset + listY[i - 1]]
+        }))
     }
 
     return result;
