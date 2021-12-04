@@ -61,56 +61,58 @@
                             <div class="cardHeader">
                                 <h2 class="title">Chỉnh sửa nhà</h2>
                             </div>
-                            <div class="select">
-                                <select name="body" id="format">
-                                    <option selected disabled>Chọn bảng tính</option>
-                                    <% bodies.forEach(body => { %>
-                                        <option value="<%=body.id%>"><%=body.Name%></option>
-                                    <% }) %>
-                                </select>
-                            </div>
-                            <div class="select">
-                                <select name="floor" id="format">
-                                    <option selected disabled>Chọn bảng tính</option>
-                                    <% floors.forEach(floor => { %>
-                                        <option value="<%=floor.id%>"><%=floor.Name%></option>
-                                    <% }) %>
-                                </select>
-                            </div>
-                            <div class="select">
-                                <select name="wall" id="format">
-                                    <option selected disabled>Chọn bảng tính</option>
-                                    <% walls.forEach(wall => { %>
-                                        <option value="<%=wall.id%>"><%=wall.Name%></option>
-                                    <% }) %>
-                                </select>
-                            </div>
-                            <div class="select">
-                                <select name="column" id="format">
-                                    <option selected disabled>Chọn bảng tính</option>
-                                    <% columns.forEach(column => { %>
-                                        <option value="<%=column.id%>"><%=column.Name%></option>
-                                    <% }) %>
-                                </select>
-                            </div>
-                            <div class="select-cntainer">
+                            <div class="select-parent">
                                 <div class="select">
-                                    <select name="type" id="format">
-
+                                    <select name="body" id="format">
                                         <option selected disabled>Chọn bảng tính</option>
-                                        <option value="Floor">Nền</option>
-                                        <option value="Steps">Bậc thềm</option>
-                                        <option value="Column">Cột</option>
-                                        <option value="Door">Cửa</option>
-                                        <option value="Fence">Hàng rào</option>
-                                        <option value="lotmai">Lót mái</option>
-                                        <option value="Floor_Brick">Lót nền</option>
-                                        <option value="Roof">Mái</option>
-                                        <option value="Wall">Tường</option>
-                                        <option value="Floor_Decoration">Trang trí nền</option>
-                                        <option value="Column_Decoration">Trang trí cột</option>
-                                        <option value="Roof_Decoration">Trang trí mái</option>
+                                        <% bodies.forEach(body => { %>
+                                            <option value="<%=body.id%>"><%=body.Name%></option>
+                                        <% }) %>
                                     </select>
+                                </div>
+                                <div class="select">
+                                    <select name="floor" id="format">
+                                        <option selected disabled>Chọn bảng tính</option>
+                                        <% floors.forEach(floor => { %>
+                                            <option value="<%=floor.id%>"><%=floor.Name%></option>
+                                        <% }) %>
+                                    </select>
+                                </div>
+                                <div class="select">
+                                    <select name="wall" id="format">
+                                        <option selected disabled>Chọn bảng tính</option>
+                                        <% walls.forEach(wall => { %>
+                                            <option value="<%=wall.id%>"><%=wall.Name%></option>
+                                        <% }) %>
+                                    </select>
+                                </div>
+                                <div class="select">
+                                    <select name="column" id="format">
+                                        <option selected disabled>Chọn bảng tính</option>
+                                        <% columns.forEach(column => { %>
+                                            <option value="<%=column.id%>"><%=column.Name%></option>
+                                        <% }) %>
+                                    </select>
+                                </div>
+                                <div class="select-cntainer">
+                                    <div class="select">
+                                        <select name="type" id="format">
+    
+                                            <option selected disabled>Chọn bảng tính</option>
+                                            <option value="Floor">Nền</option>
+                                            <option value="Steps">Bậc thềm</option>
+                                            <option value="Column">Cột</option>
+                                            <option value="Door">Cửa</option>
+                                            <option value="Fence">Hàng rào</option>
+                                            <option value="lotmai">Lót mái</option>
+                                            <option value="Floor_Brick">Lót nền</option>
+                                            <option value="Roof">Mái</option>
+                                            <option value="Wall">Tường</option>
+                                            <option value="Floor_Decoration">Trang trí nền</option>
+                                            <option value="Column_Decoration">Trang trí cột</option>
+                                            <option value="Roof_Decoration">Trang trí mái</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
 

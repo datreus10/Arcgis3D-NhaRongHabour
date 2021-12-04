@@ -220,6 +220,11 @@ body {
 
 /* SELECT */
 
+.select-parent {
+    display: flex;
+    flex-wrap: wrap;
+}
+
 .select-container {
     display: flex;
     flex-direction: column;
@@ -262,6 +267,7 @@ select::-ms-expand {
     background: linear-gradient(135deg, #71b7e6, #9b59b6);
     overflow: hidden;
     border-radius: 0.25em;
+    margin: 10px;
 }
 
 .select::after {
@@ -336,6 +342,7 @@ select::-ms-expand {
     justify-content: center;
     align-items: flex-start;
     padding: 25px 30px;
+    margin: 20px 0;
 }
 
 .Info-details .title {
