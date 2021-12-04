@@ -46,10 +46,10 @@
                             <i class="fas fa-search" aria-hidden="true"></i>
                         </label>
                 </div>
-                <div class="user">
-                    <img src="/image/user.png" />
-                </div>
-                <button><a href="/logout">Logout</a></button>
+                <!-- <div class="user">
+                     <img src="../public/image/user.jpgs" /> 
+                </div> -->
+                <button class="btn-logout"><a href="/logout">Logout</a></button>
             </div>
             <!-- Toggle ends -->
 
@@ -57,45 +57,45 @@
             <div class="details">
                 <div class="productInfo">
                     <form action="/data/createpolygon" method="post" name="createPolygon">
-                    <div class="Info-details">
-                        <div class="cardHeader">
-                            <h2 class="title">Chỉnh sửa nhà</h2>
-                        </div>
-                        <div class="select">
-                            <select name="body" id="format">
+                        <div class="Info-details">
+                            <div class="cardHeader">
+                                <h2 class="title">Chỉnh sửa nhà</h2>
+                            </div>
+                            <div class="select">
+                                <select name="body" id="format">
                                     <option selected disabled>Chọn bảng tính</option>
                                     <% bodies.forEach(body => { %>
                                         <option value="<%=body.id%>"><%=body.Name%></option>
                                     <% }) %>
                                 </select>
-                        </div>
-                        <div class="select">
-                            <select name="floor" id="format">
+                            </div>
+                            <div class="select">
+                                <select name="floor" id="format">
                                     <option selected disabled>Chọn bảng tính</option>
                                     <% floors.forEach(floor => { %>
                                         <option value="<%=floor.id%>"><%=floor.Name%></option>
                                     <% }) %>
                                 </select>
-                        </div>
-                        <div class="select">
-                            <select name="wall" id="format">
+                            </div>
+                            <div class="select">
+                                <select name="wall" id="format">
                                     <option selected disabled>Chọn bảng tính</option>
                                     <% walls.forEach(wall => { %>
                                         <option value="<%=wall.id%>"><%=wall.Name%></option>
                                     <% }) %>
                                 </select>
-                        </div>
-                        <div class="select">
-                            <select name="column" id="format">
+                            </div>
+                            <div class="select">
+                                <select name="column" id="format">
                                     <option selected disabled>Chọn bảng tính</option>
                                     <% columns.forEach(column => { %>
                                         <option value="<%=column.id%>"><%=column.Name%></option>
                                     <% }) %>
                                 </select>
-                        </div>
-                        <div class="select-cntainer">
-                            <div class="select">
-                                <select name="type" id="format">
+                            </div>
+                            <div class="select-cntainer">
+                                <div class="select">
+                                    <select name="type" id="format">
 
                                         <option selected disabled>Chọn bảng tính</option>
                                         <option value="Floor">Nền</option>
@@ -111,10 +111,10 @@
                                         <option value="Column_Decoration">Trang trí cột</option>
                                         <option value="Roof_Decoration">Trang trí mái</option>
                                     </select>
+                                </div>
                             </div>
-                        </div>
 
-                        
+
                             <div class="length-info">
                                 <div class="input-box">
                                     <span class="info">Tên</span>
@@ -146,10 +146,10 @@
                                 </div>
                             </div>
                             <div class="button">
-                                <input type="submit" value="Lưu"/>
+                                <input type="submit" value="Lưu" />
                             </div>
-                    </div>
-                </form>
+                        </div>
+                    </form>
                 </div>
 
                 <div class="productResult">
