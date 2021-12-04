@@ -5,11 +5,12 @@ const PointSchema = new Schema({
       IDN:{
           type: Schema.Types.ObjectId,
           ref:"Node",
-          required: true
+
       },
       Name: {
           type: String
       }
 })
 
-module.exports = mongoose.model("Point",PointSchema)
+const Point = mongoose.model("Point",PointSchema,"Point")
+module.exports = {Point}

@@ -5,25 +5,21 @@ const FenceSchema = new Schema({
   IDP: {
     type: Schema.Types.ObjectId,
     ref: "Polygon",
-    required: true,
   },
   IDFL: {
     type: Schema.Types.ObjectId,
     ref: "Floor",
-    required: true,
   },
   Count_CrossBar:{
-      type: Int
+      type: Number
   },
   Count_Jamb:{
-    type: Int
+    type: Number
   },
   Name:{
       type:String
   }
 });
 
-module.exports = mongoose.model(
-  "Fence",
-  FenceSchema
-);
+const Fence = mongoose.model("Fence",FenceSchema,"Fence")
+module.exports = {Fence}
