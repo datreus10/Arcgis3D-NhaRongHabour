@@ -3,26 +3,34 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Navbar</title>
+    <title>About Us</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/reponsive.css" />
+    <link rel="stylesheet" href="/css/main.css">
+
     <link href="https://fonts.googleapis.com/css?family=Montserrat:500&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a81368914c.js"></script>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <div class="full-page">
         <!-- HEADER -->
         <header>
-            <a class="logo" href="">
+            <a class="logo" href="/">
                 <img src="/image/logo.png" alt="logo">
                 <span class="logo-name">BẾN NHÀ RỒNG</span>
             </a>
             <nav>
                 <ul class="nav__links">
                     <li><a href="/user">Tham quan</a></li>
-                    <li><a href="#">Về chúng tôi</a></li>
+                    <li><a href="/about">Về chúng tôi</a></li>
                 </ul>
             </nav>
             <a class="cta" href="#" onclick="document.getElementById('login-form').style.display='block'" style="width: auto">
@@ -36,7 +44,7 @@
             <a class="close">&times;</a>
             <div class="overlay__content">
                 <a href="/user">Tham quan</a>
-                <a href="#">Về chúng tôi</a>
+                <a href="/about">Về chúng tôi</a>
             </div>
         </div>
 
@@ -72,11 +80,162 @@
                 </div>
             </div>
         </div>
-        <div id="viewDiv"></div>
+        
+        <!-- ABOUT US -->
+        <!-- Hero Section -->
+        <div class="hero">
+            <div class="hero__content">
+                <h1 class="animate-hero">BẾN NHÀ RỒNG</h1>
+                <p class="animate-hero">Nơi In Dấu Chân Bác</p>
+            </div>
+        </div>
+        <!-- Services section -->
+        <div class="services">
+            <div class="services__container">
+                <div class="services__infor">
+                    <p class="topline animate-services">Thông tin về Bến Nhà Rồng</p>
+                    <h1 class="services__heading animate-services">Những điều cần biết về Bến Nhà Rồng</h1>
+                    <div class="services__features">
+                        <p class="services__feature animate-services">
+                            <i class="fa fa-check-circle services__check"></i> Số 01,Nguyễn Tất Thành/phường 12/quận 4/Tp. Hồ Chí Minh
+                        </p>
+                        <p class="services__feature animate-services">
+                            <i class="fa fa-check-circle services__check"></i> Tham quan từ thứ 3 đến Chủ Nhật hàng tuần
+                        </p>
+                        <p class="services__feature animate-services">
+                            <i class="fa fa-check-circle services__check"></i> Sáng: 7:30 - 11:30
+                        </p>
+                        <p class="services__feature animate-services">
+                            <i class="fa fa-check-circle services__check"></i> Chiều: 13:30 - 17:00
+                        </p>
+                        <p class="services__feature animate-services">
+                            <i class="fa fa-check-circle services__check"></i> Bến Nhà Rồng giá vé: 20.000 VNĐ/người
+                        </p>
+                        <p class="services__feature animate-services">
+                            <i class="fa fa-check-circle services__check"></i> Tham quan theo đoàn, phương tiện công cộng và tự túc
+                        </p>
+                    </div>
+                </div>
+                <div class="services__bgimg">
+                    <img src="/image/BNR2.jpg" alt="service-gym" class="services__img animate-img">
+                </div>
+            </div>
+        </div>
+
+        <!-- Memberships section -->
+        <div class="memberships">
+            <h1 class="animate-membership">Tìm hiểu về Bến Nhà Rồng</h1>
+            <p class="memberships__desc animate-membership">
+                Nơi mầ Chủ tịch Hồ Chí Minh ra đi tìm đường cứu nước
+            </p>
+            <div class="memberships__wrapper">
+                <div class="memberships__card animate-card">
+                    <div class="memberships__tittle">
+                        <h3>Năm xây dựng</h3>
+                        <img class="img_info" src="/image/BNR3.jpg" alt="Kiến trúc độc đáo">
+                    </div>
+                    <div class="memberships__perks">
+                        <p>Thực dân Pháp xây năm 1863.</p>
+                        <p>Sau đó, do chính quyền miền nam quản lý.</p>
+                    </div>
+                </div>
+                <div class="memberships__card animate-card">
+                    <div class="memberships__tittle">
+                        <h3>Ý nghĩa lịch sử</h3>
+                        <img class="img_info" src="/image/BNR4.jpg" alt="Kiến trúc độc đáo">
+                    </div>
+                    <div class="memberships__perks">
+                        <p>5/6/1911, Chủ tịch Hồ Chí Minh lên con tàu Amiral Latouche Tréville bắt đầu cuộc hành trình ra đi tìm đường cứu nước.</p>
+                        
+                    </div>
+                </div>
+                <div class="memberships__card animate-card">
+                    <div class="memberships__tittle">
+                        <h3>Vẻ đẹp lịch sử</h3>
+                        <img class="img_info" src="/image/BNR5.jpg" alt="Kiến trúc độc đáo">
+                    </div>
+                    <div class="memberships__perks">
+                        <p>Bến Nhà Rồng đã được tu sửa và cải tạo lại.</p>
+                        <p>Gồm có Bảo tàng Hồ Chí Minh, tượng đài Bác, đài phun nước và khuôn viên bến cảng.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Team Section -->
+        <div class="team">
+            <div class="team__wrapper">
+                <div class="team__text animate-team">
+                    <p class="topline">Hình ảnh của Bến Nhà Rồng</p>
+                    <h1>Dấu ấn của Bác</h1>
+                    <p class="team__desc">
+                        Đây không chỉ là sự kiện đánh dấu sự khởi đầu của quá trình đi ra thế giới tìm được con đường cứu nước, cứu dân của Chủ tịch Hồ Chí Minh, mà còn là sự kiện mở ra quá trình Việt Nam từng bước hội nhập vào dòng tiến hóa theo xu thế mới của nhân loại dưới sự dẫn dắt của Người.
+                    </p>
+                </div>
+                <div class="team__text animate-team">
+                    <p class="topline">Địa điểm du lịch</p>
+                    <h1>Nơi nên tham quan khi tới Sài Gòn</h1>
+                    <p class="team__desc">
+                        Bảo tàng Hồ Chí Minh, chi nhánh Thành phố Hồ Chí Minh là địa chỉ đỏ để các tầng lớp Nhân dân, du khách đến tham quan có thể hiểu hơn về cuộc đời và sự nghiệp cách mạng của Chủ tịch Hồ Chí Minh và về lịch sử của dân tộc.
+                    </p>
+                </div>
+                <div class="team__card animate-team">
+                    <p>Tài liệu, hiện vật</p>
+                    <img src="/image/BNR6.jpg" alt="person" class="team__img">
+                </div>
+                <div class="team__card animate-team">
+                    <p>Tượng đài Bác</p>
+                    <img src="/image/BNR7.jpg" alt="person" class="team__img">
+                </div>
+                <div class="team__card animate-team">
+                    <p>BNR về đêm</p>
+                    <img src="/image/BNR8.jpg" alt="person" class="team__img">
+                </div>
+                <div class="team__card animate-team">
+                    <p>Quang cảnh BNR</p>
+                    <img src="/image/BNR9.jpg" alt="person" class="team__img">
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Section -->
+        <div class="footer">
+            <div class="footer__wrapper">
+                <div class="footer__desc">
+                    <h1>Nhóm 14 - Bến Nhà Rồng</h1>
+                    <p>Di tích lịch sử</p>
+                    <p id="phone"></p>
+                </div>
+                <div class="footer__links">
+                    <h2 class="footer__tittle">Contact Us</h2>
+                    <a href="/services.html" class="footer__link">Contact</a>
+                    <a href="/services.html" class="footer__link">Support</a>
+                    <a href="/services.html" class="footer__link">Sponsorships</a>
+                </div>
+            </div>
+            <div class="footer__wrapper">
+                <div class="footer__links">
+                    <h2 class="footer__tittle">Information</h2>
+                    <a href="/" class="footer__link">Pricing</a>
+                    <a href="/" class="footer__link">Plans</a>
+                    <a href="/" class="footer__link">FAQ</a>
+                </div>
+                <div class="footer__links">
+                    <h2 class="footer__tittle">Social Media</h2>
+                    <a href="/" class="footer__link">Instagram</a>
+                    <a href="/" class="footer__link">Facebook</a>
+                    <a href="/" class="footer__link">Youtube</a>
+                    <a href="/" class="footer__link">Twitter</a>
+                </div>
+            </div>
+        </div>
+        <!-- ABOUT US -->
     </div>
+    
+    
 
+    
     <!-- SCRIPT -->
-
     <script>
         const doc = document;
         const menuOpen = doc.querySelector(".menu");
@@ -121,8 +280,12 @@
             input.addEventListener("blur", remcl);
         });
     </script>
-</body>
 
-</html>
+    <!-- SCRIPT GAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/ScrollTrigger.min.js"></script>
+    <script src="./js/app.js"></script>
+    <!-- SCRIPT GAP -->
+</body>
 
 </html>

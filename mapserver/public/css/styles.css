@@ -289,7 +289,7 @@ form {
     left: 10px;
     top: 50%;
     transform: translateY(-50%);
-    color: rgba(0,0,0,0.5);
+    color: rgba(0, 0, 0, 0.5);
     font-size: 18px;
     transition: 0.3s;
 }
