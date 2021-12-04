@@ -1,11 +1,14 @@
 var express = require('express');
-var {getnen,getTrangTri,createpolygon,createcirculation} = require('../../controllers/data/getdata');
+var {getsize,getfloor,getcolumn,getTrangTri,createpolygon,createcirculation} = require('../../controllers/data/getdata');
 var router = express.Router();
 
 /* GET users listing. */
-router.get('/nen', getnen);
+
+router.get('/size', getsize);
+router.get('/floor', getfloor);
+router.get('/column', getcolumn);
 router.get('/trangtri', getTrangTri);
 router.post('/createpolygon',createpolygon);
-router.post('/createcirculation',createpolygon);
+router.post('/createcirculation',createcirculation);
 
 module.exports = router;

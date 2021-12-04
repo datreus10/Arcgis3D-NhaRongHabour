@@ -95,8 +95,26 @@
                 };
                 return geojsonLayer;
             }
+            
+            const json_options = {
+    				query : {
+    					f : "json"
+    				},
+    				responseType : "json"
+    			};
+			// request json
+            //chổ này chưa lấy ra được không biết bị gì
+            let floorsize;
+            let columnsize;
+			esriRequest('http://localhost:3000/data/size').then(function(response) {
+                floorsize=response.data.floorsize;
+                columnsize=response.data.columnsize;
+                console.log(columnsize)
+				});
+
             let layers = [];
-            layers.push(DrawGeo('http://localhost:3000/data/nen', 1.1, "#E7AD9F"));
+            layers.push(DrawGeo('http://localhost:3000/data/floor', 1, "#E7AD9F"));
+            layers.push(DrawGeo('http://localhost:3000/data/column', 5, "#E7AD9F"));
             map["layers"]=layers
         });
     </script>

@@ -1,56 +1,64 @@
 const drawpolygon = require('../../helper/createpolygon');
 
 const { Body } = require('../../models/Body.js');
-const { Node } = require('../../models/Node.js');
-const { Door } = require('../../models/Door.js');
-const { Polygon } = require('../../models/Polygon.js');
-const { Floor } = require('../../models/Floor.js');
+const { Circular_Decoration } = require('../../models/Circular_Decoration.js');
+const { Column_Cir_Decoration } = require('../../models/Column_Cir_Decoration.js');
+const { Column_Decoration } = require('../../models/Column_Decoration.js');
+const { Column_Fence } = require('../../models/Column_Fence.js');
 const { Column } = require('../../models/Column.js');
-// const getnen = (req, res, next) => {
-//     const startPoint = [106.70675051181462, 10.768089872127144];
-//     const type="nền nhà";
-//     const bearing = 66;
-//     const width = 33.5;
-//     const length = 26.6;
-//     const altitute = 5;
-//     const result = createPolygon(startPoint,type, bearing, width, length,altitute);
-// }
+const { Door } = require('../../models/Door.js');
+const { Face } = require('../../models/Face.js');
+const { Fence } = require('../../models/Fence.js');
+const { Floor_Brick } = require('../../models/Floor_Brick.js');
+const { Floor_Decoration } = require('../../models/Floor_Decoration.js');
+const { Floor } = require('../../models/Floor.js');
+const { Line } = require('../../models/Line.js');
+const { Node_Face } = require('../../models/Node_Face.js');
+const { Node } = require('../../models/Node.js');
+const { Point } = require('../../models/Point.js');
+const { Polygon } = require('../../models/Polygon.js');
+const { Roof_Brick } = require('../../models/Roof_Brick.js');
+const { Roof_Decoration } = require('../../models/Roof_Decoration.js');
+const { Roof } = require('../../models/Roof.js');
+const { Steps } = require('../../models/Steps.js');
+const { Wall } = require('../../models/Wall.js');
 
-const getnen = async (req, res, next) => {
+
+const draw = async (drawitem,index) =>
+{
     let listbox = [];
-    const floors = await Floor.find();
-    for (let i = 0; i < floors.length; i++) {
-        const polygon = await Polygon.findById(floors[i].IDP);
+    let listname= [];
+    for (let i = 0; i < drawitem.length; i++) {
+        const polygon = await Polygon.findById(drawitem[i].IDP);
         const node = await Node.findById(polygon.IDN);
         const boxA = drawpolygon.getBox(
             [node.x, node.y],
-            polygon.Direction, polygon.Length, polygon.Width, [node.z + 0.5, node.z, node.z - 0.5, node.z, node.z + 0.5]
+            polygon.Direction, polygon.Length, polygon.Width, [node.z + index, node.z, node.z - index, node.z, node.z + index]
         )
         listbox.push(boxA);
+        listname.push(drawitem[i].Name);
     }
     const result = drawpolygon.geoTemplate()
-    listbox.forEach(box => {
+    listbox.forEach((box,index) => {
         result["features"].push(
-            drawpolygon.geoTemplateData("Nền A", [box])
+            drawpolygon.geoTemplateData(listname[index]!=null?listname[index]:"Không tên", [box])
         )
     })
-    console.log(result);
+    return result;
+}
 
+const getfloor = async (req, res, next) => {
+    const floors = await Floor.find();
+    const result = await draw(floors,0.5);
     res.send(result);
 }
 
+const getcolumn = async (req, res, next) => {
+    const column = await Column.find();
+    const result = await draw(column,0.05);
+    res.send(result);
+}
 
-// const boxA = polygon.getBox(
-//     [106.70675051181462, 10.768089872127144],
-//     66, 33.5, 26.4, [5.5, 5, 5, 5, 5.5]
-// )
-
-
-// const result = polygon.geoTemplate()
-// result["features"].push(
-//     polygon.geoTemplateData("Nền A", [boxA])
-// )
-// res.send(result)
 
 const getTrangTri = (req, res, next) => {
 
@@ -119,6 +127,86 @@ const createpolygon = async (req, res, next) => {
                 await column.save();
                 break;
             }
+        case "Wall":
+            {
+                let wall = new Wall({
+                    Name,
+                    IDP: polygoninfo._id,
+                    IDFL: floor
+                });
+                await wall.save();
+                break;
+            }
+        case "Column_Decoration":
+            {
+                let columndecoration = new Column_Decoration({
+                    Name,
+                    IDC: column._id,
+                    IDP: polygoninfo._id,
+                });
+                await columndecoration.save();
+                break;
+            }
+        case "Door":
+            {
+                let door = new Door({
+                    Name,
+                    IDW: wall._id,
+                    IDP: polygoninfo._id,
+                });
+                await door.save();
+                break;
+            }
+        case "Roof_Brick":
+            {
+                let roofbrick = new Roof_Brick({
+                    Name,
+                    IDP: polygoninfo._id,
+                    IDFL: floor
+                });
+                await roofbrick.save();
+                break;
+            }
+        case "Roof":
+            {
+                let roof = new Roof({
+                    Name,
+                    IDW: wall._id,
+                    IDFL: floor
+                });
+                await roof.save();
+                break;
+            }
+        case "Floor_Brick":
+            {
+                let floorbrick = new Floor_Brick({
+                    Name,
+                    IDP: polygoninfo._id,
+                    IDFL: floor
+                });
+                await floorbrick.save();
+                break;
+            }
+        case "Floor_Decoration":
+            {
+                let floordecoration = new Floor_Decoration({
+                    Name,
+                    IDP: polygoninfo._id,
+                    IDFL: floor
+                });
+                await floordecoration.save();
+                break;
+            }
+        case "Steps":
+            {
+                let step = new Steps({
+                    Name,
+                    IDP: polygoninfo._id,
+                    IDFL: floor
+                });
+                await step.save();
+                break;
+            }
     }
     res.redirect('/');
 }
@@ -126,8 +214,46 @@ const createcirculation = (req, res, next) => {
     res.send(req.body);
 }
 
+const getsize = async (req, res, next) => {
+    
+    let floorsize=1;
+    if(await Floor.count()!=0)
+    {
+        const floorsinfo =await Floor.find();
+        const floorinfo = await Polygon.findById(floorsinfo[0].IDP);
+        floorsize=floorinfo.Height;
+    }
+    
+    
+    let columnsize=1;
+    if(await Column.count()!=0)
+    {
+        const columnsinfo =await Column.find();
+        const columninfo = await Polygon.findById(columnsinfo[0].IDP);
+        columnsize=columninfo.Height;
+    }
+    
+    let wallsize=1;
+    if(await Wall.count()!=0)
+    {
+        const wallsinfo =await Wall.find();
+        const wallinfo = await Wall.findById(wallsinfo[0].IDP);
+        wallsize=wallinfo.Height;
+    }
+    
+
+    let result = {
+        floorsize,
+        columnsize,
+        wallsize
+    };
+    res.send(result)
+}
+
 module.exports = {
-    getnen,
+    getsize,
+    getfloor,
+    getcolumn,
     getTrangTri,
     createpolygon,
     createcirculation
