@@ -5,16 +5,12 @@ const Column_FenceSchema = new Schema({
   IDC: {
     type: Schema.Types.ObjectId,
     ref: "Column",
-    required: true,
   },
   IDFE: {
     type: Schema.Types.ObjectId,
     ref: "Fence",
-    required: true,
   },
 });
 
-module.exports = mongoose.model(
-  "Column_Fence",
-  Column_FenceSchema
-);
+const Column_Fence = mongoose.model("Column_Fence",Column_FenceSchema,"Column_Fence")
+module.exports = {Column_Fence}

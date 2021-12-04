@@ -5,16 +5,17 @@ const Floor_BrickSchema = new Schema({
   IDP: {
     type: Schema.Types.ObjectId,
     ref: "Polygon",
-    required: true,
+
   },
   IDFL: {
     type: Schema.Types.ObjectId,
     ref: "Floor",
-    required: true,
+
   },
   Name: {
     type: String,
   }
 });
 
-module.exports = mongoose.model("Floor_Brick", Floor_BrickSchema);
+const Floor_Brick = mongoose.model("Floor_Brick",Floor_BrickSchema,"Floor_Brick")
+module.exports = {Floor_Brick}

@@ -5,16 +5,15 @@ const Column_DecorationSchema = new Schema({
         IDP:{
             type:Schema.Types.ObjectId,
             ref:"Polygon",
-            required:true
         },
         IDC:{
             type:Schema.Types.ObjectId,
             ref:"Column",
-            required:true
         },
         Name:{
             type: String
         }
 })
 
-module.exports = mongoose.model("Column_Decoration",Column_DecorationSchema)
+const Column_Decoration = mongoose.model("Column_Decoration",Column_DecorationSchema,"Column_Decoration")
+module.exports = {Column_Decoration}

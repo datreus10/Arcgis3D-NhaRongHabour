@@ -5,22 +5,23 @@ const Roof_DecorationSchema = new Schema({
         IDL:{
             type:Schema.Types.ObjectId,
             ref:"Line",
-            required:true
+
         },
         IDR:{
             type:Schema.Types.ObjectId,
             ref:"Roof",
-            required:true
+
         },
         Altitude1:{
-            type: Int
+            type: Number
         },
         Altitude2:{
-            type: Int
+            type: Number
         },
         Name:{
             type: String
         }
 })
 
-module.exports = mongoose.model("Roof_Decoration",Roof_DecorationSchema)
+const Roof_Decoration = mongoose.model("Roof_Decoration",Roof_DecorationSchema,"Roof_Decoration")
+module.exports = {Roof_Decoration}

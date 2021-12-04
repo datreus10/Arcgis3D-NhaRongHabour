@@ -5,16 +5,17 @@ const Floor_DecorationSchema = new Schema({
   IDP: {
     type: Schema.Types.ObjectId,
     ref: "Polygon",
-    required: true,
+
   },
   IDFL:{
     type: Schema.Types.ObjectId,
     ref: "Floor",
-    required: true,
+
   },
   Name: {
     type: String,
   }
 });
 
-module.exports = mongoose.model("Floor_Decoration", Floor_DecorationSchema);
+const Floor_Decoration = mongoose.model("Floor_Decoration",Floor_DecorationSchema,"Floor_Decoration")
+module.exports = {Floor_Decoration}

@@ -14,16 +14,17 @@ const LineSchema = new Schema({
   IDN1: {
     type: Schema.Types.ObjectId,
     ref: "Node",
-    required: true,
+
   },
   IDN2: {
     type: Schema.Types.ObjectId,
     ref: "Node",
-    required: true,
+
   },
   Name: {
     type: String,
   },
 });
 
-module.exports = mongoose.model("Line", LineSchema);
+const Line = mongoose.model("Line",LineSchema,"Line")
+module.exports = {Line}
