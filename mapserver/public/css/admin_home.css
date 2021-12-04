@@ -225,17 +225,6 @@ body {
     flex-wrap: wrap;
 }
 
-.select-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background: #23b499;
-    font-family: "Open Sans", sans-serif;
-    color: #fff;
-}
-
 select {
     -webkit-appearance: none;
     -moz-appearance: none;
