@@ -5,11 +5,12 @@ const FloorSchema = new Schema({
   IDP: {
     type: Schema.Types.ObjectId,
     ref: "Polygon",
-    required: true,
   },
   Name: {
     type: String,
   },
 });
 
-module.exports = mongoose.model("Floor", FloorSchema);
+
+const Floor = mongoose.model("Floor",FloorSchema,"Floor")
+module.exports = {Floor}

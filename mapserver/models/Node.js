@@ -3,14 +3,16 @@ const Schema = mongoose.Schema
 
 const NodeSchema = new Schema({
     x: {
-        type: Float
+        type: Number
     },
     y: {
-        type: Float
+        type: Number
     },
     z: {
-        type: Float
+        type: Number
     }
 })
 
-module.exports = mongoose.model("Node", NodeSchema)
+
+const Node = mongoose.model("Node",NodeSchema,"Node")
+module.exports = {Node}

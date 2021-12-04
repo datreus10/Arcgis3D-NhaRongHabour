@@ -39,7 +39,9 @@
 
     <link rel="stylesheet" href="https://js.arcgis.com/4.16/esri/themes/light/main.css" />
     <script src="https://js.arcgis.com/4.16/"></script>
-
+    <link rel="stylesheet" href="/css/styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:500&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
     <script>
         require([
             "esri/Map",
@@ -102,7 +104,19 @@
 </head>
 
 <body>
-    <h1>UserPage</h1>
+    <header>
+        <a class="logo" href="/">
+            <img src="/image/logo.png" alt="logo">
+            <span class="logo-name">BẾN NHÀ RỒNG</span>
+        </a>
+        <nav>
+            <ul class="nav__links">
+                <li><a href="/user">Tham quan</a></li>
+                <li><a href="#">Về chúng tôi</a></li>
+            </ul>
+        </nav>
+        <p class="menu cta">Menu</p>
+    </header>
     <div id="viewDiv"></div>
 </body>
 

@@ -17,7 +17,5 @@ const DoorSchema = new Schema(  {
   }
 });
 
-module.exports = mongoose.model(
-  "Steps",
-  DoorSchema
-);
+const Door = mongoose.model("Door",DoorSchema,"Door")
+module.exports = {Door}

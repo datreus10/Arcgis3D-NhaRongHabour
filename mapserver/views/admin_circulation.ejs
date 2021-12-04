@@ -61,15 +61,23 @@
                         <div class="cardHeader">
                             <h2 class="title">Chỉnh sửa trang trí hình tròn cột</h2>
                         </div>
-                        <form action="#">
+                        <form action="/data/createcirculation" method="post" name="createcirculation">
                             <div class="length-info">
                                 <div class="input-box">
-                                    <span class="info">Số điểm</span>
-                                    <input type="text" placeholder="Nhập số điểm" name="cr" required />
+                                    <span class="info">Chiều dài</span>
+                                    <input type="text" placeholder="Nhập chiều dài" name="Length" required />
+                                </div>
+                                <div class="input-box">
+                                    <span class="info">Chiều rộng</span>
+                                    <input type="text" placeholder="Nhập chiều rộng" name="Width" required />
                                 </div>
                                 <div class="input-box">
                                     <span class="info">Chiều cao</span>
-                                    <input type="text" placeholder="Nhập chiều cao" name="cc" required />
+                                    <input type="text" placeholder="Nhập chiều cao" name="Height" required />
+                                </div>
+                                <div class="input-box">
+                                    <span class="info">Số điểm</span>
+                                    <input type="text" placeholder="Nhập số điểm" name="Count" required />
                                 </div>
                                 <div class="input-box">
                                     <span class="info">Longitude,Latitude</span>
@@ -77,11 +85,7 @@
                                 </div>
                                 <div class="input-box">
                                     <span class="info">Độ</span>
-                                    <input type="text" placeholder="Nhập độ" name="bearing" required />
-                                </div>
-                                <div class="input-box">
-                                    <span class="info">Khoảng cách</span>
-                                    <input type="text" placeholder="Nhập khoảng cách" name="distance" required />
+                                    <input type="text" placeholder="Nhập độ" name="Direction" required />
                                 </div>
                             </div>
                             <div class="button">

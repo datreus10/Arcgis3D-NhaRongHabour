@@ -17,7 +17,5 @@ const WallSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model(
-  "Wall",
-  WallSchema
-);
+const Wall = mongoose.model("Wall",WallSchema,"Wall")
+module.exports = {Wall}

@@ -1,33 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-
-<body> -->
-  <!-- <h1 align="center">Admin Page</h1>
-  <h2>Xin chào <%=username%>
-  </h2>
-  <h2>
-    <%=description%>
-  </h2>
-  <button><a href="/logout">Logout</a></button>
-  <hr>
-  <form method="post" action="/admin">
-    <input type="text" name="bodyName" placeholder="body name"></input>
-    <Button type="submit">Submit</Button>
-  </form>
-
-</body>
-
-</html> -->
-
-<!-- <html> -->
-
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=0.1" />
     <title>Admin page</title>
@@ -86,44 +56,81 @@
             <!-- Form columns -->
             <div class="details">
                 <div class="productInfo">
+                    <form action="/data/createpolygon" method="post" name="createPolygon">
                     <div class="Info-details">
                         <div class="cardHeader">
                             <h2 class="title">Chỉnh sửa nhà</h2>
                         </div>
+                        <div class="select">
+                            <select name="body" id="format">
+                                    <option selected disabled>Chọn bảng tính</option>
+                                    <% bodies.forEach(body => { %>
+                                        <option value="<%=body.id%>"><%=body.Name%></option>
+                                    <% }) %>
+                                </select>
+                        </div>
+                        <div class="select">
+                            <select name="floor" id="format">
+                                    <option selected disabled>Chọn bảng tính</option>
+                                    <% floors.forEach(floor => { %>
+                                        <option value="<%=floor.id%>"><%=floor.Name%></option>
+                                    <% }) %>
+                                </select>
+                        </div>
+                        <div class="select">
+                            <select name="wall" id="format">
+                                    <option selected disabled>Chọn bảng tính</option>
+                                    <% walls.forEach(wall => { %>
+                                        <option value="<%=wall.id%>"><%=wall.Name%></option>
+                                    <% }) %>
+                                </select>
+                        </div>
+                        <div class="select">
+                            <select name="column" id="format">
+                                    <option selected disabled>Chọn bảng tính</option>
+                                    <% columns.forEach(column => { %>
+                                        <option value="<%=column.id%>"><%=column.Name%></option>
+                                    <% }) %>
+                                </select>
+                        </div>
                         <div class="select-cntainer">
                             <div class="select">
-                                <select name="format" id="format">
+                                <select name="type" id="format">
+
                                         <option selected disabled>Chọn bảng tính</option>
-                                        <option value="them">Bậc thềm</option>
-                                        <option value="cot">Cột</option>
-                                        <option value="cua">Cửa</option>
-                                        <option value="cuaso">Cửa sổ</option>
-                                        <option value="rao">Hàng rào</option>
+                                        <option value="Floor">Nền</option>
+                                        <option value="Steps">Bậc thềm</option>
+                                        <option value="Column">Cột</option>
+                                        <option value="Door">Cửa</option>
+                                        <option value="Fence">Hàng rào</option>
                                         <option value="lotmai">Lót mái</option>
-                                        <option value="lotnen">Lót nền</option>
-                                        <option value="mai">Mái</option>
-                                        <option value="nen">Nền</option>
-                                        <option value="ruot">Ruột</option>
-                                        <option value="ttnen">Trang trí nền</option>
-                                        <option value="ttcot">Trang trí cột</option>
-                                        <option value="ttmai">Trang trí mái</option>
+                                        <option value="Floor_Brick">Lót nền</option>
+                                        <option value="Roof">Mái</option>
+                                        <option value="Wall">Tường</option>
+                                        <option value="Floor_Decoration">Trang trí nền</option>
+                                        <option value="Column_Decoration">Trang trí cột</option>
+                                        <option value="Roof_Decoration">Trang trí mái</option>
                                     </select>
                             </div>
                         </div>
 
-                        <form action="#">
+                        
                             <div class="length-info">
                                 <div class="input-box">
+                                    <span class="info">Tên</span>
+                                    <input type="text" placeholder="Nhập tên" name="Name" required />
+                                </div>
+                                <div class="input-box">
                                     <span class="info">Chiều dài</span>
-                                    <input type="text" placeholder="Nhập chiều dài" name="cd" required />
+                                    <input type="text" placeholder="Nhập chiều dài" name="Length" required />
                                 </div>
                                 <div class="input-box">
                                     <span class="info">Chiều rộng</span>
-                                    <input type="text" placeholder="Nhập chiều rộng" name="cr" required />
+                                    <input type="text" placeholder="Nhập chiều rộng" name="Width" required />
                                 </div>
                                 <div class="input-box">
                                     <span class="info">Chiều cao</span>
-                                    <input type="text" placeholder="Nhập chiều cao" name="cc" required />
+                                    <input type="text" placeholder="Nhập chiều cao" name="Height" required />
                                 </div>
                                 <div class="input-box">
                                     <span class="info">Longitude,Latitude</span>
@@ -131,19 +138,20 @@
                                 </div>
                                 <div class="input-box">
                                     <span class="info">Độ</span>
-                                    <input type="text" placeholder="Nhập độ" name="bearing" required />
+                                    <input type="text" placeholder="Nhập độ" name="Direction" required />
                                 </div>
                                 <div class="input-box">
-                                    <span class="info">Khoảng cách</span>
-                                    <input type="text" placeholder="Nhập khoảng cách" name="distance" required />
+                                    <span class="info">Độ cao</span>
+                                    <input type="text" placeholder="Nhập độ cao" name="Altitude" required />
                                 </div>
                             </div>
                             <div class="button">
-                                <input type="submit" value="Tính" />
+                                <input type="submit" value="Lưu"/>
                             </div>
-                        </form>
                     </div>
+                </form>
                 </div>
+
                 <div class="productResult">
                     <h2 class="title">Kết quả</h2>
                 </div>

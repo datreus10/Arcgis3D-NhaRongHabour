@@ -2,7 +2,14 @@ const jwt = require('jsonwebtoken');
 
 
 const getloginpage = (req, res, next) => {
-    res.render('LoginPage');
+    if(req.username!="admin")
+    {
+        res.render('LoginPage');
+    }
+    else
+    {
+        res.redirect('/admin');
+    }
 }
 
 const login = (req, res, next) => {

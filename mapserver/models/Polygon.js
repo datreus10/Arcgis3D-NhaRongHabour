@@ -5,31 +5,23 @@ const PolygonSchema = new Schema({
     IDN:{
         type:mongoose.Types.ObjectId,
         ref:"Node",
-        required: True
     },
     IDB:{
         type:mongoose.Types.ObjectId,
         ref:"Body",
-        required: True
     },
     Width:{
-        type: Float
+        type: Number
     },
     Length:{
-        type: Float
+        type: Number
     },
     Height:{
-        type: Float
-    },
-    Altitude:{
-        type: Float
+        type: Number
     },
     Direction:{
-        type: Int
-    },
-    Name:{
-        type: String
+        type: Number
     }
-
 })
-module.exports = mongoose.Model("Polygon",PolygonSchema)
+const Polygon = mongoose.model("Polygon",PolygonSchema,"Polygon")
+module.exports = {Polygon}
