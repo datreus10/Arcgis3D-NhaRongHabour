@@ -93,9 +93,9 @@ const draw = async (drawitem, index) => {
 const getfloor = async (req, res, next) => {
     const floors = await Floor.find();
     const result = await draw(floors, 0.5);
-
+    const size = await getsize("sizefloor")
     res.send({
-        renderer: drawpolygon.geoRenderer(1, "#E7AD9F"),
+        renderer: drawpolygon.geoRenderer(size, "#E7AD9F"),
         content: result
     });
 }
@@ -103,8 +103,49 @@ const getfloor = async (req, res, next) => {
 const getcolumn = async (req, res, next) => {
     const column = await Column.find();
     const result = await draw(column, 0.05);
+    const size = await getsize("columnsize")
     res.send({
-        renderer: drawpolygon.geoRenderer(5, "#E7AD9F"),
+        renderer: drawpolygon.geoRenderer(size, "#E7AD9F"),
+        content: result
+    });
+}
+
+const getwall = async (req, res, next) => {
+    const wall = await Wall.find();
+    const result = await draw(wall, 0.5);
+    const size = await getsize("wallsize")
+    res.send({
+        renderer: drawpolygon.geoRenderer(size, "#E7AD9F"),
+        content: result
+    });
+}
+
+const getcolumndecoration = async (req, res, next) => {
+    const columndecoration = await Column_Decoration.find();
+    const result = await draw(columndecoration, 0.05);
+    const size = await getsize("columndecorationsize")
+    res.send({
+        renderer: drawpolygon.geoRenderer(size, "#E7AD9F"),
+        content: result
+    });
+}
+
+const getdoor = async (req, res, next) => {
+    const door = await Door.find();
+    const result = await draw(door, 0.05);
+    const size = await getsize("doorsize")
+    res.send({
+        renderer: drawpolygon.geoRenderer(size, "#E7AD9F"),
+        content: result
+    });
+}
+
+const getstep = async (req, res, next) => {
+    const step = await Steps.find();
+    const result = await draw(step, 0.0005);
+    const size = await getsize("stepsize")
+    res.send({
+        renderer: drawpolygon.geoRenderer(size, "#E7AD9F"),
         content: result
     });
 }
@@ -140,7 +181,7 @@ const getFence = (req, res, next) => {
 }
 
 
-const getTrangTri = (req, res, next) => {
+const getcircular_decoration = (req, res, next) => {
 
     const ellipse = drawpolygon.getEllipse(
         [106.70675051181462, 10.768089872127144],
@@ -171,6 +212,7 @@ const createpolygon = async (req, res, next) => {
     } = req.body;
     console.log(req.body);
     startPoint = lnglat.split(",");
+    //chổ này cần tối ưu cái node trùng
     let node = new Node({
         x: startPoint[0],
         y: startPoint[1],
@@ -284,37 +326,99 @@ const createcirculation = (req, res, next) => {
     res.send(req.body);
 }
 
-const getsize = async (req, res, next) => {
+const getsize = async (typesize) => {
 
     let floorsize = 1;
-    if (await Floor.count() != 0) {
-        const floorsinfo = await Floor.find();
-        const floorinfo = await Polygon.findById(floorsinfo[0].IDP);
-        floorsize = floorinfo.Height;
-    }
-
-
     let columnsize = 1;
-    if (await Column.count() != 0) {
-        const columnsinfo = await Column.find();
-        const columninfo = await Polygon.findById(columnsinfo[0].IDP);
-        columnsize = columninfo.Height;
-    }
-
     let wallsize = 1;
-    if (await Wall.count() != 0) {
-        const wallsinfo = await Wall.find();
-        const wallinfo = await Wall.findById(wallsinfo[0].IDP);
-        wallsize = wallinfo.Height;
+    let circulardecorationsize = 1;
+    let columndecorationsize = 1;
+    let doorsize = 1;
+    floorbricksize = 1;
+    roofbricksize = 1;
+    switch (typesize) {
+        case "floorsize":
+            {
+                if (await Floor.count() != 0) {
+                    const floorsinfo = await Floor.find();
+                    const floorinfo = await Polygon.findById(floorsinfo[0].IDP);
+                    floorsize = floorinfo.Height;
+                    return floorsize;
+                }
+            }
+        case "columnsize":
+            {
+                if (await Column.count() != 0) {
+                    const columnsinfo = await Column.find();
+                    const columninfo = await Polygon.findById(columnsinfo[0].IDP);
+                    columnsize = columninfo.Height;
+                    return columnsize;
+                }
+            }
+        case "wallsize":
+            {
+                if (await Wall.count() != 0) {
+                    const wallsinfo = await Wall.find();
+                    const wallinfo = await Polygon.findById(wallsinfo[0].IDP);
+                    wallsize = wallinfo.Height;
+                    return wallsize;
+                }
+            }
+        case "columndecorationsize":
+            {
+                if (await Column_Decoration.count() != 0) {
+                    const listcolumndecorationinfo = await Column_Decoration.find();
+                    const columndecorationinfo = await Polygon.findById(listcolumndecorationinfo[0].IDP);
+                    columndecorationsize = columndecorationinfo.Height;
+                    return columndecorationsize;
+                }
+            }
+        case "circulardecorationsize":
+            {
+                if (await Circular_Decoration.count() != 0) {
+                    const listcirculardecorationinfo = await Circular_Decoration.find();
+                    const circulardecorationinfo = await Polygon.findById(listcirculardecorationinfo[0].IDP);
+                    circulardecorationsize = circulardecorationinfo.Height;
+                    return circulardecorationsize;
+                }
+            }
+        case "doorsize":
+            {
+                if (await Door.count() != 0) {
+                    const doorsinfo = await Door.find();
+                    const doorinfo = await Polygon.findById(doorsinfo[0].IDP);
+                    doorsize = doorinfo.Height;
+                    return doorsize;
+                }
+            }
+        case "floorbricksize":
+            {
+                if (await Floor_Brick.count() != 0) {
+                    const floorbricksinfo = await Floor_Brick.find();
+                    const floorbrickinfo = await Polygon.findById(floorbricksinfo[0].IDP);
+                    floorbricksize = floorbrickinfo.Height;
+                    return floorbricksize;
+                }
+            }
+        case "roofbricksize":
+            {
+                if (await Roof_Brick.count() != 0) {
+                    const roofbricksinfo = await Roof_Brick.find();
+                    const roofbrickinfo = await Polygon.findById(roofbricksinfo[0].IDP);
+                    roofbricksize = roofbrickinfo.Height;
+                    return roofbricksize;
+                }
+            }
+        case "stepsize":
+            {
+                if (await Steps.count() != 0) {
+                    const stepsinfo = await Steps.find();
+                    const stepinfo = await Polygon.findById(stepsinfo[0].IDP);
+                    stepsize = stepinfo.Height;
+                    return stepsize;
+                }
+            }
     }
-
-
-    let result = {
-        floorsize,
-        columnsize,
-        wallsize
-    };
-    res.send(result)
 }
 
 
@@ -323,8 +427,12 @@ module.exports = {
     getsize,
     getfloor,
     getcolumn,
-    getTrangTri,
+    getcircular_decoration,
     createpolygon,
     createcirculation,
-    getFence
+    getFence,
+    getwall,
+    getcolumndecoration,
+    getdoor,
+    getstep
 }

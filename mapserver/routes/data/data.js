@@ -1,9 +1,12 @@
 var express = require('express');
 var {
-    getsize,
+    getstep,
+    getdoor,
+    getcolumndecoration,
+    getwall,
     getfloor,
     getcolumn,
-    getTrangTri,
+    getcircular_decoration,
     createpolygon,
     createcirculation,
     getFence
@@ -12,11 +15,14 @@ var router = express.Router();
 
 /* GET users listing. */
 
-router.get('/size', getsize);
 router.get('/floor', getfloor);
 router.get('/column', getcolumn);
-router.get('/trangtri', getTrangTri);
-router.get('/fence',getFence)
+router.get('/circular_decoration', getcircular_decoration);
+router.get('/fence',getFence);
+router.get('/wall',getwall);
+router.get('/columndecoration',getcolumndecoration);
+router.get('/door',getdoor);
+router.get('/step',getstep);
 
 router.post('/createpolygon', createpolygon);
 router.post('/createcirculation', createcirculation);
