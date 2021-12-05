@@ -3,7 +3,7 @@ const gethomepage = function (req, res, next) {
 }
 
 const getaboutus = function (req, res, next) {
-    res.render('AboutUs');
+    res.render('AboutUsPage');
 }
 
 module.exports = {
