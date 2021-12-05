@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>About us</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/styleAboutPage.css">
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:500&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+</head>
+
+<body>
+
+    <div class="full-page">
+        <!-- HEADER -->
+        <header>
+            <a class="logo" href="/">
+                <img src="/image/logo.png" alt="logo">
+                <span class="logo-name">BẾN NHÀ RỒNG</span>
+            </a>
+            <nav>
+                <ul class="nav__links">
+                    <li><a href="/user">Tham quan</a></li>
+                    <li><a href="/about">Về chúng tôi</a></li>
+                </ul>
+            </nav>
+            <a class="cta" href="/login" onclick="document.getElementById('login-form').style.display='block'" style="width: auto">
+                    Login
+                </a>
+            <p class="menu cta">Menu</p>
+        </header>
+
+        <!-- RESPONSIVE  -->
+        <div class="overlay">
+            <a class="close">&times;</a>
+            <div class="overlay__content">
+                <a href="/user">Tham quan</a>
+                <a href="#">Về chúng tôi</a>
+            </div>
+        </div>
+        <div class="banner">
+            <div class="row">
+                <div class="col">
+                    <!-- <h3 style="color: red; text-align: center;"> Về chúng tôi</h3> -->
+                    <p style="text-align: center;">
+                        Với mong muốn biểu diễn mô hình 3D Bến Nhà Rồng một cách sinh động nhất. Nhóm đã cố gắng hiện thực nhằm có thể quản bán khu
+
+                        chứng tích lịch sử này
+                    </p>
+                    <!-- <button class="button_intr">Click me</button> -->
+
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="image">
+                            <img src="image/BNR_About1.jpg" alt="">
+                        </div>
+                        <div class="content">
+                            <h4 style="color: yellow;" >Sinh động</h4>
+                            <p>Mang lại cảm giác tham quan sinh động</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="image">
+                            <img src="image/BNR_About2.jpg" alt="">
+                        </div>
+                        <div class="content">
+                            <h4 style="color: yellow;">Đa chiều</h4>
+                            <p>Áp dụng công cụ Gis3D với góc nhìn đa chiều</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="image">
+                            <img src="image/BNR8.jpg" alt="">
+                        </div>
+                        <div class="content">
+                            <h4 style="color: yellow;">Dễ dàng quản lý</h4>
+                            <p>Hỗ trợ tính năng quản lý kiến trúc.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="image">
+                            <img src="image/BNR2.jpg" alt="">
+                        </div>
+                        <div class="content">
+                            <h4 style="color: yellow;">Miễn phí</h4>
+                            <p>Trang web hoàn toàn miễn phí</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ctnTitel" >
+                <h1 >Thông tin về chúng tôi</h1>
+        </div>
+        <div class="ctn">
+            
+            <div class="container">
+             
+                <div class="box">
+                    <div class="icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <div class="content">
+                        <h3>Liên hệ qua SĐT</h3>
+                        <p> (+84) 38 245 2583
+                        </p>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="content">
+                        <h3>Nhóm</h3>
+                        <p style="text-align: center;">  Nguyễn Thanh Long                    
+                        </p>
+                        <p>
+                           Tô Quang Huy
+                        </p>
+                        <p style="text-align: center;">  Nguyễn Thành Đạt                    
+                        </p>
+                        <p style="text-align: center;">  Trần Anh Đức             
+                        </p>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="content">
+                        <h3>Địa chỉ Email</h3>
+                        <p> Nhom5BenNhaRong3D@gmail.com
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="footer__wrapper">
+                <div class="footer__desc">
+                    <h1>Nhóm 14 - Bến Nhà Rồng</h1>
+                    <p>Di tích lịch sử</p>
+                    <p id="phone"></p>
+                </div>
+                <div class="footer__links">
+                    <h2 class="footer__tittle">Contact Us</h2>
+                    <a href="/services.html" class="footer__link">Contact</a>
+                    <a href="/services.html" class="footer__link">Support</a>
+                    <a href="/services.html" class="footer__link">Sponsorships</a>
+                </div>
+            </div>
+            <div class="footer__wrapper">
+                <div class="footer__links">
+                    <h2 class="footer__tittle">Information</h2>
+                    <a href="/" class="footer__link">Pricing</a>
+                    <a href="/" class="footer__link">Plans</a>
+                    <a href="/" class="footer__link">FAQ</a>
+                </div>
+                <div class="footer__links">
+                    <h2 class="footer__tittle">Social Media</h2>
+                    <a href="/" class="footer__link">Instagram</a>
+                    <a href="/" class="footer__link">Facebook</a>
+                    <a href="/" class="footer__link">Youtube</a>
+                    <a href="/" class="footer__link">Twitter</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

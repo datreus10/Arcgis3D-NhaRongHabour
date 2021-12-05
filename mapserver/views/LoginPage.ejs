@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -14,4 +14,120 @@
     <button type="submit">Đăng nhập</button>
 </form>
 </body>
+</html> -->
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Login</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/StyleLoginPage.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:500&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
+</head>
+
+<body>
+    <div class="full-page">
+        <!-- HEADER -->
+        <header>
+            <a class="logo" href="/">
+                <img src="/image/logo.png" alt="logo">
+                <span class="logo-name">BẾN NHÀ RỒNG</span>
+            </a>
+        </header>
+
+        <!-- RESPONSIVE  -->
+        <div class="overlay">
+            <a class="close">&times;</a>
+            <div class="overlay__content">
+                <a href="/user">Tham quan</a>
+                <a href="#">Về chúng tôi</a>
+            </div>
+        </div>
+
+        <!-- LOGIN FORM -->
+        <div id="login-form" class="login-page login">
+            <div class="form-box">
+                <div class="login-content">
+                    <form action="/login" method="post" name="formlogin">
+                        <h2  class="title">Đăng nhập</h2>
+                        <div class="input-div one">
+                            <div class="i">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="div">
+                                <h5 style="color: white;">Tài khoản</h5>
+                                <input name="username" type="text" class="input">
+                            </div>
+                        </div>
+                        <div class="input-div pass">
+                            <div class="i">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                            <div class="div">
+                                <h5 style="color: white;">Mật khẩu</h5>
+                                <input name="password" type="password" class="input">
+                            </div>
+                        </div>
+
+                            <button type="submit"  style="background: yellow;margin-top: 50px; font-size: 20px;" class="submit-btn">Đăng nhập</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div id="viewDiv"></div>
+    </div>
+
+    <!-- SCRIPT -->
+
+    <script>
+        const doc = document;
+        const menuOpen = doc.querySelector(".menu");
+        const menuClose = doc.querySelector(".close");
+        const overlay = doc.querySelector(".overlay");
+
+        menuOpen.addEventListener("click", () => {
+            overlay.classList.add("overlay--active");
+        });
+
+        menuClose.addEventListener("click", () => {
+            overlay.classList.remove("overlay--active");
+        });
+    </script>
+    <!-- <script>
+        var modal = document.getElementById("login-form");
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        };
+    </script> -->
+    <script>
+        const inputs = document.querySelectorAll(".input");
+
+
+        function addcl() {
+            let parent = this.parentNode.parentNode;
+            parent.classList.add("focus");
+        }
+
+        function remcl() {
+            let parent = this.parentNode.parentNode;
+            if (this.value == "") {
+                parent.classList.remove("focus");
+            }
+        }
+
+
+        inputs.forEach(input => {
+            input.addEventListener("focus", addcl);
+            input.addEventListener("blur", remcl);
+        });
+    </script>
+</body>
+
+</html>
+
 </html>
