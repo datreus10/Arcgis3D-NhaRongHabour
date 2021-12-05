@@ -72,8 +72,8 @@
                                     </select>
                                 </div>
                                 <!-- Chọn bảng tính -->
-                                <div class="select child">
-                                    <select name="type" id="format">
+                                <div class="select child1 ">
+                                    <select name="type" id="format1">
     
                                             <option selected disabled>Chọn bảng tính</option>
                                             <option value="Floor">Nền</option>
@@ -91,7 +91,7 @@
                                         </select>
                                 </div>
                                 <!-- Chọn nền -->
-                                <div class="select child">
+                                <div class="select child detail_floor">
                                     <select name="floor" id="format">
                                         <option selected disabled>Chọn nền</option>
                                         <% floors.forEach(floor => { %>
@@ -100,7 +100,7 @@
                                     </select>
                                 </div>
                                 <!-- Chọn tường -->
-                                <div class="select child">
+                                <div class="select child detail_wall">
                                     <select name="wall" id="format">
                                         <option selected disabled>Chọn tường</option>
                                         <% walls.forEach(wall => { %>
@@ -109,7 +109,7 @@
                                     </select>
                                 </div>
                                 <!-- Chọn cột -->
-                                <div class="select child">
+                                <div class="select child detail_column">
                                     <select name="column" id="format">
                                         <option selected disabled>Chọn cột</option>
                                         <% columns.forEach(column => { %>
@@ -179,12 +179,39 @@
     <script>
         let select_child = document.querySelector(".child1");
         let place = document.querySelector("#format");
-        let selectChild = document.querySelectorAll(".select.child");
+        let selectChild = document.querySelectorAll(".select.child1");
         place.addEventListener("change", (e) => {
             // e.target.value;
             selectChild.forEach(item => {
                 item.style.display = "flex";
             })
+        })
+        let place1 = document.querySelector("#format1");
+        let details_floor = document.querySelector(".select.child.detail_floor");
+        let details_wall = document.querySelector(".select.child.detail_wall");
+        let details_column = document.querySelector(".select.child.detail_column");
+        place1.addEventListener("change", (e1) => {
+            console.log(e1.target.value);
+            if (e1.target.value === "Floor") {
+                details_floor.style.display = "flex";
+            } else if (e1.target.value === "Steps") {
+                details_floor.style.display = "flex";
+            } else if (e1.target.value === "Column") {
+                details_floor.style.display = "flex";
+            } else if (e1.target.value === "Door") {
+                details_wall.style.display = "flex";
+            } else if (e1.target.value === "Fence") {
+                details_wall.style.display = "flex";
+                details_column.style.display = "flex";
+            } else if (e1.target.value === "Roof") {
+                details_wall.style.display = "flex";
+            } else if (e1.target.value === "Wall") {
+                details_floor.style.display = "flex";
+            } else if (e1.target.value === "Floor_Decoration") {
+                details_floor.style.display = "flex";
+            } else if (e1.target.value === "Column_Decoration") {
+                details_column.style.display = "flex";
+            }
         })
     </script>
 </body>
