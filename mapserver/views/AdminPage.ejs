@@ -62,7 +62,8 @@
                                 <h2 class="title">Chỉnh sửa nhà</h2>
                             </div>
                             <div class="select-parent">
-                                <div class="select">
+                                <!-- Chọn địa điểm -->
+                                <div class="select parent">
                                     <select name="body" id="format">
                                         <option selected disabled>Chọn địa điểm</option>
                                         <% bodies.forEach(body => { %>
@@ -70,9 +71,9 @@
                                         <% }) %>
                                     </select>
                                 </div>
-                                <div class="select-parent">
-                                    <div class="select">
-                                        <select name="type" id="format">
+                                <!-- Chọn bảng tính -->
+                                <div class="select child">
+                                    <select name="type" id="format">
     
                                             <option selected disabled>Chọn bảng tính</option>
                                             <option value="Floor">Nền</option>
@@ -88,52 +89,35 @@
                                             <option value="Column_Decoration">Trang trí cột</option>
                                             <option value="Roof_Decoration">Trang trí mái</option>
                                         </select>
-                                    </div>
                                 </div>
-                                <div class="select">
+                                <!-- Chọn nền -->
+                                <div class="select child">
                                     <select name="floor" id="format">
-                                        <option selected disabled>Chọn bảng tính</option>
+                                        <option selected disabled>Chọn nền</option>
                                         <% floors.forEach(floor => { %>
                                             <option value="<%=floor.id%>"><%=floor.Name%></option>
                                         <% }) %>
                                     </select>
                                 </div>
-                                <div class="select">
+                                <!-- Chọn tường -->
+                                <div class="select child">
                                     <select name="wall" id="format">
-                                        <option selected disabled>Chọn bảng tính</option>
+                                        <option selected disabled>Chọn tường</option>
                                         <% walls.forEach(wall => { %>
                                             <option value="<%=wall.id%>"><%=wall.Name%></option>
                                         <% }) %>
                                     </select>
                                 </div>
-                                <div class="select">
+                                <!-- Chọn cột -->
+                                <div class="select child">
                                     <select name="column" id="format">
-                                        <option selected disabled>Chọn bảng tính</option>
+                                        <option selected disabled>Chọn cột</option>
                                         <% columns.forEach(column => { %>
                                             <option value="<%=column.id%>"><%=column.Name%></option>
                                         <% }) %>
                                     </select>
                                 </div>
-                                <div class="select-cntainer">
-                                    <div class="select">
-                                        <select name="type" id="format">
-    
-                                            <option selected disabled>Chọn bảng tính</option>
-                                            <option value="Floor">Nền</option>
-                                            <option value="Steps">Bậc thềm</option>
-                                            <option value="Column">Cột</option>
-                                            <option value="Door">Cửa</option>
-                                            <option value="Fence">Hàng rào</option>
-                                            <option value="Roof_Brick">Lót mái</option>
-                                            <option value="Floor_Brick">Lót nền</option>
-                                            <option value="Roof">Mái</option>
-                                            <option value="Wall">Tường</option>
-                                            <option value="Floor_Decoration">Trang trí nền</option>
-                                            <option value="Column_Decoration">Trang trí cột</option>
-                                            <option value="Roof_Decoration">Trang trí mái</option>
-                                        </select>
-                                    </div>
-                                </div>
+
                             </div>
 
 
@@ -191,6 +175,17 @@
             navigation.classList.toggle("active");
             main.classList.toggle("active");
         }
+    </script>
+    <script>
+        let select_child = document.querySelector(".child1");
+        let place = document.querySelector("#format");
+        let selectChild = document.querySelectorAll(".select.child");
+        place.addEventListener("change", (e) => {
+            // e.target.value;
+            selectChild.forEach(item => {
+                item.style.display = "flex";
+            })
+        })
     </script>
 </body>
 
