@@ -31,6 +31,21 @@ const geoTemplate = () => {
     }
 }
 
+const geoRenderer = (size, color) => {
+    return {
+        type: "simple",
+        symbol: {
+            type: "polygon-3d",
+            symbolLayers: [{
+                type: "extrude",
+                size: size,
+                material: {
+                    color: color,
+                },
+            }],
+        }
+    }
+}
 
 const getPointFromArray = (arr) => {
     return {
@@ -88,5 +103,6 @@ module.exports = {
     getRect,
     getBox,
     //createPolygon,
-    getEllipse
+    getEllipse,
+    geoRenderer
 }

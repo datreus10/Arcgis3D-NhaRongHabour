@@ -20,9 +20,11 @@
             position: absolute;
             bottom: 20px;
         }
+
         h1 {
-          text-align: center;
+            text-align: center;
         }
+
         #back i {
             background-image: url(app/public/img/back.svg);
             background-repeat: no-repeat;
@@ -76,46 +78,69 @@
                 },
             });
 
-            const DrawGeo = (url, size, color) => {
+            // const DrawGeo = (url, size, color) => {
+            //     const geojsonLayer = new GeoJSONLayer({
+            //         url: url,
+            //     });
+            //     geojsonLayer.renderer = {
+            //         type: "simple",
+            //         symbol: {
+            //             type: "polygon-3d",
+            //             symbolLayers: [{
+            //                 type: "extrude",
+            //                 size: size,
+            //                 material: {
+            //                     color: color,
+            //                 },
+            //             }],
+            //         },
+            //     };
+            //     return geojsonLayer;
+            // }
+
+            // const json_options = {
+            //     query: {
+            //         f: "json"
+            //     },
+            //     responseType: "json"
+            // };
+            // request json
+            //chổ này chưa lấy ra được không biết bị gì
+            // let floorsize;
+            // let columnsize;
+            // esriRequest('http://localhost:3000/data/size').then(function(response) {
+            //     floorsize=response.data.floorsize;
+            //     columnsize=response.data.columnsize;
+            //     console.log(columnsize)
+            // 	});
+
+
+
+            // layers.push(DrawGeo('http://localhost:3000/data/floor', 1, "#E7AD9F"));
+            // layers.push(DrawGeo('http://localhost:3000/data/column', 5, "#E7AD9F"));
+
+
+            const generateLayer = (data) => {
+                const blob = new Blob([JSON.stringify(data.content)], {
+                    type: "application/json"
+                });
+                const url = URL.createObjectURL(blob);
                 const geojsonLayer = new GeoJSONLayer({
                     url: url,
                 });
-                geojsonLayer.renderer = {
-                    type: "simple",
-                    symbol: {
-                        type: "polygon-3d",
-                        symbolLayers: [{
-                            type: "extrude",
-                            size: size,
-                            material: {
-                                color: color,
-                            },
-                        }],
-                    },
-                };
+                geojsonLayer.renderer = data.renderer
                 return geojsonLayer;
             }
-            
-            const json_options = {
-    				query : {
-    					f : "json"
-    				},
-    				responseType : "json"
-    			};
-			// request json
-            //chổ này chưa lấy ra được không biết bị gì
-            let floorsize;
-            let columnsize;
-			esriRequest('http://localhost:3000/data/size').then(function(response) {
-                floorsize=response.data.floorsize;
-                columnsize=response.data.columnsize;
-                console.log(columnsize)
-				});
 
-            let layers = [];
-            layers.push(DrawGeo('http://localhost:3000/data/floor', 1, "#E7AD9F"));
-            layers.push(DrawGeo('http://localhost:3000/data/column', 5, "#E7AD9F"));
-            map["layers"]=layers
+            esriRequest('http://localhost:3000/data/floor').then(function (response) {
+                map.add(generateLayer(response.data))
+            });
+
+            esriRequest('http://localhost:3000/data/column').then(function (response) {
+                map.add(generateLayer(response.data))
+            });
+
+
         });
     </script>
 
