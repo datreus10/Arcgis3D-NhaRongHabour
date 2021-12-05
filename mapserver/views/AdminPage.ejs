@@ -191,9 +191,11 @@
         let details_wall = document.querySelector(".select.child.detail_wall");
         let details_column = document.querySelector(".select.child.detail_column");
         place1.addEventListener("change", (e1) => {
-            console.log(e1.target.value);
+            details_floor.style.display = "none";
+            details_wall.style.display = "none";
+            details_column.style.display = "none";
             if (e1.target.value === "Floor") {
-                details_floor.style.display = "flex";
+                
             } else if (e1.target.value === "Steps") {
                 details_floor.style.display = "flex";
             } else if (e1.target.value === "Column") {
@@ -201,7 +203,6 @@
             } else if (e1.target.value === "Door") {
                 details_wall.style.display = "flex";
             } else if (e1.target.value === "Fence") {
-                details_wall.style.display = "flex";
                 details_column.style.display = "flex";
             } else if (e1.target.value === "Roof") {
                 details_wall.style.display = "flex";
