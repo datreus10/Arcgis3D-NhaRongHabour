@@ -186,21 +186,43 @@ body {
     object-fit: cover;
 }
 
+.btn-logout {
+    outline: none;
+    display: block;
+    border: 0;
+    padding: 16px 30px;
+    border-radius: 30px;
+    background: #0081d5;
+    font-size: 16px;
+    text-decoration: none;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s linear;
+}
+
+.btn-logout a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.btn-logout:hover,
+.btn-logout:focus {
+    background: #005c99;
+}
+
+.btn-logout:active {
+    background: #003659;
+}
+
 
 /* TOGGLE */
 
 
 /* SELECT */
 
-.select-container {
+.select-parent {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background: #23b499;
-    font-family: "Open Sans", sans-serif;
-    color: #fff;
+    flex-wrap: wrap;
 }
 
 select {
@@ -234,6 +256,7 @@ select::-ms-expand {
     background: linear-gradient(135deg, #71b7e6, #9b59b6);
     overflow: hidden;
     border-radius: 0.25em;
+    margin: 10px;
 }
 
 .select::after {
@@ -308,6 +331,7 @@ select::-ms-expand {
     justify-content: center;
     align-items: flex-start;
     padding: 25px 30px;
+    margin: 20px 0;
 }
 
 .Info-details .title {
