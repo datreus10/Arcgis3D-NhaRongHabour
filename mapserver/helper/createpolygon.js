@@ -53,32 +53,37 @@ const getPointFromArray = (arr) => {
         latitude: arr[1]
     }
 }
-const getRect = (startPoint, bearing, width, length) => {
-    const b = geolib.computeDestinationPoint(startPoint, width, bearing);
-    const c = geolib.computeDestinationPoint(b, length, bearing + 270);
-    const d = geolib.computeDestinationPoint(c, width, bearing + 180);
+const getArrayFromPoint = (point) => {
+    return [point.longitude, point.latitude];
+    s
+}
+
+const getRect = (startPoint, bearing, length, width) => {
+    const b = geolib.computeDestinationPoint(startPoint, length, bearing);
+    const c = geolib.computeDestinationPoint(b, width, bearing + 270);
+    const d = geolib.computeDestinationPoint(c, length, bearing + 180);
     return [startPoint, b, c, d, startPoint].map(e => [e.longitude, e.latitude])
 }
 
-const getBox = (startPoint, bearing, width, length, heights) => {
-    const rect = getRect(getPointFromArray(startPoint), bearing, width, length);
+const getBox = (startPoint, bearing, length, width, heights) => {
+    const rect = getRect(getPointFromArray(startPoint), bearing, length, width);
     return rect.map((e, i) => [e[0], e[1], i < heights.length ? heights[i] : heights[heights.length - 1]])
 }
 
 
-const getEllipse = (startPoint, bearing, width, length, height, nPoint, offset) => {
+const getEllipse = (startPoint, bearing, length, width, height, nPoint, offset) => {
     startPoint = getPointFromArray(startPoint)
-    const a = width / 2;
+    const a = length / 2;
     const b = height / 2;
 
-    const small = width / nPoint;
+    const small = length / nPoint;
     const listX = [startPoint]
     const listY = [0]
     const result = []
 
     for (let i = 1, x = -a + small; i <= nPoint; i++, x += small) {
 
-        const rect = getRect(listX[i - 1], bearing, small, length)
+        const rect = getRect(listX[i - 1], bearing, small, width)
 
         listX.push(getPointFromArray(rect[1]))
         const tmp = Math.sqrt((1 - ((x * x) / (a * a))) * b * b)
@@ -94,7 +99,30 @@ const getEllipse = (startPoint, bearing, width, length, height, nPoint, offset) 
     return result;
 }
 
+const getFence = (startPoint, bearing, length, width, height, altitude, nFenc = 3) => {
+    const x = (length - nFenc * width) / (nFenc - 1);
+    const y = (height - nFenc * width) / (nFenc - 1);
+    const result = {
+        fenceX: [getBox(startPoint, bearing, width, width, altitude)],
+        fenceY: [getBox(startPoint, bearing, length, width, altitude)]
+    }
 
+    for (let i = 1; i < nFenc; i++) {
+        const temp = geolib.computeDestinationPoint({
+            longitude: result.fenceX[i - 1][1][0],
+            latitude: result.fenceX[i - 1][1][1]
+        }, x, bearing);
+        result.fenceX.push(getBox(getArrayFromPoint(temp), bearing, width, width, altitude))
+    }
+    let tmp = altitude[0]
+    for (let i = 1; i < nFenc; i++) {
+        tmp +=   y + width
+        result.fenceY.push(getBox([result.fenceY[i - 1][0][0], result.fenceY[i - 1][0][1]], bearing, length, width, [tmp]))
+    }
+
+
+    return result;
+}
 
 module.exports = {
     geoTemplateData,
@@ -104,5 +132,6 @@ module.exports = {
     getBox,
     //createPolygon,
     getEllipse,
-    geoRenderer
+    geoRenderer,
+    getFence
 }

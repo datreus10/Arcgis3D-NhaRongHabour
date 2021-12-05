@@ -109,6 +109,36 @@ const getcolumn = async (req, res, next) => {
     });
 }
 
+const getFence = (req, res, next) => {
+    const startPoint = [106.70675889416727, 10.76809348693023];
+    const bearing = 66;
+    const length = 3; // chiều dài hàng rào
+    const width = 0.1; //chiều rộng hàng rào
+    const height = 1.5; // chiều cao hàng rào
+    const altitude = [6.4] // độ cao so với mực nước biển
+    const nFence = 4; //số lượng các cột
+
+    const result = drawpolygon.getFence(startPoint, bearing, length, width, height, altitude, nFence);
+
+    const fenceX = drawpolygon.geoTemplate();
+    result.fenceX.forEach(e => fenceX["features"].push(
+        drawpolygon.geoTemplateData("Không tên", [e])
+    ))
+    const fenceY = drawpolygon.geoTemplate();
+    result.fenceY.forEach(e => fenceY["features"].push(
+        drawpolygon.geoTemplateData("Không tên", [e])
+    ))
+
+
+    res.send([{
+        renderer: drawpolygon.geoRenderer(height, "#E7AD9F"),
+        content: fenceX
+    }, {
+        renderer: drawpolygon.geoRenderer(width, "#E7AD9F"),
+        content: fenceY
+    }]);
+}
+
 
 const getTrangTri = (req, res, next) => {
 
@@ -287,28 +317,7 @@ const getsize = async (req, res, next) => {
     res.send(result)
 }
 
-const getJson = async (req, res, next) => {
 
-    const floors = await Floor.find();
-    const result = await draw(floors, 0.5);
-
-    res.send({
-        renderer: {
-            type: "simple",
-            symbol: {
-                type: "polygon-3d",
-                symbolLayers: [{
-                    type: "extrude",
-                    size: 1,
-                    material: {
-                        color: "#E7AD9F",
-                    },
-                }],
-            },
-        },
-        content: result
-    })
-}
 
 module.exports = {
     getsize,
@@ -317,5 +326,5 @@ module.exports = {
     getTrangTri,
     createpolygon,
     createcirculation,
-    getJson
+    getFence
 }
