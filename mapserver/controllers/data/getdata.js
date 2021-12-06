@@ -98,17 +98,16 @@ const drawellipse = async (drawitem, index) => {
         const node = await Node.findById(polygon.IDN);
         const ellipseA = drawpolygon.getEllipse(
             [node.x, node.y],
-            polygon.Direction, polygon.Length, polygon.Width, polygon.Height, drawitem.Count, [node.z + index, node.z, node.z - index, node.z, node.z + index]
+            polygon.Direction, polygon.Length, polygon.Width, polygon.Height, drawitem[i].Count, node.z
         )
         listbox.push(ellipseA);
         listname.push(drawitem[i].Name);
     }
     const result = drawpolygon.geoTemplate()
-    listbox.forEach((box, index) => {
-        result["features"].push(
-            drawpolygon.geoTemplateData(listname[index] != null ? listname[index] : "Không tên", [box])
-        )
+    listbox.forEach((ellipse, index) => {
+        result["features"].push(...ellipse.map(e => drawpolygon.geoTemplateData("getcircular decoration", [e])))
     })
+    console.log(result)
     return result;
 }
 
@@ -205,15 +204,6 @@ const getFence = (req, res, next) => {
 
 
 const getcircular_decoration = async (req, res, next) => {
-
-    // const ellipse = drawpolygon.getEllipse(
-    //     [106.70675051181462, 10.768089872127144],
-    //     66, 3, 1, 1.5, 100, 10
-    // )
-
-    // const result = drawpolygon.geoTemplate()
-    // result["features"] = ellipse.map(e => drawpolygon.geoTemplateData("getcircular decoration", [e]))
-    // res.send(result)
     const circulardecoration = await Circular_Decoration.find();
     const result = await drawellipse(circulardecoration, 0.0005);
     const size = await getsize("circulardecorationsize")
@@ -371,8 +361,7 @@ const createcirculation = async (req, res, next) => {
         z: Altitude
     });
     let bodyinfo = await Body.findById(body);
-    //const nodeinfo = await node.save();
-    console.log(node);
+    const nodeinfo = await node.save();
     let polygon = new Polygon({
         IDB: bodyinfo,
         IDN: nodeinfo,
@@ -381,17 +370,14 @@ const createcirculation = async (req, res, next) => {
         Height,
         Direction
     })
-    //const polygoninfo = await polygon.save();
-    console.log(polygon);
+    const polygoninfo = await polygon.save();
     let circulardecoration = new Circular_Decoration({
         Name: "Circular Decoration",
         IDC: column._id,
         IDP: polygoninfo._id,
         Count
     });
-    
-    //await circulardecoration.save();
-    console.log(circulardecoration);
+    await circulardecoration.save();
     res.redirect('/');
 }
 

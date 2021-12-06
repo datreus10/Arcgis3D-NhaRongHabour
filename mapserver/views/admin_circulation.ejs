@@ -107,6 +107,10 @@
                                     <span class="info">Độ</span>
                                     <input type="text" placeholder="Nhập độ" name="Direction" required />
                                 </div>
+                                <div class="input-box">
+                                    <span class="info">Độ cao</span>
+                                    <input type="text" placeholder="Nhập độ cao" name="Altitude" required />
+                                </div>
                             </div>
                             <div class="button">
                                 <input type="submit" value="Lưu" />
@@ -131,7 +135,10 @@
             navigation.classList.toggle("active");
             main.classList.toggle("active");
         }
+        let details_column = document.querySelector(".select.child.detail_column");
+        details_column.style.display = "flex";
     </script>
+    
 </body>
 
 </html>
