@@ -33,6 +33,12 @@
                         <span class="title">Chỉnh sửa tt hình tròn</span>
                     </a>
                 </li>
+                <li>
+                    <a ref="/admin/Admin_fence">
+                        <span class="icon"><i class="fas fa-dungeon"></i></span>
+                        <span class="title">Chỉnh sửa hàng rào</span>
+                    </a>
+                </li>
             </ul>
         </div>
 
@@ -80,7 +86,6 @@
                                             <option value="Steps">Bậc thềm</option>
                                             <option value="Column">Cột</option>
                                             <option value="Door">Cửa</option>
-                                            <option value="Fence">Hàng rào</option>
                                             <option value="lotmai">Lót mái</option>
                                             <option value="Floor_Brick">Lót nền</option>
                                             <option value="Roof">Mái</option>
@@ -195,15 +200,13 @@
             details_wall.style.display = "none";
             details_column.style.display = "none";
             if (e1.target.value === "Floor") {
-                
+
             } else if (e1.target.value === "Steps") {
                 details_floor.style.display = "flex";
             } else if (e1.target.value === "Column") {
                 details_floor.style.display = "flex";
             } else if (e1.target.value === "Door") {
                 details_wall.style.display = "flex";
-            } else if (e1.target.value === "Fence") {
-                details_column.style.display = "flex";
             } else if (e1.target.value === "Roof") {
                 details_wall.style.display = "flex";
             } else if (e1.target.value === "Wall") {
