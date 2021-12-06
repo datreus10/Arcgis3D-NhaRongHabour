@@ -1,9 +1,9 @@
 const gethomepage = function (req, res, next) {
-    res.render('HomePage');
+    res.render('HomePage',{username: req.username});
 }
 
 const getaboutus = function (req, res, next) {
-    res.render('AboutUsPage');
+    res.render('AboutUsPage',{username: req.username});
 }
 
 module.exports = {

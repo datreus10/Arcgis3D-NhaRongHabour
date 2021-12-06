@@ -15,9 +15,10 @@
             <ul>
                 <li>
                     <a href="/admin">
-                        <span class="icon"><i class="fas fa-users-cog" aria-hidden="true"></i
-                            ></span>
-                        <span class="title"><h2>ADMIN</h2></span>
+                        <span class="icon"><i class="fas fa-users-cog" aria-hidden="true"></i></span>
+                        <span class="title">
+                            <h2>ADMIN</h2>
+                        </span>
                     </a>
                 </li>
 
@@ -44,13 +45,11 @@
                 <div class="toggle" onclick="toggleMenu();"></div>
                 <div class="search">
                     <label>
-                            <input type="text" placeholder="Search here" />
-                            <i class="fas fa-search" aria-hidden="true"></i>
-                        </label>
+                        <input type="text" placeholder="Search here" />
+                        <i class="fas fa-search" aria-hidden="true"></i>
+                    </label>
                 </div>
-                <div class="user">
-                    <img src="/img/user.jpg" />
-                </div>
+                <button class="btn-logout"><a href="/logout">Logout</a></button>
             </div>
             <!-- Toggle ends -->
 
@@ -62,6 +61,27 @@
                             <h2 class="title">Chỉnh sửa trang trí hình tròn cột</h2>
                         </div>
                         <form action="/data/createcirculation" method="post" name="createcirculation">
+                            <div class="select-parent">
+                                <!-- Chọn địa điểm -->
+                                <div class="select parent">
+                                    <select name="body" id="format">
+                                        <option selected disabled>Chọn địa điểm</option>
+                                        <% bodies.forEach(body=> { %>
+                                            <option value="<%=body.id%>">
+                                                <%=body.Name%>
+                                            </option>
+                                            <% }) %>
+                                    </select>
+                                </div>
+                                <div class="select child detail_column">
+                                    <select name="column" id="format">
+                                        <option selected disabled>Chọn cột</option>
+                                        <% columns.forEach(column => { %>
+                                            <option value="<%=column.id%>"><%=column.Name%></option>
+                                        <% }) %>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="length-info">
                                 <div class="input-box">
                                     <span class="info">Chiều dài</span>
@@ -89,7 +109,7 @@
                                 </div>
                             </div>
                             <div class="button">
-                                <input type="submit" value="Tính" />
+                                <input type="submit" value="Lưu" />
                             </div>
                         </form>
                     </div>

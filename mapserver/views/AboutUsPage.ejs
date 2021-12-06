@@ -32,9 +32,15 @@
                     <li><a href="/about">Về chúng tôi</a></li>
                 </ul>
             </nav>
-            <a class="cta" href="/login" onclick="document.getElementById('login-form').style.display='block'" style="width: auto">
-                    Login
+            <%if (username=="") {%>
+                <a class="cta" href="/login" onclick="document.getElementById('login-form').style.display='block'" style="width: auto">
+                    Đăng nhập
                 </a>
+            <% }else if (username=="admin"){ %>
+                <a class="cta" href="/admin">
+                    <%=username%>
+                </a>
+            <%}%>
             <p class="menu cta">Menu</p>
         </header>
 

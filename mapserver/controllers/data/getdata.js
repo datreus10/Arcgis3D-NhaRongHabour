@@ -90,6 +90,29 @@ const draw = async (drawitem, index) => {
     return result;
 }
 
+const drawellipse = async (drawitem, index) => {
+    let listbox = [];
+    let listname = [];
+    for (let i = 0; i < drawitem.length; i++) {
+        const polygon = await Polygon.findById(drawitem[i].IDP);
+        const node = await Node.findById(polygon.IDN);
+        const ellipseA = drawpolygon.getEllipse(
+            [node.x, node.y],
+            polygon.Direction, polygon.Length, polygon.Width, polygon.Height, drawitem.Count, [node.z + index, node.z, node.z - index, node.z, node.z + index]
+        )
+        listbox.push(ellipseA);
+        listname.push(drawitem[i].Name);
+    }
+    const result = drawpolygon.geoTemplate()
+    listbox.forEach((box, index) => {
+        result["features"].push(
+            drawpolygon.geoTemplateData(listname[index] != null ? listname[index] : "Không tên", [box])
+        )
+    })
+    return result;
+}
+
+
 const getfloor = async (req, res, next) => {
     const floors = await Floor.find();
     const result = await draw(floors, 0.5);
@@ -181,16 +204,23 @@ const getFence = (req, res, next) => {
 }
 
 
-const getcircular_decoration = (req, res, next) => {
+const getcircular_decoration = async (req, res, next) => {
 
-    const ellipse = drawpolygon.getEllipse(
-        [106.70675051181462, 10.768089872127144],
-        66, 3, 1, 1.5, 100, 10
-    )
+    // const ellipse = drawpolygon.getEllipse(
+    //     [106.70675051181462, 10.768089872127144],
+    //     66, 3, 1, 1.5, 100, 10
+    // )
 
-    const result = drawpolygon.geoTemplate()
-    result["features"] = ellipse.map(e => drawpolygon.geoTemplateData("trang trí", [e]))
-    res.send(result)
+    // const result = drawpolygon.geoTemplate()
+    // result["features"] = ellipse.map(e => drawpolygon.geoTemplateData("getcircular decoration", [e]))
+    // res.send(result)
+    const circulardecoration = await Circular_Decoration.find();
+    const result = await drawellipse(circulardecoration, 0.0005);
+    const size = await getsize("circulardecorationsize")
+    res.send({
+        renderer: drawpolygon.geoRenderer(size, "#E7AD9F"),
+        content: result
+    });
 
 }
 
@@ -212,7 +242,6 @@ const createpolygon = async (req, res, next) => {
     } = req.body;
     console.log(req.body);
     startPoint = lnglat.split(",");
-    //chổ này cần tối ưu cái node trùng
     let node = new Node({
         x: startPoint[0],
         y: startPoint[1],
@@ -322,8 +351,48 @@ const createpolygon = async (req, res, next) => {
     }
     res.redirect('/');
 }
-const createcirculation = (req, res, next) => {
-    res.send(req.body);
+const createcirculation = async (req, res, next) => {
+    const {
+        body,
+        column,
+        Length,
+        Width,
+        Height,
+        lnglat,
+        Direction,
+        Altitude,
+        Count
+    } = req.body;
+    console.log(req.body);
+    startPoint = lnglat.split(",");
+    let node = new Node({
+        x: startPoint[0],
+        y: startPoint[1],
+        z: Altitude
+    });
+    let bodyinfo = await Body.findById(body);
+    //const nodeinfo = await node.save();
+    console.log(node);
+    let polygon = new Polygon({
+        IDB: bodyinfo,
+        IDN: nodeinfo,
+        Width,
+        Length,
+        Height,
+        Direction
+    })
+    //const polygoninfo = await polygon.save();
+    console.log(polygon);
+    let circulardecoration = new Circular_Decoration({
+        Name: "Circular Decoration",
+        IDC: column._id,
+        IDP: polygoninfo._id,
+        Count
+    });
+    
+    //await circulardecoration.save();
+    console.log(circulardecoration);
+    res.redirect('/');
 }
 
 const getsize = async (typesize) => {

@@ -16,17 +16,18 @@ const getadminpage = async (req, res, next) => {
         let wall = await Wall.find();
         let column = await Column.find();
         res.render('AdminPage',{bodies: body, floors: floor, walls: wall, columns: column});
-        //res.render('AdminPage');
     }
 }
 
-const getadminpagecirculation = (req, res, next) => {
+const getadminpagecirculation = async (req, res, next) => {
     if(req.username!="admin"){
         res.redirect('/login');
     }
     else
     {
-        res.render('admin_circulation',{description: "This is admin page",username: req.username});
+        let body = await Body.find();
+        let column = await Column.find();
+        res.render('admin_circulation',{bodies: body, columns: column});
     }
 }
 
