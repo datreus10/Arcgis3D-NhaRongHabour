@@ -9,7 +9,8 @@ var {
     getcircular_decoration,
     createpolygon,
     createcirculation,
-    getFence
+    getFence,
+    createfence
 } = require('../../controllers/data/getdata');
 var router = express.Router();
 
@@ -26,7 +27,7 @@ router.get('/step',getstep);
 
 router.post('/createpolygon', createpolygon);
 router.post('/createcirculation', createcirculation);
-
+router.post('/createfence', createfence);
 
 
 module.exports = router;

@@ -107,9 +107,34 @@ const drawellipse = async (drawitem, index) => {
     listbox.forEach((ellipse, index) => {
         result["features"].push(...ellipse.map(e => drawpolygon.geoTemplateData("getcircular decoration", [e])))
     })
-    console.log(result)
     return result;
 }
+
+// const drawfence = async (drawitem, index) => {
+//     let listfence = [];
+//     let listname = [];
+//     let listfenceX =[];
+//     let listfenceY = [];
+//     for (let i = 0; i < drawitem.length; i++) {
+//         const polygon = await Polygon.findById(drawitem[i].IDP);
+//         const node = await Node.findById(polygon.IDN);
+//         const fence = drawpolygon.getFence(
+//             [node.x, node.y],
+//             polygon.Direction, polygon.Length, polygon.Width, polygon.Height, node.z, drawitem[i].Count_CrossBar
+//         )
+//         listfence.push(fence);
+//         listname.push(drawitem[i].Name);
+//     }
+//     listfence.forEach(fence=>{
+//         let fencex = drawpolygon.geoTemplate();
+//         fence.fenceX.forEach(e => fencex["features"].push(drawpolygon.geoTemplateData("Không tên", [e])))
+//         let fencey = drawpolygon.geoTemplate()
+//         fence.fenceY.forEach(e => fencey["features"].push(drawpolygon.geoTemplateData("Không tên", [e])))
+//         listfenceX.push(fencex);
+//         listfenceY.push(fencey);
+//     })
+//     return [listfenceX,listfenceY];
+// }
 
 
 const getfloor = async (req, res, next) => {
@@ -350,7 +375,7 @@ const createpolygon = async (req, res, next) => {
             break;
         }
     }
-    res.redirect('/');
+    res.redirect('/admin');
 }
 const createcirculation = async (req, res, next) => {
     const {
@@ -389,7 +414,48 @@ const createcirculation = async (req, res, next) => {
         Count
     });
     await circulardecoration.save();
-    res.redirect('/');
+    res.redirect('/admin/admin_circulation');
+}
+
+const createfence = async (req, res, next) => {
+    const {
+        body,
+        column,
+        Length,
+        Width,
+        Height,
+        lnglat,
+        Direction,
+        Altitude,
+        Count
+    } = req.body;
+    console.log(req.body);
+    startPoint = lnglat.split(",");
+    let node = new Node({
+        x: startPoint[0],
+        y: startPoint[1],
+        z: Altitude
+    });
+    let bodyinfo = await Body.findById(body);
+    const nodeinfo = await node.save();
+    let polygon = new Polygon({
+        IDB: bodyinfo,
+        IDN: nodeinfo,
+        Width,
+        Length,
+        Height,
+        Direction
+    })
+    const polygoninfo = await polygon.save();
+    let fence = new Fence({
+        Name: "Fence",
+        IDC: column._id,
+        IDP: polygoninfo._id,
+        Count_CrossBar: Count,
+        Count_Jamb: Count
+    });
+    await fence.save();
+    res.redirect('/admin/Admin_fence');
 }
 
 const getsize = async (typesize) => {
@@ -491,5 +557,6 @@ module.exports = {
     getwall,
     getcolumndecoration,
     getdoor,
-    getstep
+    getstep,
+    createfence
 }
