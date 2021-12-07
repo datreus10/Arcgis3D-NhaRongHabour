@@ -210,7 +210,7 @@ const getFence = async (req, res, next) => {
         const length = listData[i].IDP.Length; // chiều dài hàng rào
         const width = listData[i].IDP.Width; //chiều rộng hàng rào
         const height = listData[i].IDP.Height; // chiều cao hàng rào
-        const altitude = [node.z] // độ cao so với mực nước biển
+        const altitude = [node.z,node.z-0.01,node.z,node.z,node.z] // độ cao so với mực nước biển
         const nFence = listData[i].Count_CrossBar; //số lượng các cột
 
         const tmp = drawpolygon.getFence(startPoint, bearing, length, width, height, altitude, nFence);
@@ -409,7 +409,7 @@ const createcirculation = async (req, res, next) => {
     const polygoninfo = await polygon.save();
     let circulardecoration = new Circular_Decoration({
         Name: "Circular Decoration",
-        IDC: column._id,
+        IDC: column,
         IDP: polygoninfo._id,
         Count
     });
