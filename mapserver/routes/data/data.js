@@ -11,7 +11,10 @@ var {
     createpolygon,
     createcirculation,
     getFence,
-    createfence
+    createfence,
+    searchitemupdate,
+    updateitem,
+    update
 } = require('../../controllers/data/getdata');
 var router = express.Router();
 
@@ -30,6 +33,10 @@ router.get('/roof',getroof);
 router.post('/createpolygon', createpolygon);
 router.post('/createcirculation', createcirculation);
 router.post('/createfence', createfence);
+
+router.post('/searchitemupdate', searchitemupdate);
+router.post('/updateitem',updateitem);
+router.post('/update',update);
 
 
 module.exports = router;

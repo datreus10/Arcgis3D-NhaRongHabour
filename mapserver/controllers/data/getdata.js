@@ -84,7 +84,7 @@ const draw = async (drawitem, index, height) => {
     const result = drawpolygon.geoTemplate()
     listbox.forEach((box, index) => {
         result["features"].push(
-            drawpolygon.geoTemplateData(listname[index] != null ? listname[index] : "Không tên", [box],height)
+            drawpolygon.geoTemplateData(listname[index] != null ? listname[index] : "Không tên", [box], height)
         )
     })
     return result;
@@ -114,7 +114,7 @@ const drawellipse = async (drawitem, index) => {
 const getfloor = async (req, res, next) => {
     const floors = await Floor.find();
     const size = await getsize("sizefloor")
-    const result = await draw(floors, 0.5,size);
+    const result = await draw(floors, 0.5, size);
     res.send({
         renderer: drawpolygon.geoRenderer(size, "#E7AD9F"),
         content: result
@@ -124,7 +124,7 @@ const getfloor = async (req, res, next) => {
 const getcolumn = async (req, res, next) => {
     const column = await Column.find();
     const size = await getsize("columnsize")
-    const result = await draw(column, 0.05,size);
+    const result = await draw(column, 0.05, size);
     res.send({
         renderer: drawpolygon.geoRenderer(size, "#E7AD9F"),
         content: result
@@ -134,7 +134,7 @@ const getcolumn = async (req, res, next) => {
 const getwall = async (req, res, next) => {
     const wall = await Wall.find();
     const size = await getsize("wallsize")
-    const result = await draw(wall, 0.5,size);
+    const result = await draw(wall, 0.5, size);
     res.send({
         renderer: drawpolygon.geoRenderer(size, "#E7AD9F"),
         content: result
@@ -155,7 +155,7 @@ const getroof = async (req, res, next) => {
 const getcolumndecoration = async (req, res, next) => {
     const columndecoration = await Column_Decoration.find();
     const size = await getsize("columndecorationsize")
-    const result = await draw(columndecoration, 0.05,size);
+    const result = await draw(columndecoration, 0.05, size);
     res.send({
         renderer: drawpolygon.geoRenderer(size, "#FFFFFF"),
         content: result
@@ -165,7 +165,7 @@ const getcolumndecoration = async (req, res, next) => {
 const getdoor = async (req, res, next) => {
     const door = await Door.find();
     const size = await getsize("doorsize")
-    const result = await draw(door, 0.05,size);
+    const result = await draw(door, 0.05, size);
     res.send({
         renderer: drawpolygon.geoRenderer(size, "#E7AD9F"),
         content: result
@@ -175,7 +175,7 @@ const getdoor = async (req, res, next) => {
 const getstep = async (req, res, next) => {
     const step = await Steps.find();
     const size = await getsize("stepsize")
-    const result = await draw(step, 0.0005,size);
+    const result = await draw(step, 0.0005, size);
     res.send({
         renderer: drawpolygon.geoRenderer(size, "#E7AD9F"),
         content: result
@@ -183,19 +183,19 @@ const getstep = async (req, res, next) => {
 }
 
 const getFence = async (req, res, next) => {
-    
+
     const listData = await Fence.find().populate('IDP');
 
     const result = []
     for (let i = 0; i < listData.length; i++) {
-        
+
         const node = await Node.findById(listData[i].IDP.IDN)
         const startPoint = [node.x, node.y];
         const bearing = listData[i].IDP.Direction;
         const length = listData[i].IDP.Length; // chiều dài hàng rào
         const width = listData[i].IDP.Width; //chiều rộng hàng rào
         const height = listData[i].IDP.Height; // chiều cao hàng rào
-        const altitude = [node.z,node.z-0.03,node.z,node.z,node.z] // độ cao so với mực nước biển
+        const altitude = [node.z, node.z - 0.03, node.z, node.z, node.z] // độ cao so với mực nước biển
         const nFence = listData[i].Count_CrossBar; //số lượng các cột
 
         const tmp = drawpolygon.getFence(startPoint, bearing, length, width, height, altitude, nFence);
@@ -216,9 +216,9 @@ const getFence = async (req, res, next) => {
             renderer: drawpolygon.geoRenderer(width, "#E7AD9F"),
             content: fenceY
         }])
-        
+
     }
-    
+
     res.send(result);
 
 }
@@ -538,6 +538,322 @@ const getsize = async (typesize) => {
     }
 }
 
+const searchitemupdate = async (req, res, next) => {
+    const {
+        body,
+        type
+    } = req.body;
+    let listitem = [];
+    let polygons = await Polygon.find({ IDB: body })
+    if (type == "Floor") {
+
+        for (let i = 0; i < polygons.length; i++) {
+            let itemselected = await Floor.find({ IDP: polygons[i].id });
+            if (itemselected.length != 0) {
+                listitem.push(...itemselected);
+            }
+        }
+    }
+    else if (type == "Steps") {
+        for (let i = 0; i < polygons.length; i++) {
+            let itemselected = await Steps.find({ IDP: polygons[i].id });
+            if (itemselected.length != 0) {
+                listitem.push(...itemselected);
+            }
+        }
+    }
+    else if (type == "Column") {
+        for (let i = 0; i < polygons.length; i++) {
+            let itemselected = await Column.find({ IDP: polygons[i].id });
+            if (itemselected.length != 0) {
+                listitem.push(...itemselected);
+            }
+        }
+    }
+    else if (type == "Door") {
+        for (let i = 0; i < polygons.length; i++) {
+            let itemselected = await Door.find({ IDP: polygons[i].id });
+            if (itemselected.length != 0) {
+                listitem.push(...itemselected);
+            }
+        }
+    }
+    else if (type == "Roof_Brick") {
+        for (let i = 0; i < polygons.length; i++) {
+            let itemselected = await Roof_Brick.find({ IDP: polygons[i].id });
+            if (itemselected.length != 0) {
+                listitem.push(...itemselected);
+            }
+        }
+    }
+    else if (type == "Floor_Brick") {
+        for (let i = 0; i < polygons.length; i++) {
+            let itemselected = await Floor_Brick.find({ IDP: polygons[i].id });
+            if (itemselected.length != 0) {
+                listitem.push(...itemselected);
+            }
+        }
+    }
+    else if (type == "Roof") {
+        for (let i = 0; i < polygons.length; i++) {
+            let itemselected = await Roof.find({ IDP: polygons[i].id });
+            if (itemselected.length != 0) {
+                listitem.push(...itemselected);
+            }
+        }
+    }
+    else if (type == "Wall") {
+        for (let i = 0; i < polygons.length; i++) {
+            let itemselected = await Wall.find({ IDP: polygons[i].id });
+            if (itemselected.length != 0) {
+                listitem.push(...itemselected);
+            }
+        }
+    }
+    else if (type == "Floor_Decoration") {
+        for (let i = 0; i < polygons.length; i++) {
+            let itemselected = await Floor_Decoration.find({ IDP: polygons[i].id });
+            if (itemselected.length != 0) {
+                listitem.push(...itemselected);
+            }
+        }
+    }
+    else if (type == "Column_Decoration") {
+        for (let i = 0; i < polygons.length; i++) {
+            let itemselected = await Column_Decoration.find({ IDP: polygons[i].id });
+            if (itemselected.length != 0) {
+                listitem.push(...itemselected);
+            }
+        }
+    }
+    else if (type == "Roof_Decoration") {
+        for (let i = 0; i < polygons.length; i++) {
+            let itemselected = await Roof_Decoration.find({ IDP: polygons[i].id });
+            if (itemselected.length != 0) {
+                listitem.push(...itemselected);
+            }
+        }
+    }
+    else if (type == "Circular_Decoration") {
+        for (let i = 0; i < polygons.length; i++) {
+            let itemselected = await Circular_Decoration.find({ IDP: polygons[i].id });
+            if (itemselected.length != 0) {
+                listitem.push(...itemselected);
+            }
+        }
+    }
+    else if (type == "Fence") {
+        for (let i = 0; i < polygons.length; i++) {
+            let itemselected = await Fence.find({ IDP: polygons[i].id });
+            if (itemselected.length != 0) {
+                listitem.push(...itemselected);
+            }
+        }
+    }
+    res.render('SearchItemPage', { listitem: listitem, type: type })
+}
+
+const updateitem = async (req, res, next) => {
+    const {
+        item,
+        method,
+        type,
+    } = req.body;
+    let iteminfo;
+    let itemselected = {
+        Id: item,
+        Name: "",
+        Length: "",
+        Width: "",
+        Height: "",
+        lnglat: "",
+        Direction: "",
+        Altitude: "",
+        type: type,
+    };
+    if (method == 'remove') {
+        if (type == "Floor") {
+            iteminfo = Floor.findById(item);
+            await Floor.findByIdAndRemove(item);
+        }
+        else if (type == "Steps") {
+            iteminfo = Steps.findById(item);
+            await Steps.findByIdAndRemove(item);
+        }
+        else if (type == "Column") {
+            iteminfo = Column.findById(item);
+            await Column.findByIdAndRemove(item);
+        }
+        else if (type == "Door") {
+            iteminfo = Door.findById(item);
+            await Door.findByIdAndRemove(item);
+        }
+        else if (type == "Roof_Brick") {
+            iteminfo = Roof_Brick.findById(item);
+            await Roof_Brick.findByIdAndRemove(item);
+        }
+        else if (type == "Floor_Brick") {
+            iteminfo = Floor_Brick.findById(item);
+            await Floor_Brick.findByIdAndRemove(item);
+        }
+        else if (type == "Roof") {
+            iteminfo = Roof.findById(item);
+            await Roof.findByIdAndRemove(item);
+        }
+        else if (type == "Wall") {
+            iteminfo = Wall.findById(item);
+            await Wall.findByIdAndRemove(item);
+        }
+        else if (type == "Floor_Decoration") {
+            iteminfo = Floor_Decoration.findById(item);
+            await Floor_Decoration.findByIdAndRemove(item);
+        }
+        else if (type == "Column_Decoration") {
+            iteminfo = Column_Decoration.findById(item);
+            await Column_Decoration.findByIdAndRemove(item);
+        }
+        else if (type == "Roof_Decoration") {
+            iteminfo = Roof_Decoration.findById(item);
+            await Roof_Decoration.findByIdAndRemove(item);
+        }
+        else if (type == "Circular_Decoration") {
+            iteminfo = Circular_Decoration.findById(item);
+            await Circular_Decoration.findByIdAndRemove(item);
+        }
+        else if (type == "Fence") {
+            iteminfo = Fence.findById(item);
+            await Fence.findByIdAndRemove(item);
+        }
+        polygoninfo = await Polygon.findById(iteminfo.IDP);
+        await Polygon.findByIdAndRemove(iteminfo.IDP);
+        await Node.findByIdAndRemove(polygoninfo.IDN);
+    }
+    else {
+        if (type == "Floor") {
+            iteminfo = await Floor.findById(item);
+        }
+        else if (type == "Steps") {
+            iteminfo = await Steps.findById(item);
+        }
+        else if (type == "Column") {
+            iteminfo = await Column.findById(item);
+        }
+        else if (type == "Door") {
+            iteminfo = await Door.findById(item);
+        }
+        else if (type == "Roof_Brick") {
+            iteminfo = await Roof_Brick.findById(item);
+        }
+        else if (type == "Floor_Brick") {
+            iteminfo = await Floor_Brick.findById(item);
+        }
+        else if (type == "Roof") {
+            iteminfo = await Roof.findById(item);
+        }
+        else if (type == "Wall") {
+            iteminfo = await Wall.findById(item);
+        }
+        else if (type == "Floor_Decoration") {
+            iteminfo = await Floor_Decoration.findById(item);
+        }
+        else if (type == "Column_Decoration") {
+            iteminfo = await Column_Decoration.findById(item);
+        }
+        else if (type == "Roof_Decoration") {
+            iteminfo = await Roof_Decoration.findById(item);
+        }
+        else if (type == "Circular_Decoration") {
+            iteminfo = await Circular_Decoration.findById(item);
+        }
+        else if (type == "Fence") {
+            iteminfo = await Fence.findById(item);
+        }
+        polygoninfo = await Polygon.findById(iteminfo.IDP);
+        itemselected.Id = iteminfo._id;
+        itemselected.Name = iteminfo.Name;
+        itemselected.Length = polygoninfo.Length;
+        itemselected.Width = polygoninfo.Width;
+        itemselected.Height = polygoninfo.Height;
+        itemselected.Direction = polygoninfo.Direction;
+        nodeinfo = await Node.findById(polygoninfo.IDN);
+        itemselected.lnglat = nodeinfo.x + "," + nodeinfo.y;
+        itemselected.Altitude = nodeinfo.z;
+        console.log(itemselected);
+        res.render('Updateitem', { item: itemselected })
+    }
+}
+
+const update = async (req, res, next) => {
+    const {
+        type,
+        itemid,
+        Name,
+        Length,
+        Width,
+        Height,
+        lnglat,
+        Direction,
+        Altitude
+    } = req.body;
+    let iteminfo;
+    let xy = lnglat.split(',');
+    if (type == "Floor") {
+        await Floor.findByIdAndUpdate(itemid, { Name: Name });
+        iteminfo = Floor.findById(itemid);
+    }
+    else if (type == "Steps") {
+        await Steps.findByIdAndUpdate(itemid, { Name: Name });
+        iteminfo = Steps.findById(itemid);
+    }
+    else if (type == "Column") {
+        await Column.findByIdAndUpdate(itemid, { Name: Name });
+        iteminfo = Column.findById(itemid);
+    }
+    else if (type == "Door") {
+        await Door.findByIdAndUpdate(itemid, { Name: Name });
+        iteminfo = Door.findById(itemid);
+    }
+    else if (type == "Roof_Brick") {
+        await Roof_Brick.findByIdAndUpdate(itemid, { Name: Name });
+        iteminfo = Roof_Brick.findById(itemid);
+    }
+    else if (type == "Floor_Brick") {
+        await Floor_Brick.findByIdAndUpdate(itemid, { Name: Name });
+        iteminfo = Floor_Brick.findById(itemid);
+    }
+    else if (type == "Roof") {
+        await Roof.findByIdAndUpdate(itemid, { Name: Name });
+        iteminfo = Roof.findById(itemid);
+    }
+    else if (type == "Wall") {
+        await Wall.findByIdAndUpdate(itemid, { Name: Name });
+        iteminfo = Wall.findById(itemid);
+    }
+    else if (type == "Floor_Decoration") {
+        await Floor_Decoration.findByIdAndUpdate(itemid, { Name: Name });
+        iteminfo = Floor_Decoration.findById(itemid);
+    }
+    else if (type == "Column_Decoration") {
+        await Column_Decoration.findByIdAndUpdate(itemid, { Name: Name });
+        iteminfo = Column_Decoration.findById(itemid);
+    }
+    else if (type == "Roof_Decoration") {
+        await Roof_Decoration.findByIdAndUpdate(itemid, { Name: Name });
+        iteminfo = Roof_Decoration.findById(itemid);
+    }
+    else if (type == "Circular_Decoration") {
+        await Circular_Decoration.findByIdAndUpdate(itemid, { Name: Name });
+        iteminfo = Circular_Decoration.findById(itemid);
+    }
+    else if (type == "Fence") {
+        await Fence.findByIdAndUpdate(itemid, { Name: Name });
+        iteminfo = Fence.findById(itemid);
+    }
+    polygoninfo = await Polygon.findById(iteminfo.IDP);
+    await Polygon.findByIdAndUpdate(iteminfo.IDP, { Length: Length, Width: Width, Height: Height, Direction: Direction })
+    await Node.findByIdAndUpdate(polygoninfo.IDN, { x: xy[0], y: xy[1], z: Altitude });
+    res.redirect('/admin');
+}
 
 
 module.exports = {
@@ -554,4 +870,7 @@ module.exports = {
     getstep,
     getroof,
     createfence,
+    searchitemupdate,
+    updateitem,
+    update
 }

@@ -70,73 +70,52 @@
                 <div class="productInfo">
                     <div class="Info-details">
                         <div class="cardHeader">
-                            <h2 class="title">Chỉnh sửa Bến Nhà Rồng</h2>
+                            <h2 class="title">Chỉnh sửa <%=item.Name%></h2>
                         </div>
-                        <form action="/data/searchitemupdate" method="post" name="createcirculation">
-                            <div class="select-parent">
-                                <!-- Chọn địa điểm -->
-                                <div class="select parent">
-                                    <select name="body" id="format">
-                                            <option selected disabled>Chọn địa điểm</option>
-                                            <% bodies.forEach(body => { %>
-                                            <option value="<%=body.id%>"><%=body.Name%></option>
-                                            <% }) %>
-                                        </select>
-                                </div>
-                                <!-- Chọn bảng tính -->
-                                <div class="select child1">
-                                    <select name="type" id="format1">
-                                            <option selected disabled>Chọn bảng tính</option>
-                                            <option value="Floor">Nền</option>
-                                            <option value="Steps">Bậc thềm</option>
-                                            <option value="Column">Cột</option>
-                                            <option value="Door">Cửa</option>
-                                            <option value="Roof_Brick">Lót mái</option>
-                                            <option value="Floor_Brick">Lót nền</option>
-                                            <option value="Roof">Mái</option>
-                                            <option value="Wall">Tường</option>
-                                            <option value="Floor_Decoration">Trang trí nền</option>
-                                            <option value="Column_Decoration">Trang trí cột</option>
-                                            <option value="Roof_Decoration">Trang trí mái</option>
-                                            <option value="Circular_Decoration">Trang trí hình tròn</option>
-                                            <option value="Fence">Trang trí hàng rào</option>
-                                        </select>
-                                </div>
+                        <form action="/data/update" method="post" name="createcirculation">
+                            <div class="select parent">
+                                <select name="itemid" id="format">
+                                        <option value=<%=item.Id%>><%=item.Id%></option>
+                                    </select>
                             </div>
-                            <div class="button">
-                                <input type="submit" value="Tìm kiếm"/>
+                            <div class="select parent">
+                                <select name="type" id="format">
+                                        <option value="<%=item.type%>"><%=item.type%></option>
+                                    </select>
                             </div>
-                            <!-- <div class="length-info">
+                            <div class="length-info">
                                 <div class="input-box">
                                     <span class="info">Chiều dài</span>
-                                    <input type="text" placeholder="Nhập chiều dài" name="Length" required />
+                                    <input type="text" placeholder="Nhập chiều dài" value="<%=item.Length%>" name="Length" required/>
                                 </div>
                                 <div class="input-box">
                                     <span class="info">Chiều rộng</span>
-                                    <input type="text" placeholder="Nhập chiều rộng" name="Width" required />
+                                    <input type="text" placeholder="Nhập chiều rộng" value="<%=item.Width%>" name="Width" required />
                                 </div>
                                 <div class="input-box">
                                     <span class="info">Chiều cao</span>
-                                    <input type="text" placeholder="Nhập chiều cao" name="Height" required />
+                                    <input type="text" placeholder="Nhập chiều cao"  value="<%=item.Height%>" name="Height" required />
                                 </div>
                                 <div class="input-box">
                                     <span class="info">Số cột</span>
-                                    <input type="text" placeholder="Nhập số cột" name="Count" required />
+                                    <input type="text" placeholder="Nhập số cột" value="<%=item.Count%>"  name="Count" required />
                                 </div>
                                 <div class="input-box">
                                     <span class="info">Longitude,Latitude</span>
-                                    <input type="text" placeholder="Nhập longitude, latitude" name="lnglat" required />
+                                    <input type="text" placeholder="Nhập longitude, latitude" value="<%=item.lnglat%>" name="lnglat" required />
                                 </div>
                                 <div class="input-box">
                                     <span class="info">Độ</span>
-                                    <input type="text" placeholder="Nhập độ" name="Direction" required />
+                                    <input type="text" placeholder="Nhập độ" name="Direction" value="<%=item.Direction%>" required />
                                 </div>
                                 <div class="input-box">
                                     <span class="info">Độ cao</span>
-                                    <input type="text" placeholder="Nhập độ cao" name="Altitude" required />
+                                    <input type="text" placeholder="Nhập độ cao" name="Altitude" value="<%=item.Altitude%>" required />
                                 </div>
-                            </div> -->
-                            
+                            </div>
+                            <div class="button">
+                                <input type="submit" value="Chỉnh sửa"/>
+                            </div>
                         </form>
                     </div>
                 </div>
