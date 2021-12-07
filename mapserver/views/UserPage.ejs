@@ -113,6 +113,9 @@
             esriRequest('http://localhost:3000/data/circular_decoration').then(function (response) {
                 map.add(generateLayer(response.data))
             });
+            esriRequest('http://localhost:3000/data/columndecoration').then(function (response) {
+                map.add(generateLayer(response.data))
+            });
             view.popup.defaultPopupTemplateEnabled = true;
         });
     </script>

@@ -158,7 +158,7 @@ const getcolumndecoration = async (req, res, next) => {
     const size = await getsize("columndecorationsize")
     const result = await draw(columndecoration, 0.05,size);
     res.send({
-        renderer: drawpolygon.geoRenderer(size, "#E7AD9F"),
+        renderer: drawpolygon.geoRenderer(size, "#FFFFFF"),
         content: result
     });
 }
