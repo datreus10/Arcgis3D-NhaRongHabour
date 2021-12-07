@@ -110,6 +110,10 @@
             esriRequest('http://localhost:3000/data/roof').then(function (response) {
                 map.add(generateLayer(response.data))
             });
+            esriRequest('http://localhost:3000/data/step').then(function (response) {
+                map.add(generateLayer(response.data))
+            });
+
             esriRequest('http://localhost:3000/data/circular_decoration').then(function (response) {
                 map.add(generateLayer(response.data))
             });

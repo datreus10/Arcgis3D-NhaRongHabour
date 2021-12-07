@@ -101,7 +101,6 @@ const drawellipse = async (drawitem, index) => {
             polygon.Direction, polygon.Length, polygon.Width, polygon.Height, drawitem[i].Count, node.z
         )
         listbox.push(ellipseA);
-        console.log(node.z);
         listname.push(drawitem[i].Name);
     }
     const result = drawpolygon.geoTemplate()
