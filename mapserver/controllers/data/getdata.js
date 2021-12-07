@@ -172,34 +172,45 @@ const getstep = async (req, res, next) => {
     });
 }
 
-const getFence = (req, res, next) => {
-    const startPoint = [106.70675889416727, 10.76809348693023];
-    const bearing = 66;
-    const length = 3; // chiều dài hàng rào
-    const width = 0.1; //chiều rộng hàng rào
-    const height = 1.5; // chiều cao hàng rào
-    const altitude = [6.4] // độ cao so với mực nước biển
-    const nFence = 4; //số lượng các cột
+const getFence = async (req, res, next) => {
+    
+    const listData = await Fence.find().populate('IDP');
 
-    const result = drawpolygon.getFence(startPoint, bearing, length, width, height, altitude, nFence);
+    const result = []
+    for (let i = 0; i < listData.length; i++) {
+        
+        const node = await Node.findById(listData[i].IDP.IDN)
+        const startPoint = [node.x, node.y];
+        const bearing = listData[i].IDP.Direction;
+        const length = listData[i].IDP.Length; // chiều dài hàng rào
+        const width = listData[i].IDP.Width; //chiều rộng hàng rào
+        const height = listData[i].IDP.Height; // chiều cao hàng rào
+        const altitude = [node.z] // độ cao so với mực nước biển
+        const nFence = listData[i].Count_CrossBar; //số lượng các cột
 
-    const fenceX = drawpolygon.geoTemplate();
-    result.fenceX.forEach(e => fenceX["features"].push(
-        drawpolygon.geoTemplateData("Không tên", [e])
-    ))
-    const fenceY = drawpolygon.geoTemplate();
-    result.fenceY.forEach(e => fenceY["features"].push(
-        drawpolygon.geoTemplateData("Không tên", [e])
-    ))
+        const tmp = drawpolygon.getFence(startPoint, bearing, length, width, height, altitude, nFence);
 
+        const fenceX = drawpolygon.geoTemplate();
+        tmp.fenceX.forEach(e => fenceX["features"].push(
+            drawpolygon.geoTemplateData("Không tên", [e])
+        ))
+        const fenceY = drawpolygon.geoTemplate();
+        tmp.fenceY.forEach(e => fenceY["features"].push(
+            drawpolygon.geoTemplateData("Không tên", [e])
+        ))
 
-    res.send([{
-        renderer: drawpolygon.geoRenderer(height, "#E7AD9F"),
-        content: fenceX
-    }, {
-        renderer: drawpolygon.geoRenderer(width, "#E7AD9F"),
-        content: fenceY
-    }]);
+        result.push([{
+            renderer: drawpolygon.geoRenderer(height, "#E7AD9F"),
+            content: fenceX
+        }, {
+            renderer: drawpolygon.geoRenderer(width, "#E7AD9F"),
+            content: fenceY
+        }])
+        
+    }
+    
+    res.send(result);
+
 }
 
 
@@ -392,87 +403,78 @@ const getsize = async (typesize) => {
     floorbricksize = 1;
     roofbricksize = 1;
     switch (typesize) {
-        case "floorsize":
-            {
-                if (await Floor.count() != 0) {
-                    const floorsinfo = await Floor.find();
-                    const floorinfo = await Polygon.findById(floorsinfo[0].IDP);
-                    floorsize = floorinfo.Height;
-                    return floorsize;
-                }
+        case "floorsize": {
+            if (await Floor.count() != 0) {
+                const floorsinfo = await Floor.find();
+                const floorinfo = await Polygon.findById(floorsinfo[0].IDP);
+                floorsize = floorinfo.Height;
+                return floorsize;
             }
-        case "columnsize":
-            {
-                if (await Column.count() != 0) {
-                    const columnsinfo = await Column.find();
-                    const columninfo = await Polygon.findById(columnsinfo[0].IDP);
-                    columnsize = columninfo.Height;
-                    return columnsize;
-                }
+        }
+        case "columnsize": {
+            if (await Column.count() != 0) {
+                const columnsinfo = await Column.find();
+                const columninfo = await Polygon.findById(columnsinfo[0].IDP);
+                columnsize = columninfo.Height;
+                return columnsize;
             }
-        case "wallsize":
-            {
-                if (await Wall.count() != 0) {
-                    const wallsinfo = await Wall.find();
-                    const wallinfo = await Polygon.findById(wallsinfo[0].IDP);
-                    wallsize = wallinfo.Height;
-                    return wallsize;
-                }
+        }
+        case "wallsize": {
+            if (await Wall.count() != 0) {
+                const wallsinfo = await Wall.find();
+                const wallinfo = await Polygon.findById(wallsinfo[0].IDP);
+                wallsize = wallinfo.Height;
+                return wallsize;
             }
-        case "columndecorationsize":
-            {
-                if (await Column_Decoration.count() != 0) {
-                    const listcolumndecorationinfo = await Column_Decoration.find();
-                    const columndecorationinfo = await Polygon.findById(listcolumndecorationinfo[0].IDP);
-                    columndecorationsize = columndecorationinfo.Height;
-                    return columndecorationsize;
-                }
+        }
+        case "columndecorationsize": {
+            if (await Column_Decoration.count() != 0) {
+                const listcolumndecorationinfo = await Column_Decoration.find();
+                const columndecorationinfo = await Polygon.findById(listcolumndecorationinfo[0].IDP);
+                columndecorationsize = columndecorationinfo.Height;
+                return columndecorationsize;
             }
-        case "circulardecorationsize":
-            {
-                if (await Circular_Decoration.count() != 0) {
-                    const listcirculardecorationinfo = await Circular_Decoration.find();
-                    const circulardecorationinfo = await Polygon.findById(listcirculardecorationinfo[0].IDP);
-                    circulardecorationsize = circulardecorationinfo.Height;
-                    return circulardecorationsize;
-                }
+        }
+        case "circulardecorationsize": {
+            if (await Circular_Decoration.count() != 0) {
+                const listcirculardecorationinfo = await Circular_Decoration.find();
+                const circulardecorationinfo = await Polygon.findById(listcirculardecorationinfo[0].IDP);
+                circulardecorationsize = circulardecorationinfo.Height;
+                return circulardecorationsize;
             }
-        case "doorsize":
-            {
-                if (await Door.count() != 0) {
-                    const doorsinfo = await Door.find();
-                    const doorinfo = await Polygon.findById(doorsinfo[0].IDP);
-                    doorsize = doorinfo.Height;
-                    return doorsize;
-                }
+        }
+        case "doorsize": {
+            if (await Door.count() != 0) {
+                const doorsinfo = await Door.find();
+                const doorinfo = await Polygon.findById(doorsinfo[0].IDP);
+                doorsize = doorinfo.Height;
+                return doorsize;
             }
-        case "floorbricksize":
-            {
-                if (await Floor_Brick.count() != 0) {
-                    const floorbricksinfo = await Floor_Brick.find();
-                    const floorbrickinfo = await Polygon.findById(floorbricksinfo[0].IDP);
-                    floorbricksize = floorbrickinfo.Height;
-                    return floorbricksize;
-                }
+        }
+        case "floorbricksize": {
+            if (await Floor_Brick.count() != 0) {
+                const floorbricksinfo = await Floor_Brick.find();
+                const floorbrickinfo = await Polygon.findById(floorbricksinfo[0].IDP);
+                floorbricksize = floorbrickinfo.Height;
+                return floorbricksize;
             }
-        case "roofbricksize":
-            {
-                if (await Roof_Brick.count() != 0) {
-                    const roofbricksinfo = await Roof_Brick.find();
-                    const roofbrickinfo = await Polygon.findById(roofbricksinfo[0].IDP);
-                    roofbricksize = roofbrickinfo.Height;
-                    return roofbricksize;
-                }
+        }
+        case "roofbricksize": {
+            if (await Roof_Brick.count() != 0) {
+                const roofbricksinfo = await Roof_Brick.find();
+                const roofbrickinfo = await Polygon.findById(roofbricksinfo[0].IDP);
+                roofbricksize = roofbrickinfo.Height;
+                return roofbricksize;
             }
-        case "stepsize":
-            {
-                if (await Steps.count() != 0) {
-                    const stepsinfo = await Steps.find();
-                    const stepinfo = await Polygon.findById(stepsinfo[0].IDP);
-                    stepsize = stepinfo.Height;
-                    return stepsize;
-                }
+        }
+        case "stepsize": {
+            if (await Steps.count() != 0) {
+                const stepsinfo = await Steps.find();
+                const stepinfo = await Polygon.findById(stepsinfo[0].IDP);
+                stepsize = stepinfo.Height;
+                return stepsize;
             }
+        }
     }
 }
 
