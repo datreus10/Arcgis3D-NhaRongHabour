@@ -4,6 +4,7 @@ var {
     getdoor,
     getcolumndecoration,
     getwall,
+    getroof,
     getfloor,
     getcolumn,
     getcircular_decoration,
@@ -24,6 +25,7 @@ router.get('/wall',getwall);
 router.get('/columndecoration',getcolumndecoration);
 router.get('/door',getdoor);
 router.get('/step',getstep);
+router.get('/roof',getroof);
 
 router.post('/createpolygon', createpolygon);
 router.post('/createcirculation', createcirculation);

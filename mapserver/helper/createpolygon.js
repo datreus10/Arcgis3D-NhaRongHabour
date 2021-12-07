@@ -5,19 +5,19 @@ const {
 const geolib = require('geolib')
 
 
-const geoTemplateData = (name, data, idb = 0) => {
+const geoTemplateData = (name, data,height=0, id= 0) => {
     return {
         "type": "Feature",
         "properties": {
             "Building name": name,
-            "height": 0,
-            "idb": `${idb}`
+            "height": height,
+            "idb": `${id}`
         },
         "geometry": {
             "type": "Polygon",
             "coordinates": data
         },
-        "id": `pp${idb}`
+        "id": `pp${id}`
     }
 }
 

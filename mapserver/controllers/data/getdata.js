@@ -68,7 +68,7 @@ const {
 } = require('../../models/Wall.js');
 
 
-const draw = async (drawitem, index) => {
+const draw = async (drawitem, index, height) => {
     let listbox = [];
     let listname = [];
     for (let i = 0; i < drawitem.length; i++) {
@@ -84,7 +84,7 @@ const draw = async (drawitem, index) => {
     const result = drawpolygon.geoTemplate()
     listbox.forEach((box, index) => {
         result["features"].push(
-            drawpolygon.geoTemplateData(listname[index] != null ? listname[index] : "Không tên", [box])
+            drawpolygon.geoTemplateData(listname[index] != null ? listname[index] : "Không tên", [box],height)
         )
     })
     return result;
@@ -101,46 +101,21 @@ const drawellipse = async (drawitem, index) => {
             polygon.Direction, polygon.Length, polygon.Width, polygon.Height, drawitem[i].Count, node.z
         )
         listbox.push(ellipseA);
+        console.log(node.z);
         listname.push(drawitem[i].Name);
     }
     const result = drawpolygon.geoTemplate()
     listbox.forEach((ellipse, index) => {
-        result["features"].push(...ellipse.map(e => drawpolygon.geoTemplateData("getcircular decoration", [e])))
+        result["features"].push(...ellipse.map(e => drawpolygon.geoTemplateData("Trang trí", [e])))
     })
     return result;
 }
 
-// const drawfence = async (drawitem, index) => {
-//     let listfence = [];
-//     let listname = [];
-//     let listfenceX =[];
-//     let listfenceY = [];
-//     for (let i = 0; i < drawitem.length; i++) {
-//         const polygon = await Polygon.findById(drawitem[i].IDP);
-//         const node = await Node.findById(polygon.IDN);
-//         const fence = drawpolygon.getFence(
-//             [node.x, node.y],
-//             polygon.Direction, polygon.Length, polygon.Width, polygon.Height, node.z, drawitem[i].Count_CrossBar
-//         )
-//         listfence.push(fence);
-//         listname.push(drawitem[i].Name);
-//     }
-//     listfence.forEach(fence=>{
-//         let fencex = drawpolygon.geoTemplate();
-//         fence.fenceX.forEach(e => fencex["features"].push(drawpolygon.geoTemplateData("Không tên", [e])))
-//         let fencey = drawpolygon.geoTemplate()
-//         fence.fenceY.forEach(e => fencey["features"].push(drawpolygon.geoTemplateData("Không tên", [e])))
-//         listfenceX.push(fencex);
-//         listfenceY.push(fencey);
-//     })
-//     return [listfenceX,listfenceY];
-// }
-
 
 const getfloor = async (req, res, next) => {
     const floors = await Floor.find();
-    const result = await draw(floors, 0.5);
     const size = await getsize("sizefloor")
+    const result = await draw(floors, 0.5,size);
     res.send({
         renderer: drawpolygon.geoRenderer(size, "#E7AD9F"),
         content: result
@@ -149,8 +124,8 @@ const getfloor = async (req, res, next) => {
 
 const getcolumn = async (req, res, next) => {
     const column = await Column.find();
-    const result = await draw(column, 0.05);
     const size = await getsize("columnsize")
+    const result = await draw(column, 0.05,size);
     res.send({
         renderer: drawpolygon.geoRenderer(size, "#E7AD9F"),
         content: result
@@ -159,18 +134,29 @@ const getcolumn = async (req, res, next) => {
 
 const getwall = async (req, res, next) => {
     const wall = await Wall.find();
-    const result = await draw(wall, 0.5);
     const size = await getsize("wallsize")
+    const result = await draw(wall, 0.5,size);
     res.send({
         renderer: drawpolygon.geoRenderer(size, "#E7AD9F"),
         content: result
     });
 }
 
+const getroof = async (req, res, next) => {
+    // const roof = await Roof.find();
+    // const size = await getsize("roofsize")
+    // const result = await draw(roof, 6,size);
+    // res.send({
+    //     renderer: drawpolygon.geoRenderer(size, "#E7AD9F"),
+    //     content: result
+    // });
+}
+
+
 const getcolumndecoration = async (req, res, next) => {
     const columndecoration = await Column_Decoration.find();
-    const result = await draw(columndecoration, 0.05);
     const size = await getsize("columndecorationsize")
+    const result = await draw(columndecoration, 0.05,size);
     res.send({
         renderer: drawpolygon.geoRenderer(size, "#E7AD9F"),
         content: result
@@ -179,8 +165,8 @@ const getcolumndecoration = async (req, res, next) => {
 
 const getdoor = async (req, res, next) => {
     const door = await Door.find();
-    const result = await draw(door, 0.05);
     const size = await getsize("doorsize")
+    const result = await draw(door, 0.05,size);
     res.send({
         renderer: drawpolygon.geoRenderer(size, "#E7AD9F"),
         content: result
@@ -189,8 +175,8 @@ const getdoor = async (req, res, next) => {
 
 const getstep = async (req, res, next) => {
     const step = await Steps.find();
-    const result = await draw(step, 0.0005);
     const size = await getsize("stepsize")
+    const result = await draw(step, 0.0005,size);
     res.send({
         renderer: drawpolygon.geoRenderer(size, "#E7AD9F"),
         content: result
@@ -210,18 +196,18 @@ const getFence = async (req, res, next) => {
         const length = listData[i].IDP.Length; // chiều dài hàng rào
         const width = listData[i].IDP.Width; //chiều rộng hàng rào
         const height = listData[i].IDP.Height; // chiều cao hàng rào
-        const altitude = [node.z,node.z-0.01,node.z,node.z,node.z] // độ cao so với mực nước biển
+        const altitude = [node.z,node.z-0.03,node.z,node.z,node.z] // độ cao so với mực nước biển
         const nFence = listData[i].Count_CrossBar; //số lượng các cột
 
         const tmp = drawpolygon.getFence(startPoint, bearing, length, width, height, altitude, nFence);
 
         const fenceX = drawpolygon.geoTemplate();
         tmp.fenceX.forEach(e => fenceX["features"].push(
-            drawpolygon.geoTemplateData("Không tên", [e])
+            drawpolygon.geoTemplateData("Hàng rào", [e])
         ))
         const fenceY = drawpolygon.geoTemplate();
         tmp.fenceY.forEach(e => fenceY["features"].push(
-            drawpolygon.geoTemplateData("Không tên", [e])
+            drawpolygon.geoTemplateData("Hàng rào", [e])
         ))
 
         result.push([{
@@ -314,7 +300,7 @@ const createpolygon = async (req, res, next) => {
         case "Column_Decoration": {
             let columndecoration = new Column_Decoration({
                 Name,
-                IDC: column._id,
+                IDC: column,
                 IDP: polygoninfo._id,
             });
             await columndecoration.save();
@@ -323,7 +309,7 @@ const createpolygon = async (req, res, next) => {
         case "Door": {
             let door = new Door({
                 Name,
-                IDW: wall._id,
+                IDW: wall,
                 IDP: polygoninfo._id,
             });
             await door.save();
@@ -341,8 +327,9 @@ const createpolygon = async (req, res, next) => {
         case "Roof": {
             let roof = new Roof({
                 Name,
-                IDW: wall._id,
-                IDFL: floor
+                IDW: wall,
+                IDFL: floor,
+                IDP: polygoninfo._id,
             });
             await roof.save();
             break;
@@ -449,7 +436,7 @@ const createfence = async (req, res, next) => {
     const polygoninfo = await polygon.save();
     let fence = new Fence({
         Name: "Fence",
-        IDC: column._id,
+        IDC: column,
         IDP: polygoninfo._id,
         Count_CrossBar: Count,
         Count_Jamb: Count
@@ -541,6 +528,14 @@ const getsize = async (typesize) => {
                 return stepsize;
             }
         }
+        case "roofsize": {
+            if (await Roof.count() != 0) {
+                const roofsinfo = await Roof.find();
+                const roofinfo = await Polygon.findById(roofsinfo[0].IDP);
+                roofsize = roofinfo.Height;
+                return roofsize;
+            }
+        }
     }
 }
 
@@ -558,5 +553,6 @@ module.exports = {
     getcolumndecoration,
     getdoor,
     getstep,
-    createfence
+    getroof,
+    createfence,
 }
