@@ -129,6 +129,10 @@
             esriRequest('http://localhost:3000/data/roofbrick').then(function (response) {
                 map.add(generateLayer(response.data))
             });
+
+            esriRequest('http://localhost:3000/data/door').then(function (response) {
+                map.add(generateLayer(response.data))
+            });
             view.popup.defaultPopupTemplateEnabled = true;
         });
     </script>
