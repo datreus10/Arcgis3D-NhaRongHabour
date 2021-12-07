@@ -708,6 +708,7 @@ const updateitem = async(req, res, next) => {
         polygoninfo = await Polygon.findById(iteminfo.IDP);
         await Polygon.findByIdAndRemove(iteminfo.IDP);
         await Node.findByIdAndRemove(polygoninfo.IDN);
+        res.redirect("/admin");
     } else {
         if (type == "Floor") {
             iteminfo = await Floor.findById(item);
@@ -746,7 +747,6 @@ const updateitem = async(req, res, next) => {
         nodeinfo = await Node.findById(polygoninfo.IDN);
         itemselected.lnglat = nodeinfo.x + "," + nodeinfo.y;
         itemselected.Altitude = nodeinfo.z;
-        console.log(itemselected);
         res.render("Updateitem", { item: itemselected });
     }
 };
