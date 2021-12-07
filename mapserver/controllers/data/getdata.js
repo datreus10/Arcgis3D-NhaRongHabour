@@ -100,9 +100,40 @@ const getcolumn = async(req, res, next) => {
 const getwall = async(req, res, next) => {
     const wall = await Wall.find();
     const size = await getsize("wallsize");
-    const result = await draw(wall, 0.5, size);
+    const result = await draw(wall, 0.4, size);
     res.send({
         renderer: drawpolygon.geoRenderer(size, "#E7AD9F"),
+        content: result,
+    });
+};
+
+
+const getfloordecoration = async(req, res, next) => {
+    const floordecoration = await Floor_Decoration.find();
+    const size = await getsize("floordecorationsize");
+    const result = await draw(floordecoration, 0.5, size);
+    res.send({
+        renderer: drawpolygon.geoRenderer(size, "#ffffff"),
+        content: result,
+    });
+};
+
+const getfloorbrick = async(req, res, next) => {
+    const floorbrick = await Floor_Brick.find();
+    const size = await getsize("floorbricksize");
+    const result = await draw(floorbrick, 0.5, size);
+    res.send({
+        renderer: drawpolygon.geoRenderer(size, "rgb(222, 222, 222)"),
+        content: result,
+    });
+};
+
+const getroofbrick = async(req, res, next) => {
+    const roofbrick = await Roof_Brick.find();
+    const size = await getsize("roofbricksize");
+    const result = await draw(roofbrick, 0.5, size);
+    res.send({
+        renderer: drawpolygon.geoRenderer(size, "#fda265"),
         content: result,
     });
 };
@@ -142,7 +173,7 @@ const getstep = async(req, res, next) => {
     const size = await getsize("stepsize");
     const result = await draw(step, 0.0005, size);
     res.send({
-        renderer: drawpolygon.geoRenderer(size, "#E7AD9F"),
+        renderer: drawpolygon.geoRenderer(size, "rgb(222, 222, 222)"),
         content: result,
     });
 };
@@ -193,6 +224,8 @@ const getFence = async(req, res, next) => {
 
     res.send(result);
 };
+
+
 
 const getcircular_decoration = async(req, res, next) => {
     const circulardecoration = await Circular_Decoration.find();
@@ -479,6 +512,15 @@ const getsize = async(typesize) => {
                     return floorbricksize;
                 }
             }
+        case "floordecorationsize":
+                {
+                    if ((await Floor_Decoration.count()) != 0) {
+                        const floordecorationsinfo = await Floor_Decoration.find();
+                        const floordecorationinfo = await Polygon.findById(floordecorationsinfo[0].IDP);
+                        floordecorationsize = floordecorationinfo.Height;
+                        return floordecorationsize;
+                    }
+                }
         case "roofbricksize":
             {
                 if ((await Roof_Brick.count()) != 0) {
@@ -624,43 +666,43 @@ const updateitem = async(req, res, next) => {
     };
     if (method == "remove") {
         if (type == "Floor") {
-            iteminfo = Floor.findById(item);
+            iteminfo =await Floor.findById(item);
             await Floor.findByIdAndRemove(item);
         } else if (type == "Steps") {
-            iteminfo = Steps.findById(item);
+            iteminfo =await Steps.findById(item);
             await Steps.findByIdAndRemove(item);
         } else if (type == "Column") {
-            iteminfo = Column.findById(item);
+            iteminfo =await Column.findById(item);
             await Column.findByIdAndRemove(item);
         } else if (type == "Door") {
-            iteminfo = Door.findById(item);
+            iteminfo =await Door.findById(item);
             await Door.findByIdAndRemove(item);
         } else if (type == "Roof_Brick") {
-            iteminfo = Roof_Brick.findById(item);
+            iteminfo =await Roof_Brick.findById(item);
             await Roof_Brick.findByIdAndRemove(item);
         } else if (type == "Floor_Brick") {
-            iteminfo = Floor_Brick.findById(item);
+            iteminfo =await Floor_Brick.findById(item);
             await Floor_Brick.findByIdAndRemove(item);
         } else if (type == "Roof") {
-            iteminfo = Roof.findById(item);
+            iteminfo =await Roof.findById(item);
             await Roof.findByIdAndRemove(item);
         } else if (type == "Wall") {
-            iteminfo = Wall.findById(item);
+            iteminfo =await Wall.findById(item);
             await Wall.findByIdAndRemove(item);
         } else if (type == "Floor_Decoration") {
-            iteminfo = Floor_Decoration.findById(item);
+            iteminfo =await Floor_Decoration.findById(item);
             await Floor_Decoration.findByIdAndRemove(item);
         } else if (type == "Column_Decoration") {
-            iteminfo = Column_Decoration.findById(item);
+            iteminfo =await Column_Decoration.findById(item);
             await Column_Decoration.findByIdAndRemove(item);
         } else if (type == "Roof_Decoration") {
-            iteminfo = Roof_Decoration.findById(item);
+            iteminfo =await Roof_Decoration.findById(item);
             await Roof_Decoration.findByIdAndRemove(item);
         } else if (type == "Circular_Decoration") {
-            iteminfo = Circular_Decoration.findById(item);
+            iteminfo =await Circular_Decoration.findById(item);
             await Circular_Decoration.findByIdAndRemove(item);
         } else if (type == "Fence") {
-            iteminfo = Fence.findById(item);
+            iteminfo =await Fence.findById(item);
             await Fence.findByIdAndRemove(item);
         }
         polygoninfo = await Polygon.findById(iteminfo.IDP);
@@ -715,43 +757,43 @@ const update = async(req, res, next) => {
     let xy = lnglat.split(",");
     if (type == "Floor") {
         await Floor.findByIdAndUpdate(itemid, { Name: Name });
-        iteminfo = Floor.findById(itemid);
+        iteminfo =await Floor.findById(itemid);
     } else if (type == "Steps") {
         await Steps.findByIdAndUpdate(itemid, { Name: Name });
-        iteminfo = Steps.findById(itemid);
+        iteminfo =await Steps.findById(itemid);
     } else if (type == "Column") {
         await Column.findByIdAndUpdate(itemid, { Name: Name });
-        iteminfo = Column.findById(itemid);
+        iteminfo =await Column.findById(itemid);
     } else if (type == "Door") {
         await Door.findByIdAndUpdate(itemid, { Name: Name });
-        iteminfo = Door.findById(itemid);
+        iteminfo =await Door.findById(itemid);
     } else if (type == "Roof_Brick") {
         await Roof_Brick.findByIdAndUpdate(itemid, { Name: Name });
-        iteminfo = Roof_Brick.findById(itemid);
+        iteminfo =await Roof_Brick.findById(itemid);
     } else if (type == "Floor_Brick") {
         await Floor_Brick.findByIdAndUpdate(itemid, { Name: Name });
-        iteminfo = Floor_Brick.findById(itemid);
+        iteminfo =await Floor_Brick.findById(itemid);
     } else if (type == "Roof") {
         await Roof.findByIdAndUpdate(itemid, { Name: Name });
-        iteminfo = Roof.findById(itemid);
+        iteminfo =await Roof.findById(itemid);
     } else if (type == "Wall") {
         await Wall.findByIdAndUpdate(itemid, { Name: Name });
-        iteminfo = Wall.findById(itemid);
+        iteminfo =await Wall.findById(itemid);
     } else if (type == "Floor_Decoration") {
         await Floor_Decoration.findByIdAndUpdate(itemid, { Name: Name });
-        iteminfo = Floor_Decoration.findById(itemid);
+        iteminfo =await Floor_Decoration.findById(itemid);
     } else if (type == "Column_Decoration") {
         await Column_Decoration.findByIdAndUpdate(itemid, { Name: Name });
-        iteminfo = Column_Decoration.findById(itemid);
+        iteminfo =await Column_Decoration.findById(itemid);
     } else if (type == "Roof_Decoration") {
         await Roof_Decoration.findByIdAndUpdate(itemid, { Name: Name });
-        iteminfo = Roof_Decoration.findById(itemid);
+        iteminfo =await Roof_Decoration.findById(itemid);
     } else if (type == "Circular_Decoration") {
         await Circular_Decoration.findByIdAndUpdate(itemid, { Name: Name });
-        iteminfo = Circular_Decoration.findById(itemid);
+        iteminfo =await Circular_Decoration.findById(itemid);
     } else if (type == "Fence") {
         await Fence.findByIdAndUpdate(itemid, { Name: Name });
-        iteminfo = Fence.findById(itemid);
+        iteminfo =await Fence.findById(itemid);
     }
     polygoninfo = await Polygon.findById(iteminfo.IDP);
     await Polygon.findByIdAndUpdate(iteminfo.IDP, {
@@ -777,6 +819,9 @@ module.exports = {
     getdoor,
     getstep,
     getroof,
+    getfloordecoration,
+    getfloorbrick,
+    getroofbrick,
     createfence,
     searchitemupdate,
     updateitem,

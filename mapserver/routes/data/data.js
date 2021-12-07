@@ -11,6 +11,9 @@ var {
     createpolygon,
     createcirculation,
     getFence,
+    getfloordecoration,
+    getfloorbrick,
+    getroofbrick,
     createfence,
     searchitemupdate,
     updateitem,
@@ -29,6 +32,10 @@ router.get('/columndecoration',getcolumndecoration);
 router.get('/door',getdoor);
 router.get('/step',getstep);
 router.get('/roof',getroof);
+router.get('/floordecoration',getfloordecoration);
+router.get('/floorbrick',getfloorbrick);
+router.get('/roofbrick',getroofbrick);
+
 
 router.post('/createpolygon', createpolygon);
 router.post('/createcirculation', createcirculation);
