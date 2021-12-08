@@ -160,7 +160,7 @@ const getcolumndecoration = async(req, res, next) => {
 const getdoor = async(req, res, next) => {
     const door = await Door.find();
     const size = await getsize("doorsize");
-    const result = await draw(door, 0.05, size);
+    const result = await draw(door, 0.03, size);
     res.send({
         renderer: drawpolygon.geoRenderer(size, "#603A29"),
         content: result,
