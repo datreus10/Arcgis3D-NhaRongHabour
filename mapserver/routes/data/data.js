@@ -11,7 +11,13 @@ var {
     createpolygon,
     createcirculation,
     getFence,
-    createfence
+    getfloordecoration,
+    getfloorbrick,
+    getroofbrick,
+    createfence,
+    searchitemupdate,
+    updateitem,
+    update
 } = require('../../controllers/data/getdata');
 var router = express.Router();
 
@@ -26,10 +32,18 @@ router.get('/columndecoration',getcolumndecoration);
 router.get('/door',getdoor);
 router.get('/step',getstep);
 router.get('/roof',getroof);
+router.get('/floordecoration',getfloordecoration);
+router.get('/floorbrick',getfloorbrick);
+router.get('/roofbrick',getroofbrick);
+
 
 router.post('/createpolygon', createpolygon);
 router.post('/createcirculation', createcirculation);
 router.post('/createfence', createfence);
+
+router.post('/searchitemupdate', searchitemupdate);
+router.post('/updateitem',updateitem);
+router.post('/update',update);
 
 
 module.exports = router;

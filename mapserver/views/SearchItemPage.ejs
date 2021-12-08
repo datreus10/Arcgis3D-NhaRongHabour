@@ -38,18 +38,17 @@
                     </a>
                 </li>
                 <li>
-                    <a class="isActive" href="/admin/admin_fence">
+                    <a href="/admin/admin_fence">
                         <span class="icon"><i class="fas fa-dungeon"></i></span>
                         <span class="title">Chỉnh sửa hàng rào</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/admin/admin_update">
+                    <a class="isActive" href="/admin/admin_update">
                         <span class="icon"><i class="fas fa-folder-minus"></i></span>
                         <span class="title">Xóa, sửa BNR</span>
                     </a>
                 </li>
-            </ul>
         </div>
 
         <div class="main">
@@ -71,66 +70,38 @@
                 <div class="productInfo">
                     <div class="Info-details">
                         <div class="cardHeader">
-                            <h2 class="title">Chỉnh sửa hàng rào</h2>
+                            <h2 class="title">Chỉnh sửa</h2>
                         </div>
-                        <form action="/data/createfence" method="post" name="createcirculation">
+                        <form action="/data/updateitem" method="post" name="createcirculation">
                             <div class="select-parent">
                                 <!-- Chọn địa điểm -->
                                 <div class="select parent">
-                                    <select name="body" id="format">
-                                            <option selected disabled>Chọn địa điểm</option>
-                                            <% bodies.forEach(body=> { %>
-                                            <option value="<%=body.id%>"><%=body.Name%></option>
+                                    <select name="type" id="format">
+                                            <option value="<%=type%>"><%=type%></option>
+                                        </select>
+                                </div>
+                                <div class="select parent">
+                                    <select name="item" id="format">
+                                            <option selected disabled>Chọn thành phần</option>
+                                            <% listitem.forEach(item => { %>
+                                            <option value="<%=item.id%>"><%=item.Name%></option>
                                             <% }) %>
                                         </select>
                                 </div>
-                                <div class="select child detail_column">
-                                    <select name="column" id="format">
-                                            <option selected disabled>Chọn cột</option>
-                                            <% columns.forEach(column => { %>
-                                            <option value="<%=column.id%>"><%=column.Name%></option>
-                                            <% }) %>
+                                <div class="select parent">
+                                    <select name="method" id="format">
+                                            <option selected disabled>Chọn hành động</option>
+                                            <option value="update">Sửa</option>
+                                            <option value="remove">Xóa</option>
                                         </select>
                                 </div>
-                            </div>
-                            <div class="length-info">
-                                <div class="input-box">
-                                    <span class="info">Chiều dài</span>
-                                    <input type="text" placeholder="Nhập chiều dài" name="Length" required />
-                                </div>
-                                <div class="input-box">
-                                    <span class="info">Chiều rộng</span>
-                                    <input type="text" placeholder="Nhập chiều rộng" name="Width" required />
-                                </div>
-                                <div class="input-box">
-                                    <span class="info">Chiều cao</span>
-                                    <input type="text" placeholder="Nhập chiều cao" name="Height" required />
-                                </div>
-                                <div class="input-box">
-                                    <span class="info">Số cột</span>
-                                    <input type="text" placeholder="Nhập số cột" name="Count" required />
-                                </div>
-                                <div class="input-box">
-                                    <span class="info">Longitude,Latitude</span>
-                                    <input type="text" placeholder="Nhập longitude, latitude" name="lnglat" required />
-                                </div>
-                                <div class="input-box">
-                                    <span class="info">Độ</span>
-                                    <input type="text" placeholder="Nhập độ" name="Direction" required />
-                                </div>
-                                <div class="input-box">
-                                    <span class="info">Độ cao</span>
-                                    <input type="text" placeholder="Nhập độ cao" name="Altitude" required />
-                                </div>
+                                <!-- Chọn bảng tính -->
                             </div>
                             <div class="button">
-                                <input type="submit" value="Lưu" />
+                                <input type="submit" value="Thực hiện"/>
                             </div>
                         </form>
                     </div>
-                </div>
-                <div class="productResult">
-                    <h2 class="title">Kết quả</h2>
                 </div>
                 <div></div>
             </div>

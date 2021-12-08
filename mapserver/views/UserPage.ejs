@@ -110,7 +110,27 @@
             esriRequest('http://localhost:3000/data/roof').then(function (response) {
                 map.add(generateLayer(response.data))
             });
+            esriRequest('http://localhost:3000/data/step').then(function (response) {
+                map.add(generateLayer(response.data))
+            });
+
             esriRequest('http://localhost:3000/data/circular_decoration').then(function (response) {
+                map.add(generateLayer(response.data))
+            });
+            esriRequest('http://localhost:3000/data/columndecoration').then(function (response) {
+                map.add(generateLayer(response.data))
+            });
+            esriRequest('http://localhost:3000/data/floordecoration').then(function (response) {
+                map.add(generateLayer(response.data))
+            });
+            esriRequest('http://localhost:3000/data/floorbrick').then(function (response) {
+                map.add(generateLayer(response.data))
+            });
+            esriRequest('http://localhost:3000/data/roofbrick').then(function (response) {
+                map.add(generateLayer(response.data))
+            });
+
+            esriRequest('http://localhost:3000/data/door').then(function (response) {
                 map.add(generateLayer(response.data))
             });
             view.popup.defaultPopupTemplateEnabled = true;

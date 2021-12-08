@@ -38,18 +38,17 @@
                     </a>
                 </li>
                 <li>
-                    <a class="isActive" href="/admin/admin_fence">
+                    <a href="/admin/admin_fence">
                         <span class="icon"><i class="fas fa-dungeon"></i></span>
                         <span class="title">Chỉnh sửa hàng rào</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/admin/admin_update">
+                    <a class="isActive" href="/admin/admin_update">
                         <span class="icon"><i class="fas fa-folder-minus"></i></span>
                         <span class="title">Xóa, sửa BNR</span>
                     </a>
                 </li>
-            </ul>
         </div>
 
         <div class="main">
@@ -71,66 +70,54 @@
                 <div class="productInfo">
                     <div class="Info-details">
                         <div class="cardHeader">
-                            <h2 class="title">Chỉnh sửa hàng rào</h2>
+                            <h2 class="title">Chỉnh sửa <%=item.Name%></h2>
                         </div>
-                        <form action="/data/createfence" method="post" name="createcirculation">
-                            <div class="select-parent">
-                                <!-- Chọn địa điểm -->
-                                <div class="select parent">
-                                    <select name="body" id="format">
-                                            <option selected disabled>Chọn địa điểm</option>
-                                            <% bodies.forEach(body=> { %>
-                                            <option value="<%=body.id%>"><%=body.Name%></option>
-                                            <% }) %>
-                                        </select>
-                                </div>
-                                <div class="select child detail_column">
-                                    <select name="column" id="format">
-                                            <option selected disabled>Chọn cột</option>
-                                            <% columns.forEach(column => { %>
-                                            <option value="<%=column.id%>"><%=column.Name%></option>
-                                            <% }) %>
-                                        </select>
-                                </div>
+                        <form action="/data/update" method="post" name="createcirculation">
+                            <div class="select parent">
+                                <select name="itemid" id="format">
+                                        <option value=<%=item.Id%>><%=item.Id%></option>
+                                    </select>
+                            </div>
+                            <div class="select parent">
+                                <select name="type" id="format">
+                                        <option value="<%=item.type%>"><%=item.type%></option>
+                                    </select>
                             </div>
                             <div class="length-info">
                                 <div class="input-box">
                                     <span class="info">Chiều dài</span>
-                                    <input type="text" placeholder="Nhập chiều dài" name="Length" required />
+                                    <input type="text" placeholder="Nhập chiều dài" value="<%=item.Length%>" name="Length" required/>
                                 </div>
                                 <div class="input-box">
                                     <span class="info">Chiều rộng</span>
-                                    <input type="text" placeholder="Nhập chiều rộng" name="Width" required />
+                                    <input type="text" placeholder="Nhập chiều rộng" value="<%=item.Width%>" name="Width" required />
                                 </div>
                                 <div class="input-box">
                                     <span class="info">Chiều cao</span>
-                                    <input type="text" placeholder="Nhập chiều cao" name="Height" required />
+                                    <input type="text" placeholder="Nhập chiều cao"  value="<%=item.Height%>" name="Height" required />
                                 </div>
                                 <div class="input-box">
                                     <span class="info">Số cột</span>
-                                    <input type="text" placeholder="Nhập số cột" name="Count" required />
+                                    <input type="text" placeholder="Nhập số cột" value="<%=item.Count%>"  name="Count" required />
                                 </div>
                                 <div class="input-box">
                                     <span class="info">Longitude,Latitude</span>
-                                    <input type="text" placeholder="Nhập longitude, latitude" name="lnglat" required />
+                                    <input type="text" placeholder="Nhập longitude, latitude" value="<%=item.lnglat%>" name="lnglat" required />
                                 </div>
                                 <div class="input-box">
                                     <span class="info">Độ</span>
-                                    <input type="text" placeholder="Nhập độ" name="Direction" required />
+                                    <input type="text" placeholder="Nhập độ" name="Direction" value="<%=item.Direction%>" required />
                                 </div>
                                 <div class="input-box">
                                     <span class="info">Độ cao</span>
-                                    <input type="text" placeholder="Nhập độ cao" name="Altitude" required />
+                                    <input type="text" placeholder="Nhập độ cao" name="Altitude" value="<%=item.Altitude%>" required />
                                 </div>
                             </div>
                             <div class="button">
-                                <input type="submit" value="Lưu" />
+                                <input type="submit" value="Chỉnh sửa"/>
                             </div>
                         </form>
                     </div>
-                </div>
-                <div class="productResult">
-                    <h2 class="title">Kết quả</h2>
                 </div>
                 <div></div>
             </div>
