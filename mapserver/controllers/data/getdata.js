@@ -123,7 +123,7 @@ const drawellipse = async (drawitem, index) => {
 
 const getfloor = async (req, res, next) => {
     const floors = await Floor.find();
-    const size = await getsize("sizefloor");
+    const size = await getsize("floorsize");
     const result = await draw(floors, 0.5, size);
     res.send({
         renderer: drawpolygon.geoRenderer(size, "#E7AD9F"),
