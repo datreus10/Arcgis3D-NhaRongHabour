@@ -101,7 +101,7 @@ const drawellipse = async (drawitem, index) => {
             polygon.Direction, polygon.Length, polygon.Width, polygon.Height, drawitem[i].Count, node.z
         )
         listbox.push(ellipseA);
-        console.log(node.z);
+        
         listname.push(drawitem[i].Name);
     }
     const result = drawpolygon.geoTemplate()
@@ -143,13 +143,35 @@ const getwall = async (req, res, next) => {
 }
 
 const getroof = async (req, res, next) => {
-    // const roof = await Roof.find();
-    // const size = await getsize("roofsize")
-    // const result = await draw(roof, 6,size);
-    // res.send({
-    //     renderer: drawpolygon.geoRenderer(size, "#E7AD9F"),
-    //     content: result
-    // });
+    const roof = await Roof.find();
+    const size = await getsize("roofsize")
+
+
+    let listbox = [];
+    let listname = [];
+    for (let i = 0; i < roof.length; i++) {
+        const polygon = await Polygon.findById(roof[i].IDP);
+        const node = await Node.findById(polygon.IDN);
+        const boxA = drawpolygon.getHinhThang(
+            [node.x, node.y],
+            polygon.Direction, polygon.Length, polygon.Width, 
+            [node.z , node.z-0.5, node.z+1-0.5, node.z+1, node.z],
+            70
+        )
+        listbox.push(boxA);
+        listname.push(roof[i].Name);
+    }
+    const result = drawpolygon.geoTemplate()
+    listbox.forEach((box, index) => {
+        result["features"].push(
+            drawpolygon.geoTemplateData(listname[index] != null ? listname[index] : "Không tên", [box],size)
+        )
+    })
+
+    res.send({
+        renderer: drawpolygon.geoRenderer(size, "blue"),
+        content: result
+    });
 }
 
 
