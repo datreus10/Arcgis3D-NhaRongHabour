@@ -200,6 +200,8 @@ const getroof = async (req, res, next) => {
         const width1 = width / 2;
         const width2 = width - width1;
         const altitude = rf.IDP.IDN.z;
+
+        // Mái ngang
         const roofA = drawpolygon.getHinhThang(
             [rf.IDP.IDN.x, rf.IDP.IDN.y],
             rf.IDP.Direction, rf.IDP.Length, width1,
@@ -220,13 +222,28 @@ const getroof = async (req, res, next) => {
             roofB[3]
         ];
         const roofD = [
-            roofC[3],roofC[2],
-            [...drawpolygon.getPoint(roofA[1], 336, rf.IDP.Width),altitude-0.9],
-            [...drawpolygon.getPoint(roofA[0], 336, rf.IDP.Width),altitude-0.5],
+            roofC[3], roofC[2],
+            [...drawpolygon.getPoint(roofA[1], 336, rf.IDP.Width), altitude - 0.9],
+            [...drawpolygon.getPoint(roofA[0], 336, rf.IDP.Width), altitude - 0.5],
             roofC[3]
         ]
-        listbox.push(roofA, roofB, roofC,roofD);
-        listname.push(rf.Name, rf.Name, rf.Name,rf.Name);
+
+        // Mái dọc
+        const roofE1 = [
+            roofA[0], roofA[3], roofC[3], roofD[3], roofA[0]
+        ]
+        const roofE2 = [
+            roofB[0], roofB[3], roofC[3], roofB[0]
+        ]
+        const roofF1=[
+            roofA[1],roofA[2],roofC[2],roofD[2],roofA[1]
+        ]
+        const roofF2=[
+            roofB[1], roofB[2], roofC[2], roofB[1]
+        ]
+
+        listbox.push(roofA, roofB, roofC, roofD, roofE1, roofE2,roofF1,roofF2);
+        listname.push("Mái ngang A", "Mái ngang B", "Mái ngang C", "Mái ngang D", "Mái dọc E1", "Mái dọc E2","Mái dọc F1","Mái dọc F2");
     }
     const result = drawpolygon.geoTemplate()
     listbox.forEach((box, index) => {
@@ -236,7 +253,7 @@ const getroof = async (req, res, next) => {
     })
 
     res.send({
-        renderer: drawpolygon.geoRenderer(size, "red"),
+        renderer: drawpolygon.geoRenderer(size, "#fc9258"),
         content: result
     });
 }
