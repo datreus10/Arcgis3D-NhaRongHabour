@@ -81,6 +81,9 @@ const getBox = (startPoint, bearing, length, width, heights) => {
     return rect.map((e, i) => [e[0], e[1], i < heights.length ? heights[i] : heights[heights.length - 1]])
 }
 
+const getPoint = (startPoint, bearing, length)=>{
+   return getArrayFromPoint(geolib.computeDestinationPoint(getPointFromArray(startPoint), length, bearing));
+}
 
 const getEllipse = (startPoint, bearing, length, width, height, nPoint, offset) => {
     startPoint = getPointFromArray(startPoint)
@@ -144,5 +147,6 @@ module.exports = {
     getEllipse,
     geoRenderer,
     getFence,
-    getHinhThang
+    getHinhThang,
+    getPoint
 }
