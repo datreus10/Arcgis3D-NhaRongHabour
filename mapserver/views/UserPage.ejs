@@ -108,7 +108,10 @@
                 map.add(generateLayer(response.data))
             });
             esriRequest('http://localhost:3000/data/roof').then(function (response) {
-                map.add(generateLayer(response.data))
+                response.data.forEach(e => {
+                    map.add(generateLayer(e[0]))
+                    map.add(generateLayer(e[1]))
+                })
             });
             esriRequest('http://localhost:3000/data/step').then(function (response) {
                 map.add(generateLayer(response.data))

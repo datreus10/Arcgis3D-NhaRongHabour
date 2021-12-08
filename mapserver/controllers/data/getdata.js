@@ -182,20 +182,17 @@ const getroofbrick = async (req, res, next) => {
 };
 
 const getroof = async (req, res, next) => {
-    const roof = await Roof.find().populate({
+    const roofs = await Roof.find().populate({
         path: 'IDP',
         populate: {
             path: 'IDN'
         }
     });
     const size = await getsize("roofsize")
+    const result = [];
 
-
-
-    let listbox = [];
-    let listname = [];
-    for (let i = 0; i < roof.length; i++) {
-        const rf = roof[i];
+    for (let i = 0; i < roofs.length; i++) {
+        const rf = roofs[i];
         const width = rf.IDP.Width / 2;
         const width1 = width / 2;
         const width2 = width - width1;
@@ -235,27 +232,67 @@ const getroof = async (req, res, next) => {
         const roofE2 = [
             roofB[0], roofB[3], roofC[3], roofB[0]
         ]
-        const roofF1=[
-            roofA[1],roofA[2],roofC[2],roofD[2],roofA[1]
+        const roofF1 = [
+            roofA[1], roofA[2], roofC[2], roofD[2], roofA[1]
         ]
-        const roofF2=[
+        const roofF2 = [
             roofB[1], roofB[2], roofC[2], roofB[1]
         ]
 
-        listbox.push(roofA, roofB, roofC, roofD, roofE1, roofE2,roofF1,roofF2);
-        listname.push("Mái ngang A", "Mái ngang B", "Mái ngang C", "Mái ngang D", "Mái dọc E1", "Mái dọc E2","Mái dọc F1","Mái dọc F2");
-    }
-    const result = drawpolygon.geoTemplate()
-    listbox.forEach((box, index) => {
-        result["features"].push(
-            drawpolygon.geoTemplateData(listname[index] != null ? listname[index] : "Không tên", [box], size)
-        )
-    })
+        // Trang trí
+        const thick = 0.8
+        const decoA1 = [
+            roofA[0],
+            [...drawpolygon.getPoint(roofA[0], 66, thick), roofA[0][2]],
+            [...drawpolygon.getPoint(roofA[3], 66, thick), roofA[3][2]],
+            [...drawpolygon.getPoint(roofB[0], 66, thick), roofB[0][2]],
+            [...drawpolygon.getPoint(roofB[3], 66, thick), roofB[3][2]],
+            [...drawpolygon.getPoint(roofC[3], 66, thick), roofC[3][2]],
+            [...drawpolygon.getPoint(roofD[3], 66, thick), roofD[3][2]],
+            roofD[3], roofC[3], roofC[0], roofB[0], roofA[3], roofA[0]
+        ]
+        const decoA2 = [
+            [...drawpolygon.getPoint(roofA[1], 246, thick), roofA[1][2]],
+            roofA[1], roofA[2], roofB[2], roofC[2], roofD[2],
+            [...drawpolygon.getPoint(roofD[2], 246, thick), roofD[2][2]],
+            [...drawpolygon.getPoint(roofD[1], 246, thick), roofD[1][2]],
+            [...drawpolygon.getPoint(roofC[1], 246, thick), roofC[2][2]],
+            [...drawpolygon.getPoint(roofB[2], 246, thick), roofB[2][2]],
+            [...drawpolygon.getPoint(roofA[2], 246, thick), roofA[2][2]],
+            [...drawpolygon.getPoint(roofA[1], 246, thick), roofA[1][2]]
+        ]
 
-    res.send({
-        renderer: drawpolygon.geoRenderer(size, "#fc9258"),
-        content: result
-    });
+
+
+        const roof = drawpolygon.geoTemplate();
+        roof["features"].push(
+            drawpolygon.geoTemplateData("Mái ngang A", [roofA]),
+            drawpolygon.geoTemplateData("Mái ngang B", [roofB]),
+            drawpolygon.geoTemplateData("Mái ngang C", [roofC]),
+            drawpolygon.geoTemplateData("Mái ngang D", [roofD]),
+            drawpolygon.geoTemplateData("Mái dọc E1", [roofE1]),
+            drawpolygon.geoTemplateData("Mái dọc E2", [roofE2]),
+            drawpolygon.geoTemplateData("Mái dọc F1", [roofF1]),
+            drawpolygon.geoTemplateData("Mái dọc F2", [roofF2])
+        )
+        const deco = drawpolygon.geoTemplate();
+        deco["features"].push(
+            drawpolygon.geoTemplateData("Trang trí A1", [decoA1]),
+            drawpolygon.geoTemplateData("Trang trí A2", [decoA2])
+        )
+
+        result.push([{
+                renderer: drawpolygon.geoRenderer(size, "#fc9258"),
+                content: roof,
+            },
+            {
+                renderer: drawpolygon.geoRenderer(size + 0.05, "white"),
+                content: deco
+            },
+        ]);
+    }
+    res.send(result);
+
 }
 
 
