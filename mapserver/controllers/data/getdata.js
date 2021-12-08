@@ -70,6 +70,7 @@ const {
 const draw = async (drawitem, index, height) => {
     let listbox = [];
     let listname = [];
+    let listid = [];
     for (let i = 0; i < drawitem.length; i++) {
         const polygon = await Polygon.findById(drawitem[i].IDP);
         const node = await Node.findById(polygon.IDN);
@@ -81,13 +82,15 @@ const draw = async (drawitem, index, height) => {
         );
         listbox.push(boxA);
         listname.push(drawitem[i].Name);
+        listid.push(drawitem[i]._id)
     }
     const result = drawpolygon.geoTemplate();
     listbox.forEach((box, index) => {
         result["features"].push(
             drawpolygon.geoTemplateData(
                 listname[index] != null ? listname[index] : "Không tên", [box],
-                height
+                height,
+                listid[index]
             )
         );
     });
@@ -97,6 +100,7 @@ const draw = async (drawitem, index, height) => {
 const drawellipse = async (drawitem, index) => {
     let listbox = [];
     let listname = [];
+    let listid = [];
     for (let i = 0; i < drawitem.length; i++) {
         const polygon = await Polygon.findById(drawitem[i].IDP);
         const node = await Node.findById(polygon.IDN);
@@ -111,11 +115,12 @@ const drawellipse = async (drawitem, index) => {
         );
         listbox.push(ellipseA);
         listname.push(drawitem[i].Name);
+        listid.push(drawitem[i]._id)
     }
     const result = drawpolygon.geoTemplate();
     listbox.forEach((ellipse, index) => {
         result["features"].push(
-            ...ellipse.map((e) => drawpolygon.geoTemplateData("Trang trí", [e]))
+            ...ellipse.map((e) => drawpolygon.geoTemplateData("Trang trí", [e],1.5,listid[index]))
         );
     });
     return result;
