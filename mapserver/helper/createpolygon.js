@@ -5,7 +5,7 @@ const {
 const geolib = require('geolib')
 
 
-const geoTemplateData = (name, data,height=0, id= 0) => {
+const geoTemplateData = (name, data, height = 0, id = 0) => {
     return {
         "type": "Feature",
         "properties": {
@@ -65,11 +65,25 @@ const getRect = (startPoint, bearing, length, width) => {
     return [startPoint, b, c, d, startPoint].map(e => [e.longitude, e.latitude])
 }
 
+const getHinhThang = (startPoint, bearing, length, width, altitude, angle = 90) => {
+    const tPoint = getPointFromArray(startPoint);
+    const b = geolib.computeDestinationPoint(tPoint, length, bearing);
+    const c = geolib.computeDestinationPoint(b, width, bearing + 180 + angle);
+    //const d = geolib.computeDestinationPoint(c, length-10, bearing +180);
+    const d = geolib.computeDestinationPoint(tPoint, width, 360 - (angle - bearing));
+
+    const tShape = [tPoint, b, c, d, tPoint].map(e => [e.longitude, e.latitude])
+    return tShape.map((e, i) => [e[0], e[1], i < altitude.length ? altitude[i] : altitude[altitude.length - 1]])
+}
+
 const getBox = (startPoint, bearing, length, width, heights) => {
     const rect = getRect(getPointFromArray(startPoint), bearing, length, width);
     return rect.map((e, i) => [e[0], e[1], i < heights.length ? heights[i] : heights[heights.length - 1]])
 }
 
+const getPoint = (startPoint, bearing, length)=>{
+   return getArrayFromPoint(geolib.computeDestinationPoint(getPointFromArray(startPoint), length, bearing));
+}
 
 const getEllipse = (startPoint, bearing, length, width, height, nPoint, offset) => {
     startPoint = getPointFromArray(startPoint)
@@ -116,7 +130,7 @@ const getFence = (startPoint, bearing, length, width, height, altitude, nFenc = 
     }
     let tmp = altitude[0]
     for (let i = 1; i < nFenc; i++) {
-        tmp +=   y + width
+        tmp += y + width
         result.fenceY.push(getBox([result.fenceY[i - 1][0][0], result.fenceY[i - 1][0][1]], bearing, length, width, [tmp]))
     }
 
@@ -130,8 +144,9 @@ module.exports = {
     getPointFromArray,
     getRect,
     getBox,
-    //createPolygon,
     getEllipse,
     geoRenderer,
-    getFence
+    getFence,
+    getHinhThang,
+    getPoint
 }

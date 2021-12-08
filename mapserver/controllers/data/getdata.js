@@ -1,29 +1,73 @@
 const drawpolygon = require("../../helper/createpolygon");
 
-const { Body } = require("../../models/Body.js");
-const { Circular_Decoration } = require("../../models/Circular_Decoration.js");
-const { Column_Cir_Decoration } = require("../../models/Column_Cir_Decoration.js");
-const { Column_Decoration } = require("../../models/Column_Decoration.js");
-const { Column_Fence } = require("../../models/Column_Fence.js");
-const { Column } = require("../../models/Column.js");
-const { Door } = require("../../models/Door.js");
-const { Face } = require("../../models/Face.js");
-const { Fence } = require("../../models/Fence.js");
-const { Floor_Brick } = require("../../models/Floor_Brick.js");
-const { Floor_Decoration } = require("../../models/Floor_Decoration.js");
-const { Floor } = require("../../models/Floor.js");
-const { Line } = require("../../models/Line.js");
-const { Node_Face } = require("../../models/Node_Face.js");
-const { Node } = require("../../models/Node.js");
-const { Point } = require("../../models/Point.js");
-const { Polygon } = require("../../models/Polygon.js");
-const { Roof_Brick } = require("../../models/Roof_Brick.js");
-const { Roof_Decoration } = require("../../models/Roof_Decoration.js");
-const { Roof } = require("../../models/Roof.js");
-const { Steps } = require("../../models/Steps.js");
-const { Wall } = require("../../models/Wall.js");
+const {
+    Body
+} = require("../../models/Body.js");
+const {
+    Circular_Decoration
+} = require("../../models/Circular_Decoration.js");
+const {
+    Column_Cir_Decoration
+} = require("../../models/Column_Cir_Decoration.js");
+const {
+    Column_Decoration
+} = require("../../models/Column_Decoration.js");
+const {
+    Column_Fence
+} = require("../../models/Column_Fence.js");
+const {
+    Column
+} = require("../../models/Column.js");
+const {
+    Door
+} = require("../../models/Door.js");
+const {
+    Face
+} = require("../../models/Face.js");
+const {
+    Fence
+} = require("../../models/Fence.js");
+const {
+    Floor_Brick
+} = require("../../models/Floor_Brick.js");
+const {
+    Floor_Decoration
+} = require("../../models/Floor_Decoration.js");
+const {
+    Floor
+} = require("../../models/Floor.js");
+const {
+    Line
+} = require("../../models/Line.js");
+const {
+    Node_Face
+} = require("../../models/Node_Face.js");
+const {
+    Node
+} = require("../../models/Node.js");
+const {
+    Point
+} = require("../../models/Point.js");
+const {
+    Polygon
+} = require("../../models/Polygon.js");
+const {
+    Roof_Brick
+} = require("../../models/Roof_Brick.js");
+const {
+    Roof_Decoration
+} = require("../../models/Roof_Decoration.js");
+const {
+    Roof
+} = require("../../models/Roof.js");
+const {
+    Steps
+} = require("../../models/Steps.js");
+const {
+    Wall
+} = require("../../models/Wall.js");
 
-const draw = async(drawitem, index, height) => {
+const draw = async (drawitem, index, height) => {
     let listbox = [];
     let listname = [];
     for (let i = 0; i < drawitem.length; i++) {
@@ -50,7 +94,7 @@ const draw = async(drawitem, index, height) => {
     return result;
 };
 
-const drawellipse = async(drawitem, index) => {
+const drawellipse = async (drawitem, index) => {
     let listbox = [];
     let listname = [];
     for (let i = 0; i < drawitem.length; i++) {
@@ -77,9 +121,9 @@ const drawellipse = async(drawitem, index) => {
     return result;
 };
 
-const getfloor = async(req, res, next) => {
+const getfloor = async (req, res, next) => {
     const floors = await Floor.find();
-    const size = await getsize("sizefloor");
+    const size = await getsize("floorsize");
     const result = await draw(floors, 0.5, size);
     res.send({
         renderer: drawpolygon.geoRenderer(size, "#E7AD9F"),
@@ -87,7 +131,7 @@ const getfloor = async(req, res, next) => {
     });
 };
 
-const getcolumn = async(req, res, next) => {
+const getcolumn = async (req, res, next) => {
     const column = await Column.find();
     const size = await getsize("columnsize");
     const result = await draw(column, 0.05, size);
@@ -97,7 +141,7 @@ const getcolumn = async(req, res, next) => {
     });
 };
 
-const getwall = async(req, res, next) => {
+const getwall = async (req, res, next) => {
     const wall = await Wall.find();
     const size = await getsize("wallsize");
     const result = await draw(wall, 0.4, size);
@@ -107,7 +151,7 @@ const getwall = async(req, res, next) => {
     });
 };
 
-const getfloordecoration = async(req, res, next) => {
+const getfloordecoration = async (req, res, next) => {
     const floordecoration = await Floor_Decoration.find();
     const size = await getsize("floordecorationsize");
     const result = await draw(floordecoration, 0.5, size);
@@ -117,7 +161,7 @@ const getfloordecoration = async(req, res, next) => {
     });
 };
 
-const getfloorbrick = async(req, res, next) => {
+const getfloorbrick = async (req, res, next) => {
     const floorbrick = await Floor_Brick.find();
     const size = await getsize("floorbricksize");
     const result = await draw(floorbrick, 0.5, size);
@@ -127,7 +171,7 @@ const getfloorbrick = async(req, res, next) => {
     });
 };
 
-const getroofbrick = async(req, res, next) => {
+const getroofbrick = async (req, res, next) => {
     const roofbrick = await Roof_Brick.find();
     const size = await getsize("roofbricksize");
     const result = await draw(roofbrick, 0.5, size);
@@ -137,17 +181,85 @@ const getroofbrick = async(req, res, next) => {
     });
 };
 
-const getroof = async(req, res, next) => {
-    // const roof = await Roof.find();
-    // const size = await getsize("roofsize")
-    // const result = await draw(roof, 6,size);
-    // res.send({
-    //     renderer: drawpolygon.geoRenderer(size, "#E7AD9F"),
-    //     content: result
-    // });
-};
+const getroof = async (req, res, next) => {
+    const roof = await Roof.find().populate({
+        path: 'IDP',
+        populate: {
+            path: 'IDN'
+        }
+    });
+    const size = await getsize("roofsize")
 
-const getcolumndecoration = async(req, res, next) => {
+
+
+    let listbox = [];
+    let listname = [];
+    for (let i = 0; i < roof.length; i++) {
+        const rf = roof[i];
+        const width = rf.IDP.Width / 2;
+        const width1 = width / 2;
+        const width2 = width - width1;
+        const altitude = rf.IDP.IDN.z;
+
+        // Mái ngang
+        const roofA = drawpolygon.getHinhThang(
+            [rf.IDP.IDN.x, rf.IDP.IDN.y],
+            rf.IDP.Direction, rf.IDP.Length, width1,
+            [altitude - 0.1, altitude - 0.5, altitude + 0.6, altitude + 0.6, altitude - 0.1],
+            60
+        );
+        const roofB = [
+            [roofA[3][0], roofA[3][1], altitude + 0.6],
+            [roofA[2][0], roofA[2][1], altitude + 0.6],
+            [...drawpolygon.getPoint(roofA[2], 336, width2), altitude + 3],
+            [...drawpolygon.getPoint(roofA[3], 336, width2), altitude + 3],
+            [roofA[3][0], roofA[3][1], altitude + 0.6]
+        ];
+        const roofC = [
+            roofB[3], roofB[2],
+            [...drawpolygon.getPoint(roofB[2], 336, width2), altitude + 0.6],
+            [...drawpolygon.getPoint(roofB[3], 336, width2), altitude + 0.6],
+            roofB[3]
+        ];
+        const roofD = [
+            roofC[3], roofC[2],
+            [...drawpolygon.getPoint(roofA[1], 336, rf.IDP.Width), altitude - 0.9],
+            [...drawpolygon.getPoint(roofA[0], 336, rf.IDP.Width), altitude - 0.5],
+            roofC[3]
+        ]
+
+        // Mái dọc
+        const roofE1 = [
+            roofA[0], roofA[3], roofC[3], roofD[3], roofA[0]
+        ]
+        const roofE2 = [
+            roofB[0], roofB[3], roofC[3], roofB[0]
+        ]
+        const roofF1=[
+            roofA[1],roofA[2],roofC[2],roofD[2],roofA[1]
+        ]
+        const roofF2=[
+            roofB[1], roofB[2], roofC[2], roofB[1]
+        ]
+
+        listbox.push(roofA, roofB, roofC, roofD, roofE1, roofE2,roofF1,roofF2);
+        listname.push("Mái ngang A", "Mái ngang B", "Mái ngang C", "Mái ngang D", "Mái dọc E1", "Mái dọc E2","Mái dọc F1","Mái dọc F2");
+    }
+    const result = drawpolygon.geoTemplate()
+    listbox.forEach((box, index) => {
+        result["features"].push(
+            drawpolygon.geoTemplateData(listname[index] != null ? listname[index] : "Không tên", [box], size)
+        )
+    })
+
+    res.send({
+        renderer: drawpolygon.geoRenderer(size, "#fc9258"),
+        content: result
+    });
+}
+
+
+const getcolumndecoration = async (req, res, next) => {
     const columndecoration = await Column_Decoration.find();
     const size = await getsize("columndecorationsize");
     const result = await draw(columndecoration, 0.02, size);
@@ -157,7 +269,7 @@ const getcolumndecoration = async(req, res, next) => {
     });
 };
 
-const getdoor = async(req, res, next) => {
+const getdoor = async (req, res, next) => {
     const door = await Door.find();
     const size = await getsize("doorsize");
     const result = await draw(door, 0.03, size);
@@ -167,7 +279,7 @@ const getdoor = async(req, res, next) => {
     });
 };
 
-const getstep = async(req, res, next) => {
+const getstep = async (req, res, next) => {
     const step = await Steps.find();
     const size = await getsize("stepsize");
     const result = await draw(step, 0.0005, size);
@@ -177,7 +289,7 @@ const getstep = async(req, res, next) => {
     });
 };
 
-const getFence = async(req, res, next) => {
+const getFence = async (req, res, next) => {
     const listData = await Fence.find().populate("IDP");
 
     const result = [];
@@ -224,7 +336,7 @@ const getFence = async(req, res, next) => {
     res.send(result);
 };
 
-const getcircular_decoration = async(req, res, next) => {
+const getcircular_decoration = async (req, res, next) => {
     const circulardecoration = await Circular_Decoration.find();
     const result = await drawellipse(circulardecoration, 0.0005);
     const size = await getsize("circulardecorationsize");
@@ -234,7 +346,7 @@ const getcircular_decoration = async(req, res, next) => {
     });
 };
 
-const createpolygon = async(req, res, next) => {
+const createpolygon = async (req, res, next) => {
     const {
         body,
         wall,
@@ -268,111 +380,111 @@ const createpolygon = async(req, res, next) => {
     });
     const polygoninfo = await polygon.save();
     switch (type) {
-        case "Floor":
-            {
-                let floor = new Floor({
-                    Name,
-                    IDP: polygoninfo._id,
-                });
-                await floor.save();
-                break;
-            }
-        case "Column":
-            {
-                let column = new Column({
-                    Name,
-                    IDP: polygoninfo._id,
-                    IDFL: floor,
-                });
-                await column.save();
-                break;
-            }
-        case "Wall":
-            {
-                let wall = new Wall({
-                    Name,
-                    IDP: polygoninfo._id,
-                    IDFL: floor,
-                });
-                await wall.save();
-                break;
-            }
-        case "Column_Decoration":
-            {
-                let columndecoration = new Column_Decoration({
-                    Name,
-                    IDC: column,
-                    IDP: polygoninfo._id,
-                });
-                await columndecoration.save();
-                break;
-            }
-        case "Door":
-            {
-                let door = new Door({
-                    Name,
-                    IDW: wall,
-                    IDP: polygoninfo._id,
-                });
-                await door.save();
-                break;
-            }
-        case "Roof_Brick":
-            {
-                let roofbrick = new Roof_Brick({
-                    Name,
-                    IDP: polygoninfo._id,
-                    IDFL: floor,
-                });
-                await roofbrick.save();
-                break;
-            }
-        case "Roof":
-            {
-                let roof = new Roof({
-                    Name,
-                    IDW: wall,
-                    IDFL: floor,
-                    IDP: polygoninfo._id,
-                });
-                await roof.save();
-                break;
-            }
-        case "Floor_Brick":
-            {
-                let floorbrick = new Floor_Brick({
-                    Name,
-                    IDP: polygoninfo._id,
-                    IDFL: floor,
-                });
-                await floorbrick.save();
-                break;
-            }
-        case "Floor_Decoration":
-            {
-                let floordecoration = new Floor_Decoration({
-                    Name,
-                    IDP: polygoninfo._id,
-                    IDFL: floor,
-                });
-                await floordecoration.save();
-                break;
-            }
-        case "Steps":
-            {
-                let step = new Steps({
-                    Name,
-                    IDP: polygoninfo._id,
-                    IDFL: floor,
-                });
-                await step.save();
-                break;
-            }
+        case "Floor": {
+            let floor = new Floor({
+                Name,
+                IDP: polygoninfo._id,
+            });
+            await floor.save();
+            break;
+        }
+        case "Column": {
+            let column = new Column({
+                Name,
+                IDP: polygoninfo._id,
+                IDFL: floor,
+            });
+            await column.save();
+            break;
+        }
+        case "Wall": {
+            let wall = new Wall({
+                Name,
+                IDP: polygoninfo._id,
+                IDFL: floor,
+            });
+            await wall.save();
+            break;
+        }
+        case "Column_Decoration": {
+            let columndecoration = new Column_Decoration({
+                Name,
+                IDC: column,
+                IDP: polygoninfo._id,
+            });
+            await columndecoration.save();
+            break;
+        }
+        case "Door": {
+            let door = new Door({
+                Name,
+                IDW: wall,
+                IDP: polygoninfo._id,
+            });
+            await door.save();
+            break;
+        }
+        case "Roof_Brick": {
+            let roofbrick = new Roof_Brick({
+                Name,
+                IDP: polygoninfo._id,
+                IDFL: floor,
+            });
+            await roofbrick.save();
+            break;
+        }
+        case "Roof": {
+            let roof = new Roof({
+                Name,
+                IDW: wall,
+                IDFL: floor,
+                IDP: polygoninfo._id,
+            });
+            await roof.save();
+            break;
+        }
+        case "Floor_Brick": {
+            let floorbrick = new Floor_Brick({
+                Name,
+                IDP: polygoninfo._id,
+                IDFL: floor,
+            });
+            await floorbrick.save();
+            break;
+        }
+        case "Floor_Decoration": {
+            let floordecoration = new Floor_Decoration({
+                Name,
+                IDP: polygoninfo._id,
+                IDFL: floor,
+            });
+            await floordecoration.save();
+            break;
+        }
+        case "Steps": {
+            let step = new Steps({
+                Name,
+                IDP: polygoninfo._id,
+                IDFL: floor,
+            });
+            await step.save();
+            break;
+        }
     }
     res.redirect("/admin");
 };
-const createcirculation = async(req, res, next) => {
-    const { body, column, Length, Width, Height, lnglat, Direction, Altitude, Count } = req.body;
+const createcirculation = async (req, res, next) => {
+    const {
+        body,
+        column,
+        Length,
+        Width,
+        Height,
+        lnglat,
+        Direction,
+        Altitude,
+        Count
+    } = req.body;
     console.log(req.body);
     startPoint = lnglat.split(",");
     let node = new Node({
@@ -401,8 +513,18 @@ const createcirculation = async(req, res, next) => {
     res.redirect("/admin/admin_circulation");
 };
 
-const createfence = async(req, res, next) => {
-    const { body, column, Length, Width, Height, lnglat, Direction, Altitude, Count } = req.body;
+const createfence = async (req, res, next) => {
+    const {
+        body,
+        column,
+        Length,
+        Width,
+        Height,
+        lnglat,
+        Direction,
+        Altitude,
+        Count
+    } = req.body;
     console.log(req.body);
     startPoint = lnglat.split(",");
     let node = new Node({
@@ -432,7 +554,7 @@ const createfence = async(req, res, next) => {
     res.redirect("/admin/Admin_fence");
 };
 
-const getsize = async(typesize) => {
+const getsize = async (typesize) => {
     let floorsize = 1;
     let columnsize = 1;
     let wallsize = 1;
@@ -442,213 +564,240 @@ const getsize = async(typesize) => {
     floorbricksize = 1;
     roofbricksize = 1;
     switch (typesize) {
-        case "floorsize":
-            {
-                if ((await Floor.count()) != 0) {
-                    const floorsinfo = await Floor.find();
-                    const floorinfo = await Polygon.findById(floorsinfo[0].IDP);
-                    floorsize = floorinfo.Height;
-                    return floorsize;
-                }
+        case "floorsize": {
+            if ((await Floor.count()) != 0) {
+                const floorsinfo = await Floor.find();
+                const floorinfo = await Polygon.findById(floorsinfo[0].IDP);
+                floorsize = floorinfo.Height;
+                return floorsize;
             }
-        case "columnsize":
-            {
-                if ((await Column.count()) != 0) {
-                    const columnsinfo = await Column.find();
-                    const columninfo = await Polygon.findById(columnsinfo[0].IDP);
-                    columnsize = columninfo.Height;
-                    return columnsize;
-                }
+        }
+        case "columnsize": {
+            if ((await Column.count()) != 0) {
+                const columnsinfo = await Column.find();
+                const columninfo = await Polygon.findById(columnsinfo[0].IDP);
+                columnsize = columninfo.Height;
+                return columnsize;
             }
-        case "wallsize":
-            {
-                if ((await Wall.count()) != 0) {
-                    const wallsinfo = await Wall.find();
-                    const wallinfo = await Polygon.findById(wallsinfo[0].IDP);
-                    wallsize = wallinfo.Height;
-                    return wallsize;
-                }
+        }
+        case "wallsize": {
+            if ((await Wall.count()) != 0) {
+                const wallsinfo = await Wall.find();
+                const wallinfo = await Polygon.findById(wallsinfo[0].IDP);
+                wallsize = wallinfo.Height;
+                return wallsize;
             }
-        case "columndecorationsize":
-            {
-                if ((await Column_Decoration.count()) != 0) {
-                    const listcolumndecorationinfo = await Column_Decoration.find();
-                    const columndecorationinfo = await Polygon.findById(
-                        listcolumndecorationinfo[0].IDP
-                    );
-                    columndecorationsize = columndecorationinfo.Height;
-                    return columndecorationsize;
-                }
+        }
+        case "columndecorationsize": {
+            if ((await Column_Decoration.count()) != 0) {
+                const listcolumndecorationinfo = await Column_Decoration.find();
+                const columndecorationinfo = await Polygon.findById(
+                    listcolumndecorationinfo[0].IDP
+                );
+                columndecorationsize = columndecorationinfo.Height;
+                return columndecorationsize;
             }
-        case "circulardecorationsize":
-            {
-                if ((await Circular_Decoration.count()) != 0) {
-                    const listcirculardecorationinfo = await Circular_Decoration.find();
-                    const circulardecorationinfo = await Polygon.findById(
-                        listcirculardecorationinfo[0].IDP
-                    );
-                    circulardecorationsize = circulardecorationinfo.Height;
-                    return circulardecorationsize;
-                }
+        }
+        case "circulardecorationsize": {
+            if ((await Circular_Decoration.count()) != 0) {
+                const listcirculardecorationinfo = await Circular_Decoration.find();
+                const circulardecorationinfo = await Polygon.findById(
+                    listcirculardecorationinfo[0].IDP
+                );
+                circulardecorationsize = circulardecorationinfo.Height;
+                return circulardecorationsize;
             }
-        case "doorsize":
-            {
-                if ((await Door.count()) != 0) {
-                    const doorsinfo = await Door.find();
-                    const doorinfo = await Polygon.findById(doorsinfo[0].IDP);
-                    doorsize = doorinfo.Height;
-                    return doorsize;
-                }
+        }
+        case "doorsize": {
+            if ((await Door.count()) != 0) {
+                const doorsinfo = await Door.find();
+                const doorinfo = await Polygon.findById(doorsinfo[0].IDP);
+                doorsize = doorinfo.Height;
+                return doorsize;
             }
-        case "floorbricksize":
-            {
-                if ((await Floor_Brick.count()) != 0) {
-                    const floorbricksinfo = await Floor_Brick.find();
-                    const floorbrickinfo = await Polygon.findById(floorbricksinfo[0].IDP);
-                    floorbricksize = floorbrickinfo.Height;
-                    return floorbricksize;
-                }
+        }
+        case "floorbricksize": {
+            if ((await Floor_Brick.count()) != 0) {
+                const floorbricksinfo = await Floor_Brick.find();
+                const floorbrickinfo = await Polygon.findById(floorbricksinfo[0].IDP);
+                floorbricksize = floorbrickinfo.Height;
+                return floorbricksize;
             }
-        case "floordecorationsize":
-            {
-                if ((await Floor_Decoration.count()) != 0) {
-                    const floordecorationsinfo = await Floor_Decoration.find();
-                    const floordecorationinfo = await Polygon.findById(floordecorationsinfo[0].IDP);
-                    floordecorationsize = floordecorationinfo.Height;
-                    return floordecorationsize;
-                }
+        }
+        case "floordecorationsize": {
+            if ((await Floor_Decoration.count()) != 0) {
+                const floordecorationsinfo = await Floor_Decoration.find();
+                const floordecorationinfo = await Polygon.findById(floordecorationsinfo[0].IDP);
+                floordecorationsize = floordecorationinfo.Height;
+                return floordecorationsize;
             }
-        case "roofbricksize":
-            {
-                if ((await Roof_Brick.count()) != 0) {
-                    const roofbricksinfo = await Roof_Brick.find();
-                    const roofbrickinfo = await Polygon.findById(roofbricksinfo[0].IDP);
-                    roofbricksize = roofbrickinfo.Height;
-                    return roofbricksize;
-                }
+        }
+        case "roofbricksize": {
+            if ((await Roof_Brick.count()) != 0) {
+                const roofbricksinfo = await Roof_Brick.find();
+                const roofbrickinfo = await Polygon.findById(roofbricksinfo[0].IDP);
+                roofbricksize = roofbrickinfo.Height;
+                return roofbricksize;
             }
-        case "stepsize":
-            {
-                if ((await Steps.count()) != 0) {
-                    const stepsinfo = await Steps.find();
-                    const stepinfo = await Polygon.findById(stepsinfo[0].IDP);
-                    stepsize = stepinfo.Height;
-                    return stepsize;
-                }
+        }
+        case "stepsize": {
+            if ((await Steps.count()) != 0) {
+                const stepsinfo = await Steps.find();
+                const stepinfo = await Polygon.findById(stepsinfo[0].IDP);
+                stepsize = stepinfo.Height;
+                return stepsize;
             }
-        case "roofsize":
-            {
-                if ((await Roof.count()) != 0) {
-                    const roofsinfo = await Roof.find();
-                    const roofinfo = await Polygon.findById(roofsinfo[0].IDP);
-                    roofsize = roofinfo.Height;
-                    return roofsize;
-                }
+        }
+        case "roofsize": {
+            if ((await Roof.count()) != 0) {
+                const roofsinfo = await Roof.find();
+                const roofinfo = await Polygon.findById(roofsinfo[0].IDP);
+                roofsize = roofinfo.Height;
+                return roofsize;
             }
+        }
     }
 };
 
-const searchitemupdate = async(req, res, next) => {
-    const { body, type } = req.body;
+const searchitemupdate = async (req, res, next) => {
+    const {
+        body,
+        type
+    } = req.body;
     let listitem = [];
-    let polygons = await Polygon.find({ IDB: body });
+    let polygons = await Polygon.find({
+        IDB: body
+    });
     if (type == "Floor") {
         for (let i = 0; i < polygons.length; i++) {
-            let itemselected = await Floor.find({ IDP: polygons[i].id });
+            let itemselected = await Floor.find({
+                IDP: polygons[i].id
+            });
             if (itemselected.length != 0) {
                 listitem.push(...itemselected);
             }
         }
     } else if (type == "Steps") {
         for (let i = 0; i < polygons.length; i++) {
-            let itemselected = await Steps.find({ IDP: polygons[i].id });
+            let itemselected = await Steps.find({
+                IDP: polygons[i].id
+            });
             if (itemselected.length != 0) {
                 listitem.push(...itemselected);
             }
         }
     } else if (type == "Column") {
         for (let i = 0; i < polygons.length; i++) {
-            let itemselected = await Column.find({ IDP: polygons[i].id });
+            let itemselected = await Column.find({
+                IDP: polygons[i].id
+            });
             if (itemselected.length != 0) {
                 listitem.push(...itemselected);
             }
         }
     } else if (type == "Door") {
         for (let i = 0; i < polygons.length; i++) {
-            let itemselected = await Door.find({ IDP: polygons[i].id });
+            let itemselected = await Door.find({
+                IDP: polygons[i].id
+            });
             if (itemselected.length != 0) {
                 listitem.push(...itemselected);
             }
         }
     } else if (type == "Roof_Brick") {
         for (let i = 0; i < polygons.length; i++) {
-            let itemselected = await Roof_Brick.find({ IDP: polygons[i].id });
+            let itemselected = await Roof_Brick.find({
+                IDP: polygons[i].id
+            });
             if (itemselected.length != 0) {
                 listitem.push(...itemselected);
             }
         }
     } else if (type == "Floor_Brick") {
         for (let i = 0; i < polygons.length; i++) {
-            let itemselected = await Floor_Brick.find({ IDP: polygons[i].id });
+            let itemselected = await Floor_Brick.find({
+                IDP: polygons[i].id
+            });
             if (itemselected.length != 0) {
                 listitem.push(...itemselected);
             }
         }
     } else if (type == "Roof") {
         for (let i = 0; i < polygons.length; i++) {
-            let itemselected = await Roof.find({ IDP: polygons[i].id });
+            let itemselected = await Roof.find({
+                IDP: polygons[i].id
+            });
             if (itemselected.length != 0) {
                 listitem.push(...itemselected);
             }
         }
     } else if (type == "Wall") {
         for (let i = 0; i < polygons.length; i++) {
-            let itemselected = await Wall.find({ IDP: polygons[i].id });
+            let itemselected = await Wall.find({
+                IDP: polygons[i].id
+            });
             if (itemselected.length != 0) {
                 listitem.push(...itemselected);
             }
         }
     } else if (type == "Floor_Decoration") {
         for (let i = 0; i < polygons.length; i++) {
-            let itemselected = await Floor_Decoration.find({ IDP: polygons[i].id });
+            let itemselected = await Floor_Decoration.find({
+                IDP: polygons[i].id
+            });
             if (itemselected.length != 0) {
                 listitem.push(...itemselected);
             }
         }
     } else if (type == "Column_Decoration") {
         for (let i = 0; i < polygons.length; i++) {
-            let itemselected = await Column_Decoration.find({ IDP: polygons[i].id });
+            let itemselected = await Column_Decoration.find({
+                IDP: polygons[i].id
+            });
             if (itemselected.length != 0) {
                 listitem.push(...itemselected);
             }
         }
     } else if (type == "Roof_Decoration") {
         for (let i = 0; i < polygons.length; i++) {
-            let itemselected = await Roof_Decoration.find({ IDP: polygons[i].id });
+            let itemselected = await Roof_Decoration.find({
+                IDP: polygons[i].id
+            });
             if (itemselected.length != 0) {
                 listitem.push(...itemselected);
             }
         }
     } else if (type == "Circular_Decoration") {
         for (let i = 0; i < polygons.length; i++) {
-            let itemselected = await Circular_Decoration.find({ IDP: polygons[i].id });
+            let itemselected = await Circular_Decoration.find({
+                IDP: polygons[i].id
+            });
             if (itemselected.length != 0) {
                 listitem.push(...itemselected);
             }
         }
     } else if (type == "Fence") {
         for (let i = 0; i < polygons.length; i++) {
-            let itemselected = await Fence.find({ IDP: polygons[i].id });
+            let itemselected = await Fence.find({
+                IDP: polygons[i].id
+            });
             if (itemselected.length != 0) {
                 listitem.push(...itemselected);
             }
         }
     }
-    res.render("SearchItemPage", { listitem: listitem, type: type });
+    res.render("SearchItemPage", {
+        listitem: listitem,
+        type: type
+    });
 };
 
-const updateitem = async(req, res, next) => {
-    const { item, method, type } = req.body;
+const updateitem = async (req, res, next) => {
+    const {
+        item,
+        method,
+        type
+    } = req.body;
     let iteminfo;
     let itemselected = {
         Id: item,
@@ -744,52 +893,90 @@ const updateitem = async(req, res, next) => {
         nodeinfo = await Node.findById(polygoninfo.IDN);
         itemselected.lnglat = nodeinfo.x + "," + nodeinfo.y;
         itemselected.Altitude = nodeinfo.z;
-        res.render("Updateitem", { item: itemselected });
+        res.render("Updateitem", {
+            item: itemselected
+        });
     }
 };
 
-const update = async(req, res, next) => {
-    const { type, itemid, Name, Length, Width, Height, lnglat, Direction, Altitude } = req.body;
+const update = async (req, res, next) => {
+    const {
+        type,
+        itemid,
+        Name,
+        Length,
+        Width,
+        Height,
+        lnglat,
+        Direction,
+        Altitude
+    } = req.body;
     let iteminfo;
     let xy = lnglat.split(",");
     if (type == "Floor") {
-        await Floor.findByIdAndUpdate(itemid, { Name: Name });
+        await Floor.findByIdAndUpdate(itemid, {
+            Name: Name
+        });
         iteminfo = await Floor.findById(itemid);
     } else if (type == "Steps") {
-        await Steps.findByIdAndUpdate(itemid, { Name: Name });
+        await Steps.findByIdAndUpdate(itemid, {
+            Name: Name
+        });
         iteminfo = await Steps.findById(itemid);
     } else if (type == "Column") {
-        await Column.findByIdAndUpdate(itemid, { Name: Name });
+        await Column.findByIdAndUpdate(itemid, {
+            Name: Name
+        });
         iteminfo = await Column.findById(itemid);
     } else if (type == "Door") {
-        await Door.findByIdAndUpdate(itemid, { Name: Name });
+        await Door.findByIdAndUpdate(itemid, {
+            Name: Name
+        });
         iteminfo = await Door.findById(itemid);
     } else if (type == "Roof_Brick") {
-        await Roof_Brick.findByIdAndUpdate(itemid, { Name: Name });
+        await Roof_Brick.findByIdAndUpdate(itemid, {
+            Name: Name
+        });
         iteminfo = await Roof_Brick.findById(itemid);
     } else if (type == "Floor_Brick") {
-        await Floor_Brick.findByIdAndUpdate(itemid, { Name: Name });
+        await Floor_Brick.findByIdAndUpdate(itemid, {
+            Name: Name
+        });
         iteminfo = await Floor_Brick.findById(itemid);
     } else if (type == "Roof") {
-        await Roof.findByIdAndUpdate(itemid, { Name: Name });
+        await Roof.findByIdAndUpdate(itemid, {
+            Name: Name
+        });
         iteminfo = await Roof.findById(itemid);
     } else if (type == "Wall") {
-        await Wall.findByIdAndUpdate(itemid, { Name: Name });
+        await Wall.findByIdAndUpdate(itemid, {
+            Name: Name
+        });
         iteminfo = await Wall.findById(itemid);
     } else if (type == "Floor_Decoration") {
-        await Floor_Decoration.findByIdAndUpdate(itemid, { Name: Name });
+        await Floor_Decoration.findByIdAndUpdate(itemid, {
+            Name: Name
+        });
         iteminfo = await Floor_Decoration.findById(itemid);
     } else if (type == "Column_Decoration") {
-        await Column_Decoration.findByIdAndUpdate(itemid, { Name: Name });
+        await Column_Decoration.findByIdAndUpdate(itemid, {
+            Name: Name
+        });
         iteminfo = await Column_Decoration.findById(itemid);
     } else if (type == "Roof_Decoration") {
-        await Roof_Decoration.findByIdAndUpdate(itemid, { Name: Name });
+        await Roof_Decoration.findByIdAndUpdate(itemid, {
+            Name: Name
+        });
         iteminfo = await Roof_Decoration.findById(itemid);
     } else if (type == "Circular_Decoration") {
-        await Circular_Decoration.findByIdAndUpdate(itemid, { Name: Name });
+        await Circular_Decoration.findByIdAndUpdate(itemid, {
+            Name: Name
+        });
         iteminfo = await Circular_Decoration.findById(itemid);
     } else if (type == "Fence") {
-        await Fence.findByIdAndUpdate(itemid, { Name: Name });
+        await Fence.findByIdAndUpdate(itemid, {
+            Name: Name
+        });
         iteminfo = await Fence.findById(itemid);
     }
     polygoninfo = await Polygon.findById(iteminfo.IDP);
@@ -799,7 +986,11 @@ const update = async(req, res, next) => {
         Height: Height,
         Direction: Direction,
     });
-    await Node.findByIdAndUpdate(polygoninfo.IDN, { x: xy[0], y: xy[1], z: Altitude });
+    await Node.findByIdAndUpdate(polygoninfo.IDN, {
+        x: xy[0],
+        y: xy[1],
+        z: Altitude
+    });
     res.redirect("/admin");
 };
 
