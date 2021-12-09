@@ -711,6 +711,16 @@ const searchitemupdate = async (req, res, next) => {
         IDB: body
     });
     if (type == "Floor") {
+        // const itemselected = await Floor.find().populate({
+        //     path: 'IDP',
+        // });
+        // for(let i = 0; i < itemselected.length;i++)
+        // {
+        //     if(itemselected[i].IDP.IDB == body)
+        //     {
+        //     listitem.push(...itemselected[i]);
+        //     }
+        // }
         for (let i = 0; i < polygons.length; i++) {
             let itemselected = await Floor.find({
                 IDP: polygons[i].id

@@ -288,10 +288,11 @@ select::-ms-expand {
 .details {
     position: relative;
     width: 100%;
+    height: 100%;
     padding: 10px;
     padding-top: 10px;
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1fr 1fr;
 }
 
 .details .productInfo {
@@ -404,6 +405,11 @@ form .button input:hover {
     background: linear-gradient(-135deg, #71b7e6, #9b59b6);
 }
 
+
+.result{
+    height: 100%;
+    width: 100%;
+}
 
 /* FORM */
 
