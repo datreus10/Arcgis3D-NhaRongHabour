@@ -24,19 +24,19 @@
                 <li>
                     <a class="isActive" href="/admin">
                         <span class="icon"><i class="fas fa-home" aria-hidden="true"></i></span>
-                        <span class="title">Chỉnh sửa cột</span>
+                        <span class="title">Thêm cột</span>
                     </a>
                 </li>
                 <li>
                     <a href="/admin/admin_circulation">
                         <span class="icon"><i class="fas fa-archway"></i></span>
-                        <span class="title">Chỉnh sửa tt hình tròn</span>
+                        <span class="title">Thêm tt hình tròn</span>
                     </a>
                 </li>
                 <li>
                     <a href="/admin/Admin_fence">
                         <span class="icon"><i class="fas fa-dungeon"></i></span>
-                        <span class="title">Chỉnh sửa hàng rào</span>
+                        <span class="title">Thêm hàng rào</span>
                     </a>
                 </li>
                 <li>
@@ -61,7 +61,10 @@
                 <!-- <div class="user">
                      <img src="../public/image/user.jpgs" /> 
                 </div> -->
-                <button class="btn-logout"><a href="/logout">Đăng xuất</a></button>
+                <div class="btns">
+                    <button class="btn-logout"><a href="/logout">Đăng xuất</a></button>
+                    <button class="btn-back"><i class="fas fa-sign-out-alt icon-log"></i><a href="/user">Về trang chủ</a></button>
+                </div>
             </div>
             <!-- Toggle ends -->
 
@@ -71,7 +74,7 @@
                     <form action="/data/createpolygon" method="post" name="createPolygon">
                         <div class="Info-details">
                             <div class="cardHeader">
-                                <h2 class="title">Chỉnh sửa nhà</h2>
+                                <h2 class="title">Thêm các thuộc tính của nhà</h2>
                             </div>
                             <div class="select-parent">
                                 <!-- Chọn địa điểm -->

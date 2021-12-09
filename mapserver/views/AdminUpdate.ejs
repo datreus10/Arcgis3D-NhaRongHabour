@@ -28,19 +28,19 @@
                 <li>
                     <a href="/admin">
                         <span class="icon"><i class="fas fa-home" aria-hidden="true"></i></span>
-                        <span class="title">Chỉnh sửa cột</span>
+                        <span class="title">Thêm cột</span>
                     </a>
                 </li>
                 <li>
                     <a href="/admin/admin_circulation">
                         <span class="icon"><i class="fas fa-archway"></i></span>
-                        <span class="title">Chỉnh sửa tt hình tròn</span>
+                        <span class="title">Thêm tt hình tròn</span>
                     </a>
                 </li>
                 <li>
                     <a href="/admin/admin_fence">
                         <span class="icon"><i class="fas fa-dungeon"></i></span>
-                        <span class="title">Chỉnh sửa hàng rào</span>
+                        <span class="title">Thêm hàng rào</span>
                     </a>
                 </li>
                 <li>
@@ -61,7 +61,10 @@
                             <i class="fas fa-search" aria-hidden="true"></i>
                         </label>
                 </div>
-                <button class="btn-logout"><a href="/logout">Đăng xuất</a></button>
+                <div class="btns">
+                    <button class="btn-logout"><a href="/logout">Đăng xuất</a></button>
+                    <button class="btn-back"><i class="fas fa-sign-out-alt icon-log"></i><a href="/user">Về trang chủ</a></button>
+                </div>
             </div>
             <!-- Toggle ends -->
 
@@ -104,39 +107,9 @@
                                 </div>
                             </div>
                             <div class="button">
-                                <input type="submit" value="Tìm kiếm"/>
+                                <input type="submit" value="Tìm kiếm" />
                             </div>
-                            <!-- <div class="length-info">
-                                <div class="input-box">
-                                    <span class="info">Chiều dài</span>
-                                    <input type="text" placeholder="Nhập chiều dài" name="Length" required />
-                                </div>
-                                <div class="input-box">
-                                    <span class="info">Chiều rộng</span>
-                                    <input type="text" placeholder="Nhập chiều rộng" name="Width" required />
-                                </div>
-                                <div class="input-box">
-                                    <span class="info">Chiều cao</span>
-                                    <input type="text" placeholder="Nhập chiều cao" name="Height" required />
-                                </div>
-                                <div class="input-box">
-                                    <span class="info">Số cột</span>
-                                    <input type="text" placeholder="Nhập số cột" name="Count" required />
-                                </div>
-                                <div class="input-box">
-                                    <span class="info">Longitude,Latitude</span>
-                                    <input type="text" placeholder="Nhập longitude, latitude" name="lnglat" required />
-                                </div>
-                                <div class="input-box">
-                                    <span class="info">Độ</span>
-                                    <input type="text" placeholder="Nhập độ" name="Direction" required />
-                                </div>
-                                <div class="input-box">
-                                    <span class="info">Độ cao</span>
-                                    <input type="text" placeholder="Nhập độ cao" name="Altitude" required />
-                                </div>
-                            </div> -->
-                            
+
                         </form>
                     </div>
                 </div>
@@ -158,7 +131,7 @@
             main.classList.toggle("active");
         }
         let details_column = document.querySelector(".select.child.detail_column");
-        details_column.style.display = "flex";
+        // details_column.style.display = "flex";
     </script>
 </body>
 

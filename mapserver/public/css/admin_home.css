@@ -186,6 +186,10 @@ body {
     object-fit: cover;
 }
 
+.btns {
+    display: flex;
+}
+
 .btn-logout {
     outline: none;
     display: block;
@@ -212,6 +216,39 @@ body {
 
 .btn-logout:active {
     background: #003659;
+}
+
+.btn-back {
+    outline: none;
+    display: block;
+    border: 0;
+    padding: 16px 30px;
+    border-radius: 30px;
+    background: #de2900;
+    font-size: 16px;
+    text-decoration: none;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s linear;
+    margin-left: 10px;
+}
+
+.btn-back a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.btn-back:hover,
+.btn-back:focus {
+    background: #8f1303;
+}
+
+.btn-back:active {
+    background: #8f1303;
+}
+
+.icon-log {
+    padding-right: 5px;
 }
 
 
@@ -315,7 +352,7 @@ select::-ms-expand {
     position: relative;
     min-height: 530px;
     background: rgb(255, 255, 255);
-    padding: 20px;
+    padding: 35px 10px;
 }
 
 .cardHeader {
@@ -405,11 +442,11 @@ form .button input:hover {
     background: linear-gradient(-135deg, #71b7e6, #9b59b6);
 }
 
-
-.result{
+.result {
     height: 100%;
     width: 100%;
 }
+
 
 /* FORM */
 
