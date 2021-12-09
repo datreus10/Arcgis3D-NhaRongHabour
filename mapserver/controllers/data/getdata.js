@@ -120,7 +120,7 @@ const drawellipse = async (drawitem, index) => {
     const result = drawpolygon.geoTemplate();
     listbox.forEach((ellipse, index) => {
         result["features"].push(
-            ...ellipse.map((e) => drawpolygon.geoTemplateData("Trang trí", [e],1.5,listid[index]))
+            ...ellipse.map((e) => drawpolygon.geoTemplateData("Trang trí", [e], 1.5, listid[index]))
         );
     });
     return result;
@@ -266,8 +266,24 @@ const getroof = async (req, res, next) => {
             [...drawpolygon.getPoint(roofA[2], 246, thick), roofA[2][2]],
             [...drawpolygon.getPoint(roofA[1], 246, thick), roofA[1][2]]
         ]
-
-
+        const decoB1 = [
+            [...drawpolygon.getPoint(roofB[0], 246, 0.04), roofB[0][2]],
+            roofB[0], roofD[0],
+            [...drawpolygon.getPoint(roofD[0], 246, 0.04), roofD[0][2]],
+            [...drawpolygon.getPoint(roofB[0], 246, 0.04), roofB[0][2]]
+        ]
+        const decoB2 = [
+            [...drawpolygon.getPoint(roofB[1], 66, 0.04), roofB[1][2]],
+            roofB[1], roofD[1],
+            [...drawpolygon.getPoint(roofD[1], 66, 0.04), roofD[1][2]],
+            [...drawpolygon.getPoint(roofB[1], 66, 0.04), roofB[1][2]]
+        ]
+        const decoC = [
+            roofB[3],
+            [...drawpolygon.getPoint(roofB[3], 156, 0.05), roofB[3][2]],
+            [...drawpolygon.getPoint(roofB[2], 156, 0.05), roofB[2][2]],
+            roofB[2], roofB[3]
+        ]
 
         const roof = drawpolygon.geoTemplate();
         roof["features"].push(
@@ -283,7 +299,10 @@ const getroof = async (req, res, next) => {
         const deco = drawpolygon.geoTemplate();
         deco["features"].push(
             drawpolygon.geoTemplateData("Trang trí A1", [decoA1]),
-            drawpolygon.geoTemplateData("Trang trí A2", [decoA2])
+            drawpolygon.geoTemplateData("Trang trí A2", [decoA2]),
+            drawpolygon.geoTemplateData("Trang trí B1", [decoB1]),
+            drawpolygon.geoTemplateData("Trang trí B2", [decoB2]),
+            drawpolygon.geoTemplateData("Trang trí C", [decoC]),
         )
 
         result.push([{
