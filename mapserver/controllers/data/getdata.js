@@ -287,22 +287,22 @@ const getroof = async (req, res, next) => {
 
         const roof = drawpolygon.geoTemplate();
         roof["features"].push(
-            drawpolygon.geoTemplateData("Mái ngang A", [roofA]),
-            drawpolygon.geoTemplateData("Mái ngang B", [roofB]),
-            drawpolygon.geoTemplateData("Mái ngang C", [roofC]),
-            drawpolygon.geoTemplateData("Mái ngang D", [roofD]),
-            drawpolygon.geoTemplateData("Mái dọc E1", [roofE1]),
-            drawpolygon.geoTemplateData("Mái dọc E2", [roofE2]),
-            drawpolygon.geoTemplateData("Mái dọc F1", [roofF1]),
-            drawpolygon.geoTemplateData("Mái dọc F2", [roofF2])
+            drawpolygon.geoTemplateData("Mái ngang A", [roofA], 3, rf._id),
+            drawpolygon.geoTemplateData("Mái ngang B", [roofB], 3, rf._id),
+            drawpolygon.geoTemplateData("Mái ngang C", [roofC], 3, rf._id),
+            drawpolygon.geoTemplateData("Mái ngang D", [roofD], 3, rf._id),
+            drawpolygon.geoTemplateData("Mái dọc E1", [roofE1], 3, rf._id),
+            drawpolygon.geoTemplateData("Mái dọc E2", [roofE2], 3, rf._id),
+            drawpolygon.geoTemplateData("Mái dọc F1", [roofF1], 3, rf._id),
+            drawpolygon.geoTemplateData("Mái dọc F2", [roofF2], 3, rf._id)
         )
         const deco = drawpolygon.geoTemplate();
         deco["features"].push(
-            drawpolygon.geoTemplateData("Trang trí A1", [decoA1]),
-            drawpolygon.geoTemplateData("Trang trí A2", [decoA2]),
-            drawpolygon.geoTemplateData("Trang trí B1", [decoB1]),
-            drawpolygon.geoTemplateData("Trang trí B2", [decoB2]),
-            drawpolygon.geoTemplateData("Trang trí C", [decoC]),
+            drawpolygon.geoTemplateData("Trang trí A1", [decoA1], 0.1, rf._id),
+            drawpolygon.geoTemplateData("Trang trí A2", [decoA2], 0.1, rf._id),
+            drawpolygon.geoTemplateData("Trang trí B1", [decoB1], 0.1, rf._id),
+            drawpolygon.geoTemplateData("Trang trí B2", [decoB2], 0.1, rf._id),
+            drawpolygon.geoTemplateData("Trang trí C", [decoC], 0.1, rf._id),
         )
 
         result.push([{
@@ -376,11 +376,11 @@ const getFence = async (req, res, next) => {
 
         const fenceX = drawpolygon.geoTemplate();
         tmp.fenceX.forEach((e) =>
-            fenceX["features"].push(drawpolygon.geoTemplateData("Hàng rào", [e]))
+            fenceX["features"].push(drawpolygon.geoTemplateData("Hàng rào", [e],height,listData[i]._id))
         );
         const fenceY = drawpolygon.geoTemplate();
         tmp.fenceY.forEach((e) =>
-            fenceY["features"].push(drawpolygon.geoTemplateData("Hàng rào", [e]))
+            fenceY["features"].push(drawpolygon.geoTemplateData("Hàng rào", [e],height,listData[i]._id))
         );
 
         result.push([{
