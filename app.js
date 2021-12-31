@@ -4,7 +4,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var connectDatabase = require('./Config/ConnectDatabase')
+var connectDatabase = require('./config/ConnectDatabase')
 connectDatabase()
 var adminpageroute = require('./routes/admin/admin');
 var loginroute = require('./routes/admin/login');
