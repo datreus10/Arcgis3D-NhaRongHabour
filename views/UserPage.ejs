@@ -90,50 +90,50 @@
                 return geojsonLayer;
             }
 
-            esriRequest('http://localhost:3000/data/floor').then(function (response) {
+            esriRequest('/data/floor').then(function (response) {
                 map.add(generateLayer(response.data))
             });
 
-            esriRequest('http://localhost:3000/data/column').then(function (response) {
+            esriRequest('/data/column').then(function (response) {
                 map.add(generateLayer(response.data))
             });
 
-            esriRequest('http://localhost:3000/data/fence').then(function (response) {
+            esriRequest('/data/fence').then(function (response) {
                 response.data.forEach(e => {
                     map.add(generateLayer(e[0]))
                     map.add(generateLayer(e[1]))
                 })
             });
-            esriRequest('http://localhost:3000/data/wall').then(function (response) {
+            esriRequest('/data/wall').then(function (response) {
                 map.add(generateLayer(response.data))
             });
-            esriRequest('http://localhost:3000/data/roof').then(function (response) {
+            esriRequest('/data/roof').then(function (response) {
                 response.data.forEach(e => {
                     map.add(generateLayer(e[0]))
                     map.add(generateLayer(e[1]))
                 })
             });
-            esriRequest('http://localhost:3000/data/step').then(function (response) {
+            esriRequest('/data/step').then(function (response) {
                 map.add(generateLayer(response.data))
             });
 
-            esriRequest('http://localhost:3000/data/circular_decoration').then(function (response) {
+            esriRequest('/data/circular_decoration').then(function (response) {
                 map.add(generateLayer(response.data))
             });
-            esriRequest('http://localhost:3000/data/columndecoration').then(function (response) {
+            esriRequest('/data/columndecoration').then(function (response) {
                 map.add(generateLayer(response.data))
             });
-            esriRequest('http://localhost:3000/data/floordecoration').then(function (response) {
+            esriRequest('/data/floordecoration').then(function (response) {
                 map.add(generateLayer(response.data))
             });
-            esriRequest('http://localhost:3000/data/floorbrick').then(function (response) {
+            esriRequest('/data/floorbrick').then(function (response) {
                 map.add(generateLayer(response.data))
             });
-            esriRequest('http://localhost:3000/data/roofbrick').then(function (response) {
+            esriRequest('/data/roofbrick').then(function (response) {
                 map.add(generateLayer(response.data))
             });
 
-            esriRequest('http://localhost:3000/data/door').then(function (response) {
+            esriRequest('/data/door').then(function (response) {
                 map.add(generateLayer(response.data))
             });
             view.popup.defaultPopupTemplateEnabled = true;
