@@ -1,4 +1,4 @@
-# Đồ án cuối kì - Bến Nhà Rồng
+# Đồ án cuối kì - Xây dựng mô hình 3D Bến Nhà Rồng
 
 ### Description:
 
